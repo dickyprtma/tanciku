@@ -22,7 +22,8 @@ fun BudgetCircularItem(
     title: String,
     usedPercentage: Float,
     allocatedPercentage: Float,
-    progressBarColorResId: Int) {
+    progressBarColorResId: Int
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -31,12 +32,24 @@ fun BudgetCircularItem(
             modifier = Modifier.size(80.dp),
             contentAlignment = Alignment.Center
         ) {
-            // Circular progress indicator
+            // Outer circle (represents total allocation)
             CircularProgressIndicator(
-                progress = { usedPercentage / allocatedPercentage },
+                progress = {
+                    1f // 100% to show the full allocation
+                },
                 modifier = Modifier.size(100.dp),
-                color = colorResource(id = progressBarColorResId),
+                color = colorResource(id = R.color.color_gray_circular), // Gray color for unused portion
                 strokeWidth = 8.dp,
+            )
+
+            // Inner circle (represents used percentage)
+            CircularProgressIndicator(
+                progress = usedPercentage / allocatedPercentage,
+                modifier = Modifier
+                    .size(100.dp)
+                    .padding(1.dp), // To prevent overlap
+                color = colorResource(id = progressBarColorResId), // Color for used portion
+                strokeWidth = 8.dp
             )
 
             // Display the percentage inside the circle
@@ -47,7 +60,7 @@ fun BudgetCircularItem(
             )
         }
 
-        // Add the "Pengeluaran" label below the progress bar
+        // Add the title label below the progress bar
         Text(
             text = title,
             color = colorResource(id = R.color.text_title_large),

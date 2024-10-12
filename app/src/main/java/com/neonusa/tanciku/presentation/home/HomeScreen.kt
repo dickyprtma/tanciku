@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,10 +18,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.presentation.common.ItemData
+import com.neonusa.tanciku.presentation.common.ListTransactionitem
 import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
-import com.neonusa.tanciku.presentation.home.components.TransactionItem
+import com.neonusa.tanciku.presentation.home.components.TransactionTotalItem
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+
+
+val dummyItems = listOf(
+    ItemData(
+        iconResId = R.drawable.arrow_circle_up, // Ikon bawaan Android sebagai contoh
+        title = "Menabung",
+        type = "menabung",
+        date = "6 Oktober 2024",
+        price = "Rp2.200.000"
+    ),
+    ItemData(
+        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
+        title = "Geprek curup",
+        type = "kebutuhan",
+        date = "7 Oktober",
+        price = "Rp10.000"
+    ),
+    ItemData(
+        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
+        title = "Es teh gacor",
+        type = "keinginan",
+        date = "14 Oct 2024",
+        price = "Rp7.000"
+    )
+)
 
 @Composable
 fun HomeScreen(){
@@ -37,20 +66,41 @@ fun HomeScreen(){
             horizontalArrangement = Arrangement.SpaceBetween, // Distribute space evenly between items
             verticalAlignment = Alignment.CenterVertically
         ){
-            TransactionItem(
+            TransactionTotalItem(
                 R.drawable.arrow_circle_up,
                 colorResource(id = R.color.color_income),
                 stringResource(id = R.string.income),
-                "Rp3.000.000"
+                "Rp5.000.000"
             )
-            TransactionItem(
+            TransactionTotalItem(
                 R.drawable.arrow_circle_down,
                 colorResource(id = R.color.color_expense),
                 stringResource(id = R.string.expense),
-                "Rp128.500"
+                "Rp800.000"
             )
         }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Alokasi Anggaran",
+                color = colorResource(id = R.color.text_title_large),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = "Selengkapnya >",
+                color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            )
+        }
 
         Row(
             modifier = Modifier
@@ -61,7 +111,7 @@ fun HomeScreen(){
         ){
             BudgetCircularItem(
                 title = "Kebutuhan",
-                usedPercentage = 20f,
+                usedPercentage = 6.52f,
                 allocatedPercentage = 50f,
                 progressBarColorResId = R.color.color_expense
             )
@@ -80,6 +130,30 @@ fun HomeScreen(){
                 progressBarColorResId = R.color.color_income
             )
         }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Transaksi",
+                color = colorResource(id = R.color.text_title_large),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = "Lihat Semua >",
+                color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            )
+        }
+        ListTransactionitem(itemList = dummyItems)
+
     }
 }
 

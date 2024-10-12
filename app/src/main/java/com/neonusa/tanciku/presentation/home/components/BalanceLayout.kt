@@ -40,7 +40,7 @@ fun BalanceLayout() {
             )
         }
         Text(
-            text = "Rp1.800.280",
+            text = "Rp4.200.000",
             color = colorResource(id = R.color.text_title_large),
             style = MaterialTheme.typography.titleLarge
         )
