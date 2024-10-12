@@ -70,7 +70,7 @@ fun TransactionItem(
         // Harga di ujung kanan
         Text(
             text = price,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(start = 16.dp)
         )
     }

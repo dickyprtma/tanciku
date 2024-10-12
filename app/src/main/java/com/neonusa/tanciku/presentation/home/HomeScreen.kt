@@ -76,7 +76,7 @@ fun HomeScreen(){
                 R.drawable.arrow_circle_down,
                 colorResource(id = R.color.color_expense),
                 stringResource(id = R.string.expense),
-                "Rp800.000"
+                "Rp3.000.000"
             )
         }
 
@@ -111,21 +111,21 @@ fun HomeScreen(){
         ){
             BudgetCircularItem(
                 title = "Kebutuhan",
-                usedPercentage = 6.52f,
+                usedPercentage = 32f,
                 allocatedPercentage = 50f,
                 progressBarColorResId = R.color.color_expense
             )
 
             BudgetCircularItem(
                 title = "Keinginan",
-                usedPercentage = 23f,
+                usedPercentage = 8f,
                 allocatedPercentage = 20f,
                 progressBarColorResId = R.color.color_wants
             )
 
             BudgetCircularItem(
                 title = "Menabung",
-                usedPercentage = 31f,
+                usedPercentage = 20f,
                 allocatedPercentage = 30f,
                 progressBarColorResId = R.color.color_income
             )
