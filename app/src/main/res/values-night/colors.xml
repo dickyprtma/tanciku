@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_title_large">#FFFFFFFF</color>
+    <color name="text_title_small">#FFFFFFFF</color>
+
+    <color name="color_income">#24AD61</color>
+    <color name="color_wants">#C5B54B</color>
+    <color name="color_expense">#CE434A</color>
+</resources>

@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="text_title_large">#FF000000</color>
+    <color name="text_title_small">#FF000000</color>
+
+    <color name="color_income">#24AD61</color>
+    <color name="color_wants">#C5B54B</color>
+    <color name="color_expense">#CE434A</color>
+
 </resources>
