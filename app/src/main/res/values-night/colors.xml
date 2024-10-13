@@ -8,4 +8,6 @@
     <color name="color_expense">#CE434A</color>
 
     <color name="color_gray_circular">#E0E0E0</color>
+
+    <color name="body">#B0B3B8</color>
 </resources>
