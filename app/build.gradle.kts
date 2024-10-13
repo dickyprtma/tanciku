@@ -67,6 +67,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Hilt navcompose
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    // dark theme
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
 
 }
