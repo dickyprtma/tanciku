@@ -40,8 +40,14 @@ fun MainBottomNavigation(
                 onClick = { onItemClick(index) },
                 icon = {
                     Column(horizontalAlignment = CenterHorizontally) {
+                        // If "Home" is selected, show the + icon
+                        val iconId = if (item.text == "Beranda" && index == selectedItem) {
+                            R.drawable.plus // Replace with your + icon resource
+                        } else {
+                            item.icon
+                        }
                         Icon(
-                            painter = painterResource(id = item.icon),
+                            painter = painterResource(id = iconId),
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
                         )
