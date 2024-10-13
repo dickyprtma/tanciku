@@ -47,7 +47,15 @@ val dummyItems = listOf(
         type = "keinginan",
         date = "14 Oct 2024",
         price = "Rp7.000"
+    ),
+    ItemData(
+        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
+        title = "Es teh gacor",
+        type = "keinginan",
+        date = "14 Oct 2024",
+        price = "Rp7.000"
     )
+
 )
 
 @Composable
