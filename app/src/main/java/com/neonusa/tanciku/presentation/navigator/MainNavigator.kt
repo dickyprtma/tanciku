@@ -77,7 +77,8 @@ fun MainNavigator() {
                             route = Route.SettingsScreen.route
                         )
                     }
-                }
+                },
+                onFabClick = {}
             )
         }
     }) {
