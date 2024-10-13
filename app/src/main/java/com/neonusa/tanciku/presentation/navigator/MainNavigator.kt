@@ -32,7 +32,7 @@ fun MainNavigator() {
         listOf(
             BottomNavigationItem(icon = R.drawable.receipt, text = "Transaksi"),
             BottomNavigationItem(icon = R.drawable.home, text = "Beranda"),
-            BottomNavigationItem(icon = R.drawable.settings, text = "Pengaturan"),
+            BottomNavigationItem(icon = R.drawable.chart_pie_alt, text = "Anggaran"),
         )
     }
 

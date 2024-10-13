@@ -36,7 +36,6 @@ fun TancikuApp() {
         val isSystemInDarkMode = isSystemInDarkTheme()
         val systemUiColor = rememberSystemUiController()
         ConfigureSystemBars(systemUiColor, isSystemInDarkMode)
-
         // Main UI content
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             NavGraph(startDestination = "BottomNavigation")
