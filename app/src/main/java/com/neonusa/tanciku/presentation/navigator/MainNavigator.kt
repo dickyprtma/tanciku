@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.presentation.navigator
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
@@ -78,7 +80,10 @@ fun MainNavigator() {
                         )
                     }
                 },
-                onFabClick = {}
+                onFabClick = {
+                    navigateToAddTransaction(navController = navController)
+                    Log.d("FAB", "Plus button clicked!")
+                }
             )
         }
     }) {
@@ -99,6 +104,12 @@ fun MainNavigator() {
             }
             composable(route = Route.SettingsScreen.route) {
             }
+
+            composable(route = Route.AddTransactionScreen.route) {
+                AddTransactionScreen(
+                    navigateUp = {navController.navigateUp()}
+                )
+            }
         }
     }
 }
@@ -113,4 +124,10 @@ private fun navigateToTab(navController: NavController, route: String) {
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun navigateToAddTransaction(navController: NavController){
+    navController.navigate(
+        route = Route.AddTransactionScreen.route
+    )
 }

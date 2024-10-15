@@ -72,5 +72,4 @@ dependencies {
 
     // dark theme
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
-
 }

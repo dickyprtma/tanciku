@@ -79,7 +79,7 @@ fun MainBottomNavigation(
         FloatingActionButton(
             onClick = {
                 if (selectedItem == 1) {
-                    Log.d("FAB", "Plus button clicked!")
+                    onFabClick() // triggered di MainNavigator
                 } else {
                     onItemClick(1)
                 }
