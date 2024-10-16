@@ -28,7 +28,7 @@ import com.neonusa.tanciku.ui.theme.TancikuTheme
 
 val dummyItems = listOf(
     ItemData(
-        iconResId = R.drawable.arrow_circle_up, // Ikon bawaan Android sebagai contoh
+        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
         title = "Menabung",
         type = "menabung",
         date = "6 Oktober 2024",
@@ -54,6 +54,13 @@ val dummyItems = listOf(
         type = "keinginan",
         date = "14 Oct 2024",
         price = "Rp7.000"
+    ),
+    ItemData(
+        iconResId = R.drawable.arrow_circle_up, // Ikon bawaan Android sebagai contoh
+        title = "Gaji bulan ini",
+        type = "pemasukan",
+        date = "5 Oktober 2024",
+        price = "Rp5.000.000"
     )
 
 )

@@ -30,6 +30,7 @@ fun TransactionItem(
     price: String
 ) {
     val iconTintColor = when (type) {
+        "pemasukan" -> colorResource(id = R.color.color_income)
         "menabung" -> colorResource(id = R.color.color_income)
         "kebutuhan" -> colorResource(id = R.color.color_expense)
         "keinginan" -> colorResource(id = R.color.color_wants)
@@ -67,9 +68,14 @@ fun TransactionItem(
             )
         }
 
+        val symbol = when (type) {
+            "pemasukan" -> "+"
+            else -> "−"
+        }
+
         // Harga di ujung kanan
         Text(
-            text = price,
+            text = symbol+price,
             color = colorResource(id = R.color.text_title_large),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(start = 16.dp)
