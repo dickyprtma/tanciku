@@ -150,6 +150,6 @@ fun ShowDatePicker(
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun AddTranscationScreenPreview(){
+fun AddTransactionScreenPreview(){
     AddTransactionScreen(navigateUp = {})
 }
