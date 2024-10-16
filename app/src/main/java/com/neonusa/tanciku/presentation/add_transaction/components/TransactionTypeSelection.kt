@@ -30,10 +30,13 @@ import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 
 @Composable
-fun TransactionTypeSelection() {
+fun TransactionTypeSelection(
+
+) {
     var selectedCategory by remember { mutableStateOf("Pengeluaran") }
     Row(
-        modifier = Modifier.padding()
+        modifier = Modifier
+            .padding()
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
@@ -42,7 +45,7 @@ fun TransactionTypeSelection() {
             label = "Pengeluaran",
             onClick = { selectedCategory = "Pengeluaran" },
             borderColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935) else Color(0xFF757575),
-            backgroundColor = Color(0xFFFFEBEE),
+            backgroundColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFFE53935),
         )
 
@@ -51,7 +54,7 @@ fun TransactionTypeSelection() {
             label = "Pemasukan",
             onClick = { selectedCategory = "Pemasukan" },
             borderColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047) else Color(0xFF757575),
-            backgroundColor = Color(0xFFE8F5E9),
+            backgroundColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFF43A047)
         )
     }
@@ -69,7 +72,7 @@ fun TransactionTypeItem(
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(50),
-        color = if (isSelected) backgroundColor else Color.White,
+        color = backgroundColor,
         border = BorderStroke(1.dp, borderColor),
         modifier = Modifier
             .wrapContentSize()
@@ -87,10 +90,21 @@ fun TransactionTypeItem(
                 modifier = Modifier.size(20.dp) // Atur ukuran ikon secara eksplisit
             )
             Spacer(modifier = Modifier.width(8.dp))
+
+            val textColor = if (isSelected) {
+                when (label) {
+                    "Pengeluaran" -> R.color.text_transaction_type_add_transaction_expense
+                    else -> R.color.text_transaction_type_add_transaction_income
+                }
+            } else {
+                R.color.text_title_small
+            }
+
             Text(
                 text = label,
-                color = if (label == "Pengeluaran") colorResource(id = R.color.text_transaction_type_add_transaction_expense) else colorResource(id = R.color.text_transaction_type_add_transaction_income),
-                style = MaterialTheme.typography.titleSmall)
+                color = colorResource(id = textColor),
+                style = MaterialTheme.typography.titleSmall
+            )
         }
     }
 }

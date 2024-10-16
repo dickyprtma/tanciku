@@ -32,6 +32,8 @@ fun AddTransactionScreen(
 ){
     var nominal by remember{ mutableStateOf("0")}
     var keterangan by remember{ mutableStateOf("")}
+    var transactionType by remember { mutableStateOf("Pengeluaran")}
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -67,7 +69,9 @@ fun AddTransactionScreen(
                 .padding(start = 16.dp, end = 16.dp, top = 8.dp)
                 .defaultMinSize(minHeight = 100.dp)
         )
-        TransactionCategorySelection()
+        if(transactionType == "Pengeluaran"){
+            TransactionCategorySelection()
+        }
 //        DatePickerLayout()
 
     }

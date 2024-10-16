@@ -11,10 +11,14 @@
     <color name="text_title_large">#FF000000</color>
     <color name="text_title_small">#FF000000</color>
 
-    <color name="text_transaction_type_add_transaction_bg">#FFFFEBEE</color>
-    <color name="text_transaction_type_add_transaction_expense">#FF000000</color>
-    <color name="text_transaction_type_add_transaction_income">#FF000000</color>
-    <color name="text_transaction_type_add_transaction_wants">#FF000000</color>
+    <color name="text_transaction_type_add_transaction_bg">#FFFFFFFF</color>
+    <color name="text_transaction_type_add_transaction_expense">#E53935</color>
+    <color name="text_transaction_type_add_transaction_income">#43A047</color>
+    <color name="text_transaction_type_add_transaction_wants">#AD850E</color>
+
+    <color name="text_transaction_type_add_transaction_expense_bg_selected">#DCA5A4</color>
+    <color name="text_transaction_type_add_transaction_income_bg_selected">#65A667</color>
+    <color name="text_transaction_type_add_transaction_wants_bg_selected">#A09863</color>
 
 
     <color name="color_income">#24AD61</color>

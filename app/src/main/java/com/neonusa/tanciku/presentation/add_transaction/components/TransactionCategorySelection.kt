@@ -27,7 +27,8 @@ import com.neonusa.tanciku.R
 fun TransactionCategorySelection() {
     var selectedCategory by remember { mutableStateOf("Kebutuhan") }
     Row(
-        modifier = Modifier.padding()
+        modifier = Modifier
+            .padding(top = 4.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
@@ -36,7 +37,7 @@ fun TransactionCategorySelection() {
             isSelected = selectedCategory == "Kebutuhan",
             onClick = { selectedCategory = "Kebutuhan" },
             borderColor = if (selectedCategory == "Kebutuhan") Color(0xFFE53935) else Color(0xFF757575),
-            backgroundColor = Color(0xFFFFEBEE),
+            backgroundColor = if (selectedCategory == "Kebutuhan") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
 
         TransactionCategoryItem(
@@ -44,7 +45,7 @@ fun TransactionCategorySelection() {
             label = "Keinginan",
             onClick = { selectedCategory = "Keinginan" },
             borderColor = if (selectedCategory == "Keinginan") Color(0xFFD6C96F) else Color(0xFF757575),
-            backgroundColor = Color(0xFFE8F5E9),
+            backgroundColor = if (selectedCategory == "Keinginan") Color(0xFFD6C96F).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
 
         TransactionCategoryItem(
@@ -52,7 +53,7 @@ fun TransactionCategorySelection() {
             label = "Menabung",
             onClick = { selectedCategory = "Menabung" },
             borderColor = if (selectedCategory == "Menabung") Color(0xFF43A047) else Color(0xFF757575),
-            backgroundColor = Color(0xFFE8F5E9),
+            backgroundColor = if (selectedCategory == "Menabung") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
     }
 }
@@ -68,26 +69,27 @@ fun TransactionCategoryItem(
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(50),
-        color = if (isSelected) backgroundColor else Color.White,
+        color = backgroundColor,
         border = BorderStroke(1.dp, borderColor),
         modifier = Modifier
             .wrapContentSize()
             .padding(4.dp)
     ) {
-        val textColor = if(label == "Kebutuhan"){
-            R.color.text_transaction_type_add_transaction_expense
-        } else if(label == "Keinginan"){
-            R.color.text_transaction_type_add_transaction_wants
-        } else if(label == "Pemasukan" || label == "Menabung"){
-            R.color.text_transaction_type_add_transaction_income
+        val textColor = if (isSelected) {
+            when (label) {
+                "Kebutuhan" -> R.color.text_transaction_type_add_transaction_expense
+                "Pemasukan", "Menabung" -> R.color.text_transaction_type_add_transaction_income
+                else -> R.color.text_transaction_type_add_transaction_wants
+            }
         } else {
-            R.color.text_transaction_type_add_transaction_wants
+            R.color.text_title_small
         }
         Text(
             modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, start = 12.dp, end = 12.dp),
             text = label,
             color = colorResource(id = textColor),
-            style = MaterialTheme.typography.titleSmall)
+            style = MaterialTheme.typography.titleSmall
+        )
     }
 }
 
