@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.presentation.add_transaction.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -92,13 +93,14 @@ fun CategoryItem(
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = label,
-                color = colorResource(id = R.color.text_title_small),
+                color = if (label == "Pengeluaran") colorResource(id = R.color.text_transaction_type_add_transaction_expense) else colorResource(id = R.color.text_transaction_type_add_transaction_income),
                 style = MaterialTheme.typography.titleSmall)
         }
     }
 }
 
 @Preview(showBackground = true)
+@Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewCategorySelector() {
     TransactionTypeLayout()

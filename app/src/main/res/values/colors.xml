@@ -11,9 +11,14 @@
     <color name="text_title_large">#FF000000</color>
     <color name="text_title_small">#FF000000</color>
 
+    <color name="text_transaction_type_add_transaction_bg">#FFFFEBEE</color>
+    <color name="text_transaction_type_add_transaction_expense">#FF000000</color>
+    <color name="text_transaction_type_add_transaction_income">#FF000000</color>
+
     <color name="color_income">#24AD61</color>
     <color name="color_wants">#C5B54B</color>
     <color name="color_expense">#CE434A</color>
+
 
     <color name="color_gray_circular">#E0E0E0</color>
 
