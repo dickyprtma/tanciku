@@ -26,6 +26,7 @@ import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
+import com.neonusa.tanciku.presentation.transaction.TransactionScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,7 +47,7 @@ fun MainNavigator() {
     selectedItem = when (backStackState?.destination?.route) {
         Route.TransactionScreen.route -> 0
         Route.HomeScreen.route -> 1
-        Route.SettingsScreen.route -> 2
+        Route.BudgetScreen.route -> 2
         else -> 0
     }
 
@@ -54,7 +55,7 @@ fun MainNavigator() {
     val isBottomBarVisible = remember(key1 = backStackState) {
         backStackState?.destination?.route == Route.TransactionScreen.route ||
                 backStackState?.destination?.route == Route.HomeScreen.route ||
-                backStackState?.destination?.route == Route.SettingsScreen.route
+                backStackState?.destination?.route == Route.BudgetScreen.route
     }
 
     Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
@@ -76,7 +77,7 @@ fun MainNavigator() {
 
                         2 -> navigateToTab(
                             navController = navController,
-                            route = Route.SettingsScreen.route
+                            route = Route.BudgetScreen.route
                         )
                     }
                 },
@@ -88,21 +89,18 @@ fun MainNavigator() {
         }
     }) {
         val bottomPadding = it.calculateBottomPadding()
-
-
         NavHost(
             navController = navController,
             startDestination = Route.HomeScreen.route,
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.TransactionScreen.route) {
-
+                TransactionScreen()
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
-                HomeScreen(
-                )
+                HomeScreen()
             }
-            composable(route = Route.SettingsScreen.route) {
+            composable(route = Route.BudgetScreen.route) {
             }
 
             composable(route = Route.AddTransactionScreen.route) {
