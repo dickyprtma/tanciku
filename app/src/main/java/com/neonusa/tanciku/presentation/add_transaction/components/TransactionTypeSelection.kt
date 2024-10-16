@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -30,18 +27,17 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.neonusa.tanciku.R
 
 @Composable
-fun TransactionTypeLayout() {
+fun TransactionTypeSelection() {
     var selectedCategory by remember { mutableStateOf("Pengeluaran") }
     Row(
         modifier = Modifier.padding()
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        CategoryItem(
+        TransactionTypeItem(
             isSelected = selectedCategory == "Pengeluaran",
             label = "Pengeluaran",
             onClick = { selectedCategory = "Pengeluaran" },
@@ -50,7 +46,7 @@ fun TransactionTypeLayout() {
             iconColor = Color(0xFFE53935),
         )
 
-        CategoryItem(
+        TransactionTypeItem(
             isSelected = selectedCategory == "Pemasukan",
             label = "Pemasukan",
             onClick = { selectedCategory = "Pemasukan" },
@@ -62,7 +58,7 @@ fun TransactionTypeLayout() {
 }
 
 @Composable
-fun CategoryItem(
+fun TransactionTypeItem(
     isSelected: Boolean,
     label: String,
     onClick: () -> Unit,
@@ -102,6 +98,6 @@ fun CategoryItem(
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewCategorySelector() {
-    TransactionTypeLayout()
+fun Preview() {
+    TransactionTypeSelection()
 }

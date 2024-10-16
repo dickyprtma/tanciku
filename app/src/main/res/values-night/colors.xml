@@ -2,8 +2,10 @@
 <resources>
     <color name="text_title_large">#FFFFFFFF</color>
     <color name="text_title_small">#FFFFFFFF</color>
+
     <color name="text_transaction_type_add_transaction_expense">#FFE53935</color>
     <color name="text_transaction_type_add_transaction_income">#FF43A047</color>
+    <color name="text_transaction_type_add_transaction_wants">#A09443</color>
 
     <color name="color_income">#24AD61</color>
     <color name="color_wants">#C5B54B</color>

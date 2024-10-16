@@ -23,7 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.presentation.add_transaction.components.AddTransactionToolbarLayout
-import com.neonusa.tanciku.presentation.add_transaction.components.TransactionTypeLayout
+import com.neonusa.tanciku.presentation.add_transaction.components.TransactionCategorySelection
+import com.neonusa.tanciku.presentation.add_transaction.components.TransactionTypeSelection
 
 @Composable
 fun AddTransactionScreen(
@@ -38,7 +39,7 @@ fun AddTransactionScreen(
     ) {
         // rencananya nanti pilih tanggalnya kalo udh tekan centang aja
         AddTransactionToolbarLayout(onBackClick = navigateUp, onShareClick = {})
-        TransactionTypeLayout()
+        TransactionTypeSelection()
         OutlinedTextField(
             value = nominal,
             leadingIcon = {
@@ -63,10 +64,10 @@ fun AddTransactionScreen(
             maxLines =  5,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding( start= 16.dp, end= 16.dp, top = 8.dp)
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp)
                 .defaultMinSize(minHeight = 100.dp)
         )
-
+        TransactionCategorySelection()
 //        DatePickerLayout()
 
     }
