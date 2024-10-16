@@ -31,9 +31,9 @@ import com.neonusa.tanciku.R
 
 @Composable
 fun TransactionTypeSelection(
-
+    selectedCategory: String,
+    onCategoryChange: (String) -> Unit
 ) {
-    var selectedCategory by remember { mutableStateOf("Pengeluaran") }
     Row(
         modifier = Modifier
             .padding()
@@ -43,7 +43,7 @@ fun TransactionTypeSelection(
         TransactionTypeItem(
             isSelected = selectedCategory == "Pengeluaran",
             label = "Pengeluaran",
-            onClick = { selectedCategory = "Pengeluaran" },
+            onClick = { onCategoryChange("Pengeluaran") },
             borderColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935) else Color(0xFF757575),
             backgroundColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFFE53935),
@@ -52,7 +52,7 @@ fun TransactionTypeSelection(
         TransactionTypeItem(
             isSelected = selectedCategory == "Pemasukan",
             label = "Pemasukan",
-            onClick = { selectedCategory = "Pemasukan" },
+            onClick = { onCategoryChange("Pemasukan") },
             borderColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047) else Color(0xFF757575),
             backgroundColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFF43A047)
@@ -113,5 +113,5 @@ fun TransactionTypeItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun Preview() {
-    TransactionTypeSelection()
+    TransactionTypeSelection("Pengeluaran",{})
 }

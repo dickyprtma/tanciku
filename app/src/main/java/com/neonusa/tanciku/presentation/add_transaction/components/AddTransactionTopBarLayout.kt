@@ -33,7 +33,7 @@ import com.neonusa.tanciku.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTransactionToolbarLayout(
-    onShareClick: () -> Unit,
+    onCheckClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
 
@@ -61,7 +61,7 @@ fun AddTransactionToolbarLayout(
             }
         },
         actions = {
-            IconButton(onClick = onShareClick) {
+            IconButton(onClick = onCheckClick) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_24),
                     contentDescription = null
@@ -77,7 +77,7 @@ fun AddTransactionToolbarLayout(
 @Composable
 fun AddTransactionTopBarLayoutPreview() {
     AddTransactionToolbarLayout(
-        onShareClick = {},
+        onCheckClick = {},
         onBackClick = {}
     )
 }
