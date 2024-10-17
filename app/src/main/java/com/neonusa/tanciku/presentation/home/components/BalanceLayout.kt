@@ -97,6 +97,7 @@ fun BalanceLayout(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
 @Composable
