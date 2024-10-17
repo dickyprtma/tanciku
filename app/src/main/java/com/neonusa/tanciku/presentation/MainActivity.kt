@@ -30,25 +30,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    // TESTING ROOM
-    @Inject
-    lateinit var transactionDao: TransactionDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TESTING ROOM
-        lifecycleScope.launch {
-//            transactionDao.insert(
-//                Transaction(
-//                    description =  "Beli ayam geprek",
-//                    date = "2024-20-09",
-//                    type = TransactionType.PENGELUARAN,
-//                    category = TransactionCategory.KEBUTUHAN,
-//                    amount = 20000
-//                )
-//            )
-            transactionDao.deleteById(2)
-        }
-
         enableEdgeToEdge()
         setContent {
             TancikuApp()

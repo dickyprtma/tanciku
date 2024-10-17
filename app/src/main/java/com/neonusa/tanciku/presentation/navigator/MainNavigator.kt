@@ -4,9 +4,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +25,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Transaction
+import com.neonusa.tanciku.domain.model.TransactionCategory
+import com.neonusa.tanciku.domain.model.TransactionType
+import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
+import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
@@ -104,8 +113,45 @@ fun MainNavigator() {
             }
 
             composable(route = Route.AddTransactionScreen.route) {
+                val viewModel: AddTransactionViewModel = hiltViewModel()
+
+                val context = LocalContext.current
+                var showDialog by remember { mutableStateOf(false) }
+
+                if (viewModel.sideEffect != null && !showDialog) {
+                    showDialog = true
+                }
+
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
+                            showDialog = false
+                            viewModel.onEvent(AddTransactionEvent.RemoveSideEffect)
+                            navController.navigate(Route.HomeScreen.route) {
+                                popUpTo(Route.HomeScreen.route) { inclusive = true }
+                            }
+                        },
+                        title = { Text("Success") },
+                        text = { Text("Data transaksi berhasil Ditambahkan") },
+                        confirmButton = {
+
+                        }
+                    )
+
+                    // Automatically dismiss after 2 seconds
+                    LaunchedEffect(Unit) {
+                        kotlinx.coroutines.delay(2000)
+                        showDialog = false
+                        viewModel.onEvent(AddTransactionEvent.RemoveSideEffect)
+                        navController.navigate(Route.HomeScreen.route) {
+                            popUpTo(Route.HomeScreen.route) { inclusive = true }
+                        }
+                    }
+                }
+
                 AddTransactionScreen(
-                    navigateUp = {navController.navigateUp()}
+                    navigateUp = {navController.navigateUp()},
+                    event = viewModel::onEvent
                 )
             }
         }
