@@ -1,6 +1,9 @@
 package com.neonusa.tanciku.di
 
+import android.app.Application
+import androidx.room.Room
 import com.neonusa.tanciku.data.TransactionRepositoryImpl
+import com.neonusa.tanciku.data.local.TransactionConverter
 import com.neonusa.tanciku.data.local.TransactionDao
 import com.neonusa.tanciku.data.local.TransactionDatabase
 import com.neonusa.tanciku.domain.repository.TransactionRepository
@@ -16,12 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Provides
-    @Singleton
-    fun provideTransactionDao(
-        transactionDatabase: TransactionDatabase
-    ): TransactionDao = transactionDatabase.transactionDao
-
     @Provides
     @Singleton
     fun provideTransactionRepository(
@@ -40,4 +37,24 @@ object AppModule {
             deleteTransaction = DeleteTransaction(transactionRepository),
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideTransactionDatabase(
+        application: Application
+    ): TransactionDatabase {
+        return Room.databaseBuilder(
+            context = application,
+            klass = TransactionDatabase::class.java,
+            name = "transaction_db"
+        ).addTypeConverter(TransactionConverter())
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTransactionDao(
+        transactionDatabase: TransactionDatabase
+    ): TransactionDao = transactionDatabase.transactionDao
 }

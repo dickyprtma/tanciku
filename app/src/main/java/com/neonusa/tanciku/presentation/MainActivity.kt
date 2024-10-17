@@ -14,15 +14,40 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.neonusa.tanciku.data.local.TransactionDao
+import com.neonusa.tanciku.domain.model.Transaction
+import com.neonusa.tanciku.domain.model.TransactionCategory
+import com.neonusa.tanciku.domain.model.TransactionType
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.NavGraph
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    // TESTING ROOM
+    @Inject
+    lateinit var transactionDao: TransactionDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TESTING ROOM
+        lifecycleScope.launch {
+            transactionDao.insert(
+                Transaction(
+                    description =  "Beli ayam geprek",
+                    date = "2024-20-09",
+                    type = TransactionType.PENGELUARAN,
+                    category = TransactionCategory.KEBUTUHAN,
+                    amount = 20000
+                )
+            )
+        }
+
         enableEdgeToEdge()
         setContent {
             TancikuApp()
