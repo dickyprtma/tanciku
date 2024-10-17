@@ -24,8 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 
 @Composable
-fun TransactionCategorySelection() {
-    var selectedCategory by remember { mutableStateOf("Kebutuhan") }
+fun TransactionCategorySelection(
+    selectedCategory: String,
+    onCategoryChange: (String) -> Unit
+) {
     Row(
         modifier = Modifier
             .padding(top = 4.dp)
@@ -35,7 +37,7 @@ fun TransactionCategorySelection() {
         TransactionCategoryItem(
             label = "Kebutuhan",
             isSelected = selectedCategory == "Kebutuhan",
-            onClick = { selectedCategory = "Kebutuhan" },
+            onClick = { onCategoryChange("Kebutuhan") },
             borderColor = if (selectedCategory == "Kebutuhan") Color(0xFFE53935) else Color(0xFF757575),
             backgroundColor = if (selectedCategory == "Kebutuhan") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
@@ -43,7 +45,7 @@ fun TransactionCategorySelection() {
         TransactionCategoryItem(
             isSelected = selectedCategory == "Keinginan",
             label = "Keinginan",
-            onClick = { selectedCategory = "Keinginan" },
+            onClick = { onCategoryChange("Keinginan") },
             borderColor = if (selectedCategory == "Keinginan") Color(0xFFD6C96F) else Color(0xFF757575),
             backgroundColor = if (selectedCategory == "Keinginan") Color(0xFFD6C96F).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
@@ -51,7 +53,7 @@ fun TransactionCategorySelection() {
         TransactionCategoryItem(
             isSelected = selectedCategory == "Menabung",
             label = "Menabung",
-            onClick = { selectedCategory = "Menabung" },
+            onClick = { onCategoryChange("Menabung") },
             borderColor = if (selectedCategory == "Menabung") Color(0xFF43A047) else Color(0xFF757575),
             backgroundColor = if (selectedCategory == "Menabung") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
         )
@@ -97,5 +99,5 @@ fun TransactionCategoryItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TransactionCategorySelectionPreview() {
-    TransactionCategorySelection()
+    TransactionCategorySelection("Keinginan",{})
 }

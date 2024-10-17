@@ -31,8 +31,8 @@ import com.neonusa.tanciku.R
 
 @Composable
 fun TransactionTypeSelection(
-    selectedCategory: String,
-    onCategoryChange: (String) -> Unit
+    selectedType: String,
+    onTypeChange: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -41,20 +41,20 @@ fun TransactionTypeSelection(
         horizontalArrangement = Arrangement.Center
     ) {
         TransactionTypeItem(
-            isSelected = selectedCategory == "Pengeluaran",
+            isSelected = selectedType == "Pengeluaran",
             label = "Pengeluaran",
-            onClick = { onCategoryChange("Pengeluaran") },
-            borderColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935) else Color(0xFF757575),
-            backgroundColor = if (selectedCategory == "Pengeluaran") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
+            onClick = { onTypeChange("Pengeluaran") },
+            borderColor = if (selectedType == "Pengeluaran") Color(0xFFE53935) else Color(0xFF757575),
+            backgroundColor = if (selectedType == "Pengeluaran") Color(0xFFE53935).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFFE53935),
         )
 
         TransactionTypeItem(
-            isSelected = selectedCategory == "Pemasukan",
+            isSelected = selectedType == "Pemasukan",
             label = "Pemasukan",
-            onClick = { onCategoryChange("Pemasukan") },
-            borderColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047) else Color(0xFF757575),
-            backgroundColor = if (selectedCategory == "Pemasukan") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
+            onClick = { onTypeChange("Pemasukan") },
+            borderColor = if (selectedType == "Pemasukan") Color(0xFF43A047) else Color(0xFF757575),
+            backgroundColor = if (selectedType == "Pemasukan") Color(0xFF43A047).copy(alpha = 0.1f) else colorResource(id = R.color.text_transaction_type_add_transaction_bg),
             iconColor = Color(0xFF43A047)
         )
     }
