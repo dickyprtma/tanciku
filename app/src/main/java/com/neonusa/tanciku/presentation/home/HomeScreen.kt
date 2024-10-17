@@ -1,6 +1,8 @@
 package com.neonusa.tanciku.presentation.home
 
 import android.content.res.Configuration
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +26,8 @@ import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.TransactionTotalItem
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import java.text.NumberFormat
+import java.util.Locale
 
 
 val dummyItems = listOf(
@@ -65,15 +69,23 @@ val dummyItems = listOf(
 
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    totalIncome: Int,
+    totalExpense: Int,
+    balance: Int
+){
+    val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
+    val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
+    val formattedBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(balance)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
             .padding(16.dp)
     ) {
-        BalanceLayout()
+        BalanceLayout(formattedBalance)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,13 +97,13 @@ fun HomeScreen(){
                 R.drawable.arrow_circle_up,
                 colorResource(id = R.color.color_income),
                 stringResource(id = R.string.income),
-                "Rp5.000.000"
+                "Rp$formattedIncome"
             )
             TransactionTotalItem(
                 R.drawable.arrow_circle_down,
                 colorResource(id = R.color.color_expense),
                 stringResource(id = R.string.expense),
-                "Rp3.000.000"
+                "Rp$formattedExpense"
             )
         }
 
@@ -172,11 +184,12 @@ fun HomeScreen(){
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen()
+        HomeScreen(0,0, 0)
     }
 }

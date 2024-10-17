@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +34,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
+import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
@@ -107,7 +110,14 @@ fun MainNavigator() {
                 TransactionScreen()
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
-                HomeScreen()
+                val viewModel: HomeViewModel = hiltViewModel()
+                val totalIncome by viewModel.totalIncome.collectAsState()
+                val totalExpense by viewModel.totalExpense.collectAsState()
+
+                // derivedStateOf : state turunan yang nilainya bergantung dengan state yang lain
+                val balance by derivedStateOf { totalIncome - totalExpense }
+
+                HomeScreen(totalIncome = totalIncome, totalExpense = totalExpense, balance = balance)
             }
             composable(route = Route.BudgetScreen.route) {
             }
@@ -115,9 +125,7 @@ fun MainNavigator() {
             composable(route = Route.AddTransactionScreen.route) {
                 val viewModel: AddTransactionViewModel = hiltViewModel()
 
-                val context = LocalContext.current
                 var showDialog by remember { mutableStateOf(false) }
-
                 if (viewModel.sideEffect != null && !showDialog) {
                     showDialog = true
                 }
