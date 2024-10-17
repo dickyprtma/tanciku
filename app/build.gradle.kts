@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+    id ("com.google.dagger.hilt.android")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -67,9 +71,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Hilt navcompose
+    // Hilt Navcompose
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-    // dark theme
+    // Dark theme
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
+
+    // Room
+    implementation ("androidx.room:room-runtime:2.5.2")
+    ksp ("androidx.room:room-compiler:2.5.2") // don't use kapt (kapt will error)
+    implementation ("androidx.room:room-ktx:2.5.2")
+
+    // Dagger Hilt : Dependency Injection
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt ("com.google.dagger:hilt-compiler:2.48")
 }

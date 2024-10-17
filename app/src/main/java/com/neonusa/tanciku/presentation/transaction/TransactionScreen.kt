@@ -42,7 +42,8 @@ fun TransactionScreen(){
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
-        }
+
+         }
         ListTransactionitem(itemList = dummyItems)
     }
 }
