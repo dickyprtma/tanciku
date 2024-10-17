@@ -24,6 +24,8 @@ import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.TransactionTotalItem
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import java.text.NumberFormat
+import java.util.Locale
 
 
 val dummyItems = listOf(
@@ -66,7 +68,10 @@ val dummyItems = listOf(
 )
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    totalIncome: Int
+){
+    val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,7 +90,8 @@ fun HomeScreen(){
                 R.drawable.arrow_circle_up,
                 colorResource(id = R.color.color_income),
                 stringResource(id = R.string.income),
-                "Rp5.000.000"
+                //todo: tampilkan formatnya misal: 5000000 menjadi 5.000.000
+                "Rp" + formattedIncome
             )
             TransactionTotalItem(
                 R.drawable.arrow_circle_down,
@@ -177,6 +183,6 @@ fun HomeScreen(){
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen()
+        HomeScreen(5000000)
     }
 }
