@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.neonusa.tanciku.presentation.get_started.GetStartedScreen
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navigator.MainNavigator
 
@@ -19,7 +20,9 @@ fun NavGraph(
             startDestination = "NavigatorScreen"
         ) {
             composable(route = "NavigatorScreen") {
-                MainNavigator()
+//                MainNavigator()
+                // testing GetStartedLayout
+                GetStartedScreen()
             }
         }
     }
