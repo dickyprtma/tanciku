@@ -15,4 +15,12 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
     override suspend fun deleteTransactionById(id: Int) {
         transactionDao.deleteById(id)
     }
+
+    override suspend fun getTotalIncome() {
+        transactionDao.getTotalIncome()
+    }
+
+    override suspend fun getTotalExpense() {
+        transactionDao.getTotalExpense()
+    }
 }
