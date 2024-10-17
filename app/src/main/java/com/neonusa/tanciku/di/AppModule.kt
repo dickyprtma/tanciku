@@ -9,6 +9,7 @@ import com.neonusa.tanciku.data.local.TransactionDatabase
 import com.neonusa.tanciku.domain.repository.TransactionRepository
 import com.neonusa.tanciku.domain.usecases.TransactionUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransaction
+import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransactionById
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
 import dagger.Module
 import dagger.Provides
@@ -35,6 +36,7 @@ object AppModule {
         return TransactionUseCases(
             insertTransaction = InsertTransaction(transactionRepository),
             deleteTransaction = DeleteTransaction(transactionRepository),
+            deleteTransactionById = DeleteTransactionById(transactionRepository)
         )
     }
 

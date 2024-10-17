@@ -11,4 +11,8 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
     override suspend fun deleteTransaction(transaction: Transaction) {
         transactionDao.delete(transaction)
     }
+
+    override suspend fun deleteTransactionById(id: Int) {
+        transactionDao.deleteById(id)
+    }
 }
