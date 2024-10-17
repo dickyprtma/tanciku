@@ -24,7 +24,9 @@ import com.neonusa.tanciku.R
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 
 @Composable
-fun BalanceLayout() {
+fun BalanceLayout(
+    balance: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +70,7 @@ fun BalanceLayout() {
 
             // Saldo
             Text(
-                text = "Rp2.000.000",
+                text = "Rp$balance",
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleLarge
             )
@@ -81,6 +83,6 @@ fun BalanceLayout() {
 @Composable
 fun PreviewBalanceLayout() {
     TancikuTheme {
-        BalanceLayout()
+        BalanceLayout("0")
     }
 }

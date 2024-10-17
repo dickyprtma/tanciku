@@ -16,13 +16,23 @@ class HomeViewModel @Inject constructor(
     private val _totalIncome = MutableStateFlow(0)
     val totalIncome: StateFlow<Int> = _totalIncome
 
+    private val _totalExpense = MutableStateFlow(0)
+    val totalExpense: StateFlow<Int> = _totalExpense
+
     init {
         getTotalIncome()
+        getTotalExpense()
     }
 
     private fun getTotalIncome() {
         viewModelScope.launch {
             _totalIncome.value = transactionUseCases.getTotalIncome()
+        }
+    }
+
+    private fun getTotalExpense() {
+        viewModelScope.launch {
+            _totalExpense.value = transactionUseCases.getTotalExpense()
         }
     }
 }

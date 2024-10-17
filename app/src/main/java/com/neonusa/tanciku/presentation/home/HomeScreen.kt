@@ -69,16 +69,20 @@ val dummyItems = listOf(
 
 @Composable
 fun HomeScreen(
-    totalIncome: Int
+    totalIncome: Int,
+    totalExpense: Int,
+    balance: Int
 ){
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
+    val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
+    val formattedBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(balance)
     Column(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
             .padding(16.dp)
     ) {
-        BalanceLayout()
+        BalanceLayout(formattedBalance)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -90,14 +94,13 @@ fun HomeScreen(
                 R.drawable.arrow_circle_up,
                 colorResource(id = R.color.color_income),
                 stringResource(id = R.string.income),
-                //todo: tampilkan formatnya misal: 5000000 menjadi 5.000.000
-                "Rp" + formattedIncome
+                "Rp$formattedIncome"
             )
             TransactionTotalItem(
                 R.drawable.arrow_circle_down,
                 colorResource(id = R.color.color_expense),
                 stringResource(id = R.string.expense),
-                "Rp3.000.000"
+                "Rp$formattedExpense"
             )
         }
 
@@ -183,6 +186,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(5000000)
+        HomeScreen(0,0, 0)
     }
 }

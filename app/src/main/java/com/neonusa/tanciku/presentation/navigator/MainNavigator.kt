@@ -12,6 +12,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -111,7 +112,12 @@ fun MainNavigator() {
             composable(route = Route.HomeScreen.route) { backStackEntry ->
                 val viewModel: HomeViewModel = hiltViewModel()
                 val totalIncome by viewModel.totalIncome.collectAsState()
-                HomeScreen(totalIncome)
+                val totalExpense by viewModel.totalExpense.collectAsState()
+
+                // derivedStateOf : state turunan yang nilainya bergantung dengan state yang lain
+                val balance by derivedStateOf { totalIncome - totalExpense }
+
+                HomeScreen(totalIncome = totalIncome, totalExpense = totalExpense, balance = balance)
             }
             composable(route = Route.BudgetScreen.route) {
             }
