@@ -1,6 +1,8 @@
 package com.neonusa.tanciku.presentation.home.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,11 +24,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Calendar
+import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BalanceLayout(
     balance: String
 ) {
+    val currentMonth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        LocalDate.now().month.getDisplayName(TextStyle.FULL, Locale("id"))
+    } else {
+        val calendar = Calendar.getInstance()
+        calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale("id")) ?: "Bulan"
+    }
+    val currentYear = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        LocalDate.now().year
+    } else {
+        val calendar = Calendar.getInstance()
+        calendar.get(Calendar.YEAR)
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +63,7 @@ fun BalanceLayout(
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = "Oktober 2024",
+                text = "$currentMonth $currentYear",
                 color = colorResource(id = R.color.text_title_small),
                 style = MaterialTheme.typography.bodySmall
             )
