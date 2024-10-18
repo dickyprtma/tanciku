@@ -23,6 +23,7 @@ import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.NavGraph
+import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -47,7 +48,10 @@ fun TancikuApp() {
         ConfigureSystemBars(systemUiColor, isSystemInDarkMode)
         // Main UI content
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            NavGraph(startDestination = "BottomNavigation")
+            //todo : startDestination akan mengecek apakah appentry udah true/false
+            // nilainya diambil dari mainViewModel
+
+            NavGraph(startDestination = Route.MainNavigation.route)
         }
     }
 }

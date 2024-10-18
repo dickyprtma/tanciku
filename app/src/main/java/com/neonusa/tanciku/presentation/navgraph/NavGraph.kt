@@ -16,15 +16,14 @@ fun NavGraph(
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = startDestination) {
         navigation(
-            route = "BottomNavigation",
-            startDestination = "NavigatorScreen"
+            route = Route.MainNavigation.route,
+            startDestination = Route.MainNavigatorScreen.route
         ) {
-            composable(route = "NavigatorScreen") {
+            composable(route = Route.MainNavigatorScreen.route) {
                 MainNavigator()
                 //todo : implementasikan appentry untuk menyimpan state getstarted
                 //todo : bikin viewmodel untuk getstartedscreen
                 //todo : kemungknan besar butuh event juga
-
             }
         }
     }
