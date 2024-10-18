@@ -2,7 +2,7 @@ package com.neonusa.tanciku.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.neonusa.tanciku.domain.usecases.TransactionUseCases
+import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

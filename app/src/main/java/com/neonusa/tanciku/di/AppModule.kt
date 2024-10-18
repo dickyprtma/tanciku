@@ -6,13 +6,19 @@ import com.neonusa.tanciku.data.TransactionRepositoryImpl
 import com.neonusa.tanciku.data.local.TransactionConverter
 import com.neonusa.tanciku.data.local.TransactionDao
 import com.neonusa.tanciku.data.local.TransactionDatabase
+import com.neonusa.tanciku.data.manager.LocalUserManagerImpl
+import com.neonusa.tanciku.domain.manager.LocalUserManager
 import com.neonusa.tanciku.domain.repository.TransactionRepository
-import com.neonusa.tanciku.domain.usecases.TransactionUseCases
+import com.neonusa.tanciku.domain.usecases.app_entry.AppEntryUseCases
+import com.neonusa.tanciku.domain.usecases.app_entry.ReadAppEntry
+import com.neonusa.tanciku.domain.usecases.app_entry.SaveAppEntry
+import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransaction
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransactionById
 import com.neonusa.tanciku.domain.usecases.transaction.GetTotalExpense
 import com.neonusa.tanciku.domain.usecases.transaction.GetTotalIncome
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
+import com.neonusa.tanciku.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,7 +58,7 @@ object AppModule {
         return Room.databaseBuilder(
             context = application,
             klass = TransactionDatabase::class.java,
-            name = "transaction_db"
+            name = DATABASE_NAME
         ).addTypeConverter(TransactionConverter())
             .fallbackToDestructiveMigration()
             .build()
@@ -63,4 +69,19 @@ object AppModule {
     fun provideTransactionDao(
         transactionDatabase: TransactionDatabase
     ): TransactionDao = transactionDatabase.transactionDao
+
+    @Provides
+    @Singleton
+    fun provideLocalUserManager(
+        application: Application
+    ): LocalUserManager = LocalUserManagerImpl(context = application)
+
+    @Provides
+    @Singleton
+    fun provideAppEntryUseCases(
+        localUserManger: LocalUserManager
+    ): AppEntryUseCases = AppEntryUseCases(
+        readAppEntry = ReadAppEntry(localUserManger),
+        saveAppEntry = SaveAppEntry(localUserManger)
+    )
 }

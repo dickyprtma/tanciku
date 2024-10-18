@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neonusa.tanciku.domain.model.Transaction
-import com.neonusa.tanciku.domain.usecases.TransactionUseCases
+import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
