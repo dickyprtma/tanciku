@@ -20,9 +20,13 @@ fun NavGraph(
             startDestination = "NavigatorScreen"
         ) {
             composable(route = "NavigatorScreen") {
-//                MainNavigator()
+                MainNavigator()
                 // testing GetStartedLayout
-                GetStartedScreen()
+                //todo : kembalikan lagi jadi getstartedscreen
+                //todo : implementasikan appentry untuk menyimpan state getstarted
+                //todo : bikin viewmodel untuk getstartedscreen
+                //todo : kemungknan besar butuh event juga
+//                GetStartedScreen()
             }
         }
     }
