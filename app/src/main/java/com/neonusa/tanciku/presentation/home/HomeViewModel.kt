@@ -27,20 +27,20 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getTotalIncome()
-        getTotalExpense()
+        getTotalIncomeForCurrentMonth()
+        getTotalExpenseForCurrentMonth()
         getAllocation()
     }
 
-    private fun getTotalIncome() {
+    private fun getTotalIncomeForCurrentMonth() {
         viewModelScope.launch {
-            _totalIncome.value = transactionUseCases.getTotalIncome()
+            _totalIncome.value = transactionUseCases.getTotalIncomeForCurrentMonth()
         }
     }
 
-    private fun getTotalExpense() {
+    private fun getTotalExpenseForCurrentMonth() {
         viewModelScope.launch {
-            _totalExpense.value = transactionUseCases.getTotalExpense()
+            _totalExpense.value = transactionUseCases.getTotalExpenseForCurrentMonth()
         }
     }
 

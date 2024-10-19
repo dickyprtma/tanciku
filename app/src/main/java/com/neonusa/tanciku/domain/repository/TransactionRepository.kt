@@ -7,6 +7,6 @@ interface TransactionRepository {
     suspend fun deleteTransaction(transaction: Transaction)
     suspend fun deleteTransactionById(id : Int)
 
-    suspend fun getTotalIncome(): Int
-    suspend fun getTotalExpense(): Int
+    suspend fun getTotalIncomeForCurrentMonth(): Int
+    suspend fun getTotalExpenseForCurrentMonth(): Int
 }
