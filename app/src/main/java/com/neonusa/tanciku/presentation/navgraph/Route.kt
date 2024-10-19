@@ -6,6 +6,9 @@ sealed class Route(
     val route: String,
     val arguments: List<NamedNavArgument> = emptyList()
 ) {
+    // LEVEL 0
+    object GetStartedScreen : Route(route = "GetStartedScreen")
+
     // LEVEL 1
     object TransactionScreen : Route(route = "TransactionScreen")
     object HomeScreen : Route(route = "HomeScreen")
@@ -14,6 +17,7 @@ sealed class Route(
     // LEVEL 2
     object AddTransactionScreen: Route(route = "AddTransactionScreen")
 
+    object GetStartedNavigation : Route(route = "GetStartedNavigation")
     object MainNavigation : Route(route = "MainNavigation")
 
     object MainNavigatorScreen : Route(route = "MainNavigatorScreen")

@@ -20,6 +20,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -40,7 +41,6 @@ import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationIte
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
 import com.neonusa.tanciku.presentation.transaction.TransactionScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavigator() {
     val bottomNavigationItems = remember {
@@ -71,6 +71,7 @@ fun MainNavigator() {
     }
 
     Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
+        // buat jadi true untuk melihat navigation bar
         if (isBottomBarVisible) {
             MainBottomNavigation(
                 items = bottomNavigationItems,
@@ -182,4 +183,10 @@ private fun navigateToAddTransaction(navController: NavController){
     navController.navigate(
         route = Route.AddTransactionScreen.route
     )
+}
+
+@Preview
+@Composable
+private fun MainNavigatorPreview(){
+    MainNavigator()
 }
