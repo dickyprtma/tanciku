@@ -16,11 +16,13 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
         transactionDao.deleteById(id)
     }
 
+    //todo change func name
     override suspend fun getTotalIncome(): Int {
-        return transactionDao.getTotalIncome()
+        return transactionDao.getTotalIncomeForCurrentMonth()
     }
 
+    //todo change func name
     override suspend fun getTotalExpense(): Int {
-        return transactionDao.getTotalExpense()
+        return transactionDao.getTotalExpenseForCurrentMonth()
     }
 }

@@ -22,9 +22,17 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
 
-    @Query("SELECT SUM(amount) FROM transactions WHERE type = 'Pemasukan'")
-    suspend fun getTotalIncome(): Int
 
-    @Query("SELECT SUM(amount) FROM transactions WHERE type = 'Pengeluaran'")
-    suspend fun getTotalExpense(): Int
+    // Total income & Total expenses for the current month
+    @Query("""
+        SELECT SUM(amount) FROM transactions 
+        WHERE type = 'Pemasukan' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
+    """)
+    suspend fun getTotalIncomeForCurrentMonth(): Int
+    //
+    @Query("""
+        SELECT SUM(amount) FROM transactions 
+        WHERE type = 'Pengeluaran' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
+    """)
+    suspend fun getTotalExpenseForCurrentMonth(): Int
 }

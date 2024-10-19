@@ -190,7 +190,7 @@ fun AddTransactionScreen(
                         "Kebutuhan" -> TransactionCategory.Kebutuhan
                         "Keinginan" -> TransactionCategory.Keinginan
                         "Menabung" -> TransactionCategory.Menabung
-                        else -> TransactionCategory.Kebutuhan // Default value (jika ada)
+                        else -> TransactionCategory.Pemasukan // Default value (jika ada)
                     }
 
                     // insert ke database
