@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.presentation.common.ItemData
 import com.neonusa.tanciku.presentation.common.ListTransactionitem
 import com.neonusa.tanciku.presentation.home.components.BalanceLayout
@@ -74,7 +75,8 @@ val dummyItems = listOf(
 fun HomeScreen(
     totalIncome: Int,
     totalExpense: Int,
-    balance: Int
+    balance: Int,
+    allocation: Allocation
 ){
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
@@ -138,22 +140,22 @@ fun HomeScreen(
         ){
             BudgetCircularItem(
                 title = "Kebutuhan",
-                usedPercentage = 32f,
-                allocatedPercentage = 50f,
+                usedPercentage = 0f, //todo : rumus + dari room
+                allocatedPercentage = allocation.needs.toFloat(),
                 progressBarColorResId = R.color.color_expense
             )
 
             BudgetCircularItem(
                 title = "Keinginan",
-                usedPercentage = 8f,
-                allocatedPercentage = 20f,
+                usedPercentage = 0f, //todo : rumus + dari room
+                allocatedPercentage = allocation.wants.toFloat(),
                 progressBarColorResId = R.color.color_wants
             )
 
             BudgetCircularItem(
                 title = "Menabung",
-                usedPercentage = 20f,
-                allocatedPercentage = 30f,
+                usedPercentage = 0f, //todo : rumus + dari room
+                allocatedPercentage = allocation.saving.toFloat(),
                 progressBarColorResId = R.color.color_income
             )
         }
@@ -190,6 +192,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(0,0, 0)
+        HomeScreen(0,0, 0, allocation = Allocation(0,0,0))
     }
 }

@@ -37,7 +37,7 @@ class LocalUserManagerImpl(
         }
     }
 
-    override suspend fun readAllocation(): Flow<Allocation> {
+    override fun readAllocation(): Flow<Allocation> {
         return context.dataStore.data
             .map { settings ->
                 val needs = settings[PreferenceKeys.NEEDS] ?: 0
@@ -46,6 +46,7 @@ class LocalUserManagerImpl(
                 Allocation(needs, wants, saving)
             }
     }
+
 }
 
 private val readOnlyProperty = preferencesDataStore(name = USER_SETTINGS)

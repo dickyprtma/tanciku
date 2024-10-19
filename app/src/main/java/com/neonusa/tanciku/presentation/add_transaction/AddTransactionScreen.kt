@@ -42,7 +42,6 @@ fun AddTransactionScreen(
 ){
     var rawAmount by remember { mutableStateOf("0") } // for data input
     var amount by remember{ mutableStateOf("0")} // for data view
-
     var desc by remember{ mutableStateOf("")}
 
     var transactionType by remember { mutableStateOf("Pengeluaran")}

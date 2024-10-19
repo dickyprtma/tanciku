@@ -36,6 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.common.IncomeAllocationInputField
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -272,8 +274,15 @@ fun GetStartedScreen(
             }
         )
         LaunchedEffect(Unit) {
-            //todo : simpan data alokasi pengguna (local)
             delay(3000) // Delay 3 detik
+
+            // insert ke database
+            val allocation = Allocation(
+                needs = kebutuhan.toInt(),
+                wants = keinginan.toInt(),
+                saving = menabung.toInt(),
+            )
+            onEvent(GetStartedEvent.SaveAllocation(allocation))
             onEvent(GetStartedEvent.SaveAppEntry) // langsung pindah ke halaman utama sebab readAppEntry berubah
             showSuccessDialog = false
         }

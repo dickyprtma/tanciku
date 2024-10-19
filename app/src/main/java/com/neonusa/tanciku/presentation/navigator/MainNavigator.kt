@@ -1,14 +1,11 @@
 package com.neonusa.tanciku.presentation.navigator
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -19,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,9 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neonusa.tanciku.R
-import com.neonusa.tanciku.domain.model.Transaction
-import com.neonusa.tanciku.domain.model.TransactionCategory
-import com.neonusa.tanciku.domain.model.TransactionType
+import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
@@ -118,7 +112,8 @@ fun MainNavigator() {
                 // derivedStateOf : state turunan yang nilainya bergantung dengan state yang lain
                 val balance by derivedStateOf { totalIncome - totalExpense }
 
-                HomeScreen(totalIncome = totalIncome, totalExpense = totalExpense, balance = balance)
+                val allocation: Allocation by viewModel.allocation.collectAsState()
+                HomeScreen(totalIncome = totalIncome, totalExpense = totalExpense, balance = balance, allocation)
             }
             composable(route = Route.BudgetScreen.route) {
             }
