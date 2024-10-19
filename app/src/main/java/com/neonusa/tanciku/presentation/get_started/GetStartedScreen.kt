@@ -61,6 +61,8 @@ fun GetStartedScreen(
     var showAllocationError by remember { mutableStateOf(false) }
     var allocationErrorMessage by remember { mutableStateOf("") }
 
+    var showSuccessDialog by remember { mutableStateOf(false) }
+
     fun updateUsedPercentage() {
         val total = kebutuhan.toInt() + keinginan.toInt() + menabung.toInt()
         usedPercentage = total
@@ -97,6 +99,11 @@ fun GetStartedScreen(
         } else if (menabungError.value) {
             showAllocationError = true
             allocationErrorMessage = "Alokasi menabung tidak boleh 0%"
+        }
+
+        // If no errors, show success dialog
+        if (!showAllocationError) {
+            showSuccessDialog = true
         }
     }
 
@@ -223,7 +230,8 @@ fun GetStartedScreen(
             onClick = {
                 validateAndShowErrors()
                 if(!showAllocationError){
-                    onEvent(GetStartedEvent.SaveAppEntry)
+                    // todo : tampilkan dialog berhasil
+//                    onEvent(GetStartedEvent.SaveAppEntry)
                 }
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
@@ -244,6 +252,22 @@ fun GetStartedScreen(
                     resetAllocation() // Reset allocation when clicked
                 }
         )
+    }
+
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("Alokasi") },
+            text = { Text("Pemasukan kamu berhasil dialokasikan!") },
+            confirmButton = {
+            }
+        )
+        LaunchedEffect(Unit) {
+            //todo : simpan data alokasi pengguna (local)
+            delay(3000) // Delay 3 detik
+            onEvent(GetStartedEvent.SaveAppEntry) // langsung pindah ke halaman utama sebab readAppEntry berubah
+            showSuccessDialog = false
+        }
     }
 }
 
