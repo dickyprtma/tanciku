@@ -9,6 +9,9 @@ import com.neonusa.tanciku.data.local.TransactionDatabase
 import com.neonusa.tanciku.data.manager.LocalUserManagerImpl
 import com.neonusa.tanciku.domain.manager.LocalUserManager
 import com.neonusa.tanciku.domain.repository.TransactionRepository
+import com.neonusa.tanciku.domain.usecases.allocation.AllocationUseCases
+import com.neonusa.tanciku.domain.usecases.allocation.ReadAllocation
+import com.neonusa.tanciku.domain.usecases.allocation.SaveAllocation
 import com.neonusa.tanciku.domain.usecases.app_entry.AppEntryUseCases
 import com.neonusa.tanciku.domain.usecases.app_entry.ReadAppEntry
 import com.neonusa.tanciku.domain.usecases.app_entry.SaveAppEntry
@@ -83,5 +86,14 @@ object AppModule {
     ): AppEntryUseCases = AppEntryUseCases(
         readAppEntry = ReadAppEntry(localUserManger),
         saveAppEntry = SaveAppEntry(localUserManger)
+    )
+
+    @Provides
+    @Singleton
+    fun provideAllocationUseCases(
+        localUserManger: LocalUserManager
+    ): AllocationUseCases = AllocationUseCases(
+        saveAllocation = SaveAllocation(localUserManger),
+        readAllocation = ReadAllocation(localUserManger)
     )
 }

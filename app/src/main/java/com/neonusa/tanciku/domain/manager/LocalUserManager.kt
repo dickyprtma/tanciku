@@ -8,5 +8,5 @@ interface LocalUserManager {
     fun readAppEntry(): Flow<Boolean>
 
     suspend fun saveAllocation(allocation: Allocation)
-    suspend fun readAllocation(): Flow<Allocation>
+    fun readAllocation(): Flow<Allocation>
 }
