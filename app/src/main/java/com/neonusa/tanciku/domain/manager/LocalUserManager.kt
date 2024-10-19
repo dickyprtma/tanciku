@@ -1,10 +1,12 @@
 package com.neonusa.tanciku.domain.manager
 
+import com.neonusa.tanciku.domain.model.Allocation
 import kotlinx.coroutines.flow.Flow
 
 interface LocalUserManager {
     suspend fun saveAppEntry()
     fun readAppEntry(): Flow<Boolean>
 
-    suspend fun saveAllocation()
+    suspend fun saveAllocation(allocation: Allocation)
+    suspend fun readAllocation(): Flow<Allocation>
 }

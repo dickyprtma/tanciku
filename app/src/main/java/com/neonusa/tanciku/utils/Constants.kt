@@ -5,7 +5,7 @@ object Constants {
     const val USER_SETTINGS = "user_settings"
 
     const val APP_ENTRY = "app_entry"
-    const val KEBUTUHAN = "kebutuhan"
-    const val KEINGINAN = "keinginan"
-    const val MENABUNG = "menabung"
+    const val NEEDS = "needs"
+    const val WANTS = "wants"
+    const val SAVING = "saving"
 }
