@@ -23,6 +23,7 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
 
+    //todo : refactor : getCurrentMonthTotalIncome sama expense juga
 
     // Total income & Total expenses for the current month
     @Query("""

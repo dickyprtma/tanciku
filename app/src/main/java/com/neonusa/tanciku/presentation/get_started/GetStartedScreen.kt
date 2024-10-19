@@ -229,10 +229,6 @@ fun GetStartedScreen(
         Button(
             onClick = {
                 validateAndShowErrors()
-                if(!showAllocationError){
-                    // todo : tampilkan dialog berhasil
-//                    onEvent(GetStartedEvent.SaveAppEntry)
-                }
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
         ) {
