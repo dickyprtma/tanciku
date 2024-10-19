@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.neonusa.tanciku.domain.manager.LocalUserManager
 import com.neonusa.tanciku.utils.Constants
@@ -33,4 +34,8 @@ val Context.dataStore: DataStore<Preferences> by readOnlyProperty
 
 private object PreferenceKeys {
     val APP_ENTRY = booleanPreferencesKey(Constants.APP_ENTRY)
+
+    val KEBUTUHAN = intPreferencesKey(Constants.KEBUTUHAN)
+    val KEINGINAN = intPreferencesKey(Constants.KEINGINAN)
+    val MENABUNG = intPreferencesKey(Constants.MENABUNG)
 }

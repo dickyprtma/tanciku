@@ -6,5 +6,4 @@ class SaveAppEntry(private val localUserManger: LocalUserManager) {
     suspend operator fun invoke(){
         localUserManger.saveAppEntry()
     }
-
 }
