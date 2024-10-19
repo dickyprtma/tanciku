@@ -22,7 +22,6 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
 
-    //todo :
     @Query("SELECT SUM(amount) FROM transactions WHERE type = 'Pemasukan'")
     suspend fun getTotalIncome(): Int
 
