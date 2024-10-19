@@ -16,6 +16,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases
 ): ViewModel() {
+
+    private val _splashCondition = mutableStateOf(true)
+    val splashCondition: State<Boolean> = _splashCondition
+
     private val _startDestination = mutableStateOf(Route.GetStartedNavigation.route)
     val startDestination: State<String> = _startDestination
 
@@ -26,7 +30,8 @@ class MainViewModel @Inject constructor(
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(200) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
+            delay(1000) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
+            _splashCondition.value = false
         }.launchIn(viewModelScope)
     }
 }
