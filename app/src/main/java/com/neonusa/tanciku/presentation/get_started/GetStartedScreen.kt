@@ -47,16 +47,16 @@ import kotlinx.coroutines.delay
 fun GetStartedScreen(
     onEvent: (GetStartedEvent) -> Unit
 ) {
-    var usedPercentage by remember { mutableStateOf(100) }
+    var usedPercentage by remember { mutableStateOf(0) }
     var allocatedPercentage by remember { mutableStateOf(100) }
 
     val kebutuhanError = remember { mutableStateOf(false) }
     val keinginanError = remember { mutableStateOf(false) }
     val menabungError = remember { mutableStateOf(false) }
 
-    var kebutuhan by remember { mutableStateOf("50") }
-    var keinginan by remember { mutableStateOf("30") }
-    var menabung by remember { mutableStateOf("20") }
+    var kebutuhan by remember { mutableStateOf("0") }
+    var keinginan by remember { mutableStateOf("0") }
+    var menabung by remember { mutableStateOf("0") }
 
     var showAllocationError by remember { mutableStateOf(false) }
     var allocationErrorMessage by remember { mutableStateOf("") }
@@ -138,8 +138,6 @@ fun GetStartedScreen(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 48.dp,start = 16.dp, end=16.dp,)
         )
-
-        Spacer(modifier = Modifier.height(24.dp))
 
         Box(
             modifier = Modifier
@@ -239,11 +237,22 @@ fun GetStartedScreen(
             Text("Alokasikan")
         }
 
+
         Text(
-            text = "Reset Alokasi",
+            text = "Jika masih bingung, kamu bisa menggunakan alokasi default. Tenang, alokasi anggaran bisa diubah kembali " +
+                    "nanti.",
             color = colorResource(
                 id = R.color.text_title_small
             ).copy(alpha = 0.5f),
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier
+                .padding(top = 24.dp, start = 12.dp, end = 12.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+
+        Text(
+            text = "Gunakan Alokasi Default",
+            color = Color.Blue.copy(alpha = 0.7f),
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .padding(top = 24.dp)
@@ -257,7 +266,7 @@ fun GetStartedScreen(
     if (showSuccessDialog) {
         AlertDialog(
             onDismissRequest = {},
-            title = { Text("Alokasi") },
+            title = { Text("Alokasi Berhasil") },
             text = { Text("Pemasukan kamu berhasil dialokasikan!") },
             confirmButton = {
             }
