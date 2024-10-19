@@ -225,10 +225,10 @@ fun GetStartedScreen(
 
         Button(
             onClick = {
-                //TODO : jika input sudah benar pangggil
-                // saya masih belum tau cara logic validateAndShowError alurnya
-                onEvent(GetStartedEvent.SaveAppEntry)
                 validateAndShowErrors()
+                if (!showAllocationError) {
+                    onEvent(GetStartedEvent.SaveAppEntry)
+                }
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
         ) {
