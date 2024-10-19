@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.presentation.main_activity
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,7 +31,7 @@ class MainViewModel @Inject constructor(
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(1000) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
+            delay(500) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }

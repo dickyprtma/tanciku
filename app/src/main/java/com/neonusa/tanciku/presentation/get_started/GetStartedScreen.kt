@@ -61,9 +61,6 @@ fun GetStartedScreen(
     var showAllocationError by remember { mutableStateOf(false) }
     var allocationErrorMessage by remember { mutableStateOf("") }
 
-    // State for showing the success dialog
-    var showSuccessDialog by remember { mutableStateOf(false) }
-
     fun updateUsedPercentage() {
         val total = kebutuhan.toInt() + keinginan.toInt() + menabung.toInt()
         usedPercentage = total
@@ -101,11 +98,6 @@ fun GetStartedScreen(
             showAllocationError = true
             allocationErrorMessage = "Alokasi menabung tidak boleh 0%"
         }
-
-        // If no errors, show success dialog
-        if (!showAllocationError) {
-            showSuccessDialog = true
-        }
     }
 
     // Reset allocation function
@@ -140,38 +132,29 @@ fun GetStartedScreen(
             modifier = Modifier.padding(bottom = 48.dp,start = 16.dp, end=16.dp,)
         )
 
-        Spacer(modifier = Modifier.height(48.dp))
-
-        Text(
-            text = "Alokasikan Pemasukan",
-            color = colorResource(id = R.color.text_title_large),
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .padding(bottom = 24.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+        Spacer(modifier = Modifier.height(24.dp))
 
         Box(
             modifier = Modifier
-                .size(130.dp)
+                .size(180.dp)
                 .align(Alignment.CenterHorizontally),
             contentAlignment = Alignment.Center
 
         ) {
             CircularProgressIndicator(
                 progress = 1f, // 100%
-                modifier = Modifier.size(130.dp),
+                modifier = Modifier.size(180.dp),
                 color = colorResource(id = R.color.color_gray_circular),
-                strokeWidth = 15.dp,
+                strokeWidth = 20.dp,
             )
 
             CircularProgressIndicator(
                 progress = usedPercentage.toFloat() / allocatedPercentage.toFloat(),
                 modifier = Modifier
-                    .size(130.dp)
+                    .size(180.dp)
                     .padding(1.dp),
                 color = colorResource(id = R.color.color_income),
-                strokeWidth = 15.dp
+                strokeWidth = 20.dp
             )
 
             Text(
@@ -239,6 +222,9 @@ fun GetStartedScreen(
         Button(
             onClick = {
                 validateAndShowErrors()
+                if(!showAllocationError){
+                    onEvent(GetStartedEvent.SaveAppEntry)
+                }
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
         ) {
@@ -258,25 +244,6 @@ fun GetStartedScreen(
                     resetAllocation() // Reset allocation when clicked
                 }
         )
-    }
-
-    // todo : ini sebaiknya dilakukan di onEvent agar delay bekerja
-    if (showSuccessDialog) {
-        AlertDialog(
-            onDismissRequest = {},
-            title = { Text("Alokasi Berhasil") },
-            text = { Text("Pemasukan kamu berhasil dialokasikan!") },
-            confirmButton = {
-            }
-        )
-
-        // Automatically dismiss after 2 seconds
-        LaunchedEffect(Unit) {
-            //todo : simpan data alokasi pengguna (local)
-//            onEvent(GetStartedEvent.SaveAppEntry)
-            kotlinx.coroutines.delay(3000)
-            showSuccessDialog = false
-        }
     }
 }
 

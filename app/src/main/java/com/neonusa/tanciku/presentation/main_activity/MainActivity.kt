@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         installSplashScreen().apply {
             setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
         }
@@ -47,6 +46,7 @@ fun TancikuApp(viewModel: MainViewModel = hiltViewModel()) {
         val isSystemInDarkMode = isSystemInDarkTheme()
         val systemUiColor = rememberSystemUiController()
         ConfigureSystemBars(systemUiColor, isSystemInDarkMode)
+
         // Main UI content
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             NavGraph(startDestination = viewModel.startDestination.value)
