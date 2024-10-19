@@ -34,10 +34,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.presentation.common.IncomeAllocationInputField
+import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 
+
 @Composable
-fun GetStartedScreen() {
+fun GetStartedScreen(
+    onEvent: (GetStartedEvent) -> Unit
+) {
     var usedPercentage by remember { mutableStateOf(100) }
     var allocatedPercentage by remember { mutableStateOf(100) }
 
@@ -221,6 +225,9 @@ fun GetStartedScreen() {
 
         Button(
             onClick = {
+                //TODO : jika input sudah benar pangggil
+                // saya masih belum tau cara logic validateAndShowError alurnya
+                onEvent(GetStartedEvent.SaveAppEntry)
                 validateAndShowErrors()
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
@@ -249,6 +256,6 @@ fun GetStartedScreen() {
 @Composable
 fun GetStartedScreenPreview(){
     TancikuTheme {
-        GetStartedScreen()
+        GetStartedScreen({})
     }
 }

@@ -1,10 +1,11 @@
-package com.neonusa.tanciku.presentation
+package com.neonusa.tanciku.presentation.main_activity
 
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -14,23 +15,17 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.neonusa.tanciku.data.local.TransactionDao
-import com.neonusa.tanciku.domain.model.Transaction
-import com.neonusa.tanciku.domain.model.TransactionCategory
-import com.neonusa.tanciku.domain.model.TransactionType
-import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.navgraph.NavGraph
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,17 +36,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TancikuApp() {
+fun TancikuApp(viewModel: MainViewModel = hiltViewModel()) {
     TancikuTheme(dynamicColor = false) {
         val isSystemInDarkMode = isSystemInDarkTheme()
         val systemUiColor = rememberSystemUiController()
         ConfigureSystemBars(systemUiColor, isSystemInDarkMode)
         // Main UI content
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            //todo : startDestination akan mengecek apakah appentry udah true/false
-            // nilainya diambil dari mainViewModel
-
-            NavGraph(startDestination = Route.MainNavigation.route)
+            NavGraph(startDestination = viewModel.startDestination.value)
         }
     }
 }

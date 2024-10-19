@@ -17,6 +17,7 @@ sealed class Route(
     // LEVEL 2
     object AddTransactionScreen: Route(route = "AddTransactionScreen")
 
+    object GetStartedNavigation : Route(route = "GetStartedNavigation")
     object MainNavigation : Route(route = "MainNavigation")
 
     object MainNavigatorScreen : Route(route = "MainNavigatorScreen")
