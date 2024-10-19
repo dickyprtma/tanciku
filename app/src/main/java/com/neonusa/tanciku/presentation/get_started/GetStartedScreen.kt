@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -21,9 +22,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,9 +36,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.common.IncomeAllocationInputField
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -55,6 +60,9 @@ fun GetStartedScreen(
 
     var showAllocationError by remember { mutableStateOf(false) }
     var allocationErrorMessage by remember { mutableStateOf("") }
+
+    // State for showing the success dialog
+    var showSuccessDialog by remember { mutableStateOf(false) }
 
     fun updateUsedPercentage() {
         val total = kebutuhan.toInt() + keinginan.toInt() + menabung.toInt()
@@ -92,6 +100,11 @@ fun GetStartedScreen(
         } else if (menabungError.value) {
             showAllocationError = true
             allocationErrorMessage = "Alokasi menabung tidak boleh 0%"
+        }
+
+        // If no errors, show success dialog
+        if (!showAllocationError) {
+            showSuccessDialog = true
         }
     }
 
@@ -226,9 +239,6 @@ fun GetStartedScreen(
         Button(
             onClick = {
                 validateAndShowErrors()
-                if (!showAllocationError) {
-                    onEvent(GetStartedEvent.SaveAppEntry)
-                }
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
         ) {
@@ -248,6 +258,25 @@ fun GetStartedScreen(
                     resetAllocation() // Reset allocation when clicked
                 }
         )
+    }
+
+    // todo : ini sebaiknya dilakukan di onEvent agar delay bekerja
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("Alokasi Berhasil") },
+            text = { Text("Pemasukan kamu berhasil dialokasikan!") },
+            confirmButton = {
+            }
+        )
+
+        // Automatically dismiss after 2 seconds
+        LaunchedEffect(Unit) {
+            //todo : simpan data alokasi pengguna (local)
+//            onEvent(GetStartedEvent.SaveAppEntry)
+            kotlinx.coroutines.delay(3000)
+            showSuccessDialog = false
+        }
     }
 }
 

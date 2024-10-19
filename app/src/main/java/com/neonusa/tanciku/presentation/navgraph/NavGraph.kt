@@ -34,9 +34,6 @@ fun NavGraph(
         ) {
             composable(route = Route.MainNavigatorScreen.route) {
                 MainNavigator()
-                //todo : implementasikan appentry untuk menyimpan state getstarted
-                //todo : bikin viewmodel untuk getstartedscreen
-                //todo : kemungknan besar butuh event juga
             }
         }
     }
