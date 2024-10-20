@@ -40,10 +40,8 @@ class HomeViewModel @Inject constructor(
         getCurrentMonthTotalIncome()
         getCurrentMonthTotalExpense()
         getAllocation()
-    }
 
-    fun loadTransactionByCategory(category: TransactionCategory) {
-        getCurrentMonthTotalTransactionByCategory(category)
+        getCurrentMonthTotalNeeds()
     }
 
     private fun getCurrentMonthTotalIncome() {

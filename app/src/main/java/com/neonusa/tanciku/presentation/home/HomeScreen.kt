@@ -2,6 +2,7 @@ package com.neonusa.tanciku.presentation.home
 
 import android.content.res.Configuration
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -76,6 +77,7 @@ fun HomeScreen(
     totalIncome: Int,
     totalExpense: Int,
     balance: Int,
+    totalNeeds: Int,
     allocation: Allocation
 ){
     // rumus usedPercentage = total<Needs || Wants || Saving> / totalIncome
@@ -114,7 +116,7 @@ fun HomeScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -136,13 +138,16 @@ fun HomeScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(start= 16.dp, end = 16.dp, top = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween, // Distribute space evenly between items
             verticalAlignment = Alignment.CenterVertically
         ){
+            val needsUsedPercentage = if (totalIncome != 0) (totalNeeds.toFloat() / totalIncome.toFloat()) * 100 else 0f
+            Log.d("Test", "HomeScreen: $needsUsedPercentage")
+            Log.d("Test", "HomeScreen: $totalNeeds/$totalIncome")
             BudgetCircularItem(
                 title = "Kebutuhan",
-                usedPercentage = 0f, //todo : rumus + dari room
+                usedPercentage = needsUsedPercentage,
                 allocatedPercentage = allocation.needs.toFloat(),
                 progressBarColorResId = R.color.color_expense
             )
@@ -184,7 +189,6 @@ fun HomeScreen(
             )
         }
         ListTransactionitem(itemList = dummyItems)
-
     }
 }
 
@@ -194,6 +198,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(0,0, 0, allocation = Allocation(0,0,0))
+        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0)
     }
 }
