@@ -23,25 +23,23 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
 
-    //todo : refactor : getCurrentMonthTotalIncome sama expense juga
-
     // Total income & Total expenses for the current month
     @Query("""
         SELECT SUM(amount) FROM transactions 
         WHERE type = 'Pemasukan' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
-    suspend fun getTotalIncomeForCurrentMonth(): Int
+    suspend fun getCurrentMonthTotalIncome(): Int
     //
     @Query("""
         SELECT SUM(amount) FROM transactions 
         WHERE type = 'Pengeluaran' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
-    suspend fun getTotalExpenseForCurrentMonth(): Int
+    suspend fun getCurrentMonthTotalExpense(): Int
 
     // Total transactions for a specific category in the current month
     @Query("""
         SELECT SUM(amount) FROM transactions 
         WHERE category = :category AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
-    suspend fun getTotalTransactionsForCategoryInCurrentMonth(category: TransactionCategory): Int?
+    suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int
 }

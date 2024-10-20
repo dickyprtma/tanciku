@@ -18,8 +18,9 @@ import com.neonusa.tanciku.domain.usecases.app_entry.SaveAppEntry
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransaction
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransactionById
-import com.neonusa.tanciku.domain.usecases.transaction.GetTotalExpenseForCurrentMonth
-import com.neonusa.tanciku.domain.usecases.transaction.GetTotalIncomeForCurrentMonth
+import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalExpense
+import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalIncome
+import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalTransactionByCategory
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
 import com.neonusa.tanciku.utils.Constants.DATABASE_NAME
 import dagger.Module
@@ -48,8 +49,9 @@ object AppModule {
             insertTransaction = InsertTransaction(transactionRepository),
             deleteTransaction = DeleteTransaction(transactionRepository),
             deleteTransactionById = DeleteTransactionById(transactionRepository),
-            getTotalIncomeForCurrentMonth = GetTotalIncomeForCurrentMonth((transactionRepository)),
-            getTotalExpenseForCurrentMonth = GetTotalExpenseForCurrentMonth(transactionRepository)
+            getCurrentMonthTotalIncome = GetCurrentMonthTotalIncome((transactionRepository)),
+            getCurrentMonthTotalExpense = GetCurrentMonthTotalExpense(transactionRepository),
+            getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository)
         )
     }
 

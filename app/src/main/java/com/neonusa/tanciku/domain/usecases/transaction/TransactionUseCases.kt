@@ -5,6 +5,7 @@ data class TransactionUseCases(
     val deleteTransaction: DeleteTransaction,
     val deleteTransactionById: DeleteTransactionById,
 
-    val getTotalIncomeForCurrentMonth: GetTotalIncomeForCurrentMonth,
-    val getTotalExpenseForCurrentMonth: GetTotalExpenseForCurrentMonth,
-)
+    val getCurrentMonthTotalIncome: GetCurrentMonthTotalIncome,
+    val getCurrentMonthTotalExpense: GetCurrentMonthTotalExpense,
+    val getCurrentMonthTotalTransactionByCategory: GetCurrentMonthTotalTransactionByCategory,
+    )

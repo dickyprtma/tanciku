@@ -106,8 +106,10 @@ fun MainNavigator() {
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
                 val viewModel: HomeViewModel = hiltViewModel()
-                val totalIncome by viewModel.totalIncome.collectAsState()
-                val totalExpense by viewModel.totalExpense.collectAsState()
+                val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
+                val totalExpense by viewModel.currentMonthTotalExpense.collectAsState()
+
+//               todo: val totalNeeds by viewModel.totalTransactionByCategory()
 
                 // derivedStateOf : state turunan yang nilainya bergantung dengan state yang lain
                 val balance by derivedStateOf { totalIncome - totalExpense }

@@ -2,6 +2,7 @@ package com.neonusa.tanciku.data
 
 import com.neonusa.tanciku.data.local.TransactionDao
 import com.neonusa.tanciku.domain.model.Transaction
+import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.repository.TransactionRepository
 
 class TransactionRepositoryImpl(private val transactionDao: TransactionDao): TransactionRepository {
@@ -16,11 +17,16 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
         transactionDao.deleteById(id)
     }
 
-    override suspend fun getTotalIncomeForCurrentMonth(): Int {
-        return transactionDao.getTotalIncomeForCurrentMonth()
+    override suspend fun getCurrentMonthTotalIncome(): Int {
+        return transactionDao.getCurrentMonthTotalIncome()
     }
 
-    override suspend fun getTotalExpenseForCurrentMonth(): Int {
-        return transactionDao.getTotalExpenseForCurrentMonth()
+    override suspend fun getCurrentMonthTotalExpense(): Int {
+        return transactionDao.getCurrentMonthTotalExpense()
     }
+
+    override suspend fun getCurentMonthTotalTransactionByCategory(category: TransactionCategory): Int {
+        return transactionDao.getCurrentMonthTotalTransactionByCategory(category)
+    }
+
 }
