@@ -18,6 +18,7 @@ import com.neonusa.tanciku.domain.usecases.app_entry.SaveAppEntry
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransaction
 import com.neonusa.tanciku.domain.usecases.transaction.DeleteTransactionById
+import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthLatestTransactions
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalExpense
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalIncome
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalTransactionByCategory
@@ -51,7 +52,8 @@ object AppModule {
             deleteTransactionById = DeleteTransactionById(transactionRepository),
             getCurrentMonthTotalIncome = GetCurrentMonthTotalIncome((transactionRepository)),
             getCurrentMonthTotalExpense = GetCurrentMonthTotalExpense(transactionRepository),
-            getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository)
+            getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository),
+            getCurrentMonthLatestTransactions = GetCurrentMonthLatestTransactions(transactionRepository)
         )
     }
 

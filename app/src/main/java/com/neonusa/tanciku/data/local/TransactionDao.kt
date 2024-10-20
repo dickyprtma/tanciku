@@ -23,6 +23,14 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
 
+    @Query("""
+    SELECT * FROM transactions 
+    WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now') 
+    ORDER BY date DESC 
+    LIMIT 4
+""")
+    fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>>
+
     // Total income & Total expenses for the current month
     @Query("""
         SELECT SUM(amount) FROM transactions 

@@ -82,8 +82,6 @@ fun HomeScreen(
     totalSaving: Int,
     allocation: Allocation
 ){
-    // rumus usedPercentage = total<Needs || Wants || Saving> / totalIncome
-
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
     val formattedBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(balance)
