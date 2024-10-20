@@ -36,13 +36,21 @@ interface TransactionDao {
 """)
     fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>>
 
+    /* IMPORTANT NOTE
+        di AddTransactionScreen tanggal satu digit seperti 1,2,3..etc diubah formatnya menjadi 01,02,03..etc
+        hal ini karena tanggal fungsi strftime milik sqlite menggunakan format YYYY-MM-DD example :
+        SELECT strftime('%Y', '2024-10-10') AS year; -> return 2024
+        SELECT strftime('%Y', '2024-10-9') AS year; -> return null
+        SELECT strftime('%Y', '2024-10-09') AS year; -> return 2024
+     */
+
     // Total income & Total expenses for the current month
     @Query("""
         SELECT SUM(amount) FROM transactions 
         WHERE type = 'Pemasukan' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
+
     suspend fun getCurrentMonthTotalIncome(): Int
-    //
     @Query("""
         SELECT SUM(amount) FROM transactions 
         WHERE type = 'Pengeluaran' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
