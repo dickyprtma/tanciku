@@ -202,15 +202,19 @@ private fun navigateToAddTransaction(navController: NavController){
 }
 
 private fun navigateToBudget(navController: NavController){
-    navController.navigate(
-        route = Route.BudgetScreen.route
-    )
+    navController.navigate(route = Route.BudgetScreen.route) {
+        popUpTo(Route.HomeScreen.route) { saveState = true } // pastikan kembali ke HomeScreen
+        launchSingleTop = true
+        restoreState = true
+    }
 }
 
 private fun navigateToTransaction(navController: NavController){
-    navController.navigate(
-        route = Route.TransactionScreen.route
-    )
+    navController.navigate(route = Route.TransactionScreen.route) {
+        popUpTo(Route.HomeScreen.route) { saveState = true } // pastikan kembali ke HomeScreen
+        launchSingleTop = true
+        restoreState = true
+    }
 }
 
 @Preview
