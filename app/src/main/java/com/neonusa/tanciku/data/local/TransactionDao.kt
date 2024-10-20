@@ -9,6 +9,11 @@ import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import kotlinx.coroutines.flow.Flow
 
+// todo : ada bug
+// tanggal testing : 20/10/2024
+// saat input data ke tanggal 05/10/2024 kategori pemasukan
+// data tidak dihitung sebagai data bulan ini (padahal masih di bulan oktober)
+
 @Dao
 interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
