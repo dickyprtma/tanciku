@@ -42,6 +42,8 @@ class HomeViewModel @Inject constructor(
         getAllocation()
 
         getCurrentMonthTotalNeeds()
+        getCurrentMonthTotalWants()
+        getCurrentMonthTotalSaving()
     }
 
     private fun getCurrentMonthTotalIncome() {
@@ -59,6 +61,18 @@ class HomeViewModel @Inject constructor(
     private fun getCurrentMonthTotalNeeds() {
         viewModelScope.launch {
             _currentMonthTotalNeeds.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Kebutuhan)
+        }
+    }
+
+    private fun getCurrentMonthTotalWants() {
+        viewModelScope.launch {
+            _currentMonthTotalWants.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Keinginan)
+        }
+    }
+
+    private fun getCurrentMonthTotalSaving() {
+        viewModelScope.launch {
+            _currentMonthTotalSaving.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Menabung)
         }
     }
 
