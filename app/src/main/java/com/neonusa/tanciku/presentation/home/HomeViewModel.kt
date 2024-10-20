@@ -51,6 +51,8 @@ class HomeViewModel @Inject constructor(
         getCurrentMonthTotalNeeds()
         getCurrentMonthTotalWants()
         getCurrentMonthTotalSaving()
+
+        getCurrentMonthLatestTransactions()
     }
 
     private fun getCurrentMonthTotalIncome() {

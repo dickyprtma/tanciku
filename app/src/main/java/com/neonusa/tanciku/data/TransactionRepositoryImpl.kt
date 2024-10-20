@@ -4,6 +4,7 @@ import com.neonusa.tanciku.data.local.TransactionDao
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.repository.TransactionRepository
+import kotlinx.coroutines.flow.Flow
 
 class TransactionRepositoryImpl(private val transactionDao: TransactionDao): TransactionRepository {
     override suspend fun insertTransaction(transaction: Transaction) {
@@ -27,6 +28,10 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
 
     override suspend fun getCurentMonthTotalTransactionByCategory(category: TransactionCategory): Int {
         return transactionDao.getCurrentMonthTotalTransactionByCategory(category)
+    }
+
+    override fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>> {
+        return transactionDao.getCurrentMonthLatestTransactions()
     }
 
 }

@@ -18,8 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.presentation.Dimens.MediumPadding1
-import com.neonusa.tanciku.presentation.common.ListTransactionitem
-import com.neonusa.tanciku.presentation.home.dummyItems
 
 @Composable
 fun TransactionScreen(){
@@ -44,7 +42,8 @@ fun TransactionScreen(){
             )
 
          }
-        ListTransactionitem(itemList = dummyItems)
+        //todo tampilkan data transaction
+//        ListTransactionitem(itemList = dummyItems)
     }
 }
 

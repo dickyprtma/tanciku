@@ -19,22 +19,29 @@ import androidx.compose.ui.res.painterResource
  import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Transaction
+import com.neonusa.tanciku.domain.model.TransactionCategory
+import com.neonusa.tanciku.domain.model.TransactionType
 import com.neonusa.tanciku.ui.theme.TancikuTheme
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun TransactionItem(
-    iconResId: Int,
-    title: String,
-    type: String,
-    date: String,
-    price: String
+    transaction: Transaction,
+    onClick: (() -> Unit)? = null
 ) {
-    val iconTintColor = when (type) {
-        "pemasukan" -> colorResource(id = R.color.color_income)
-        "menabung" -> colorResource(id = R.color.color_income)
-        "kebutuhan" -> colorResource(id = R.color.color_expense)
-        "keinginan" -> colorResource(id = R.color.color_wants)
-        else -> colorResource(id = R.color.text_title_large) // Default color if no type matches
+    val iconTintColor = when (transaction.category) {
+        TransactionCategory.Menabung -> colorResource(id = R.color.color_income)
+        TransactionCategory.Pemasukan -> colorResource(id = R.color.color_income)
+        TransactionCategory.Kebutuhan -> colorResource(id = R.color.color_expense)
+        TransactionCategory.Keinginan -> colorResource(id = R.color.color_wants)
+    }
+
+    val iconResId = when(transaction.type){
+        TransactionType.Pemasukan -> R.drawable.arrow_circle_up
+        TransactionType.Pengeluaran -> R.drawable.arrow_circle_down
     }
     Row(
         modifier = Modifier
@@ -42,40 +49,41 @@ fun TransactionItem(
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         // Icon di sebelah kiri
         Icon(
+
             painter = painterResource(id = iconResId),
             contentDescription = null,
             modifier = Modifier.size(30.dp),
             tint = iconTintColor
         )
 
-        // Kolom untuk nama item (title) dan tanggal (subitem)
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = title,
+                text = transaction.description,
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = date,
+                text = convertDate(transaction.date),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
         }
 
-        val symbol = when (type) {
-            "pemasukan" -> "+"
+        val symbol = when (transaction.type) {
+            TransactionType.Pemasukan -> "+"
             else -> "−"
         }
 
         // Harga di ujung kanan
         Text(
-            text = symbol+price,
+            text = symbol+"Rp"+transaction.amount,
             color = colorResource(id = R.color.text_title_large),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(start = 16.dp)
@@ -83,11 +91,23 @@ fun TransactionItem(
     }
 }
 
+fun convertDate(inputDate: String): String {
+    // Define the input and output formats
+    val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d", Locale.getDefault()) // Handling single digit month/day
+    val outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("id", "ID")) // Indonesian locale
+    // Parse the input date
+    val date = LocalDate.parse(inputDate, inputFormatter)
+    // Format to the desired output format
+    return date.format(outputFormatter)
+}
+
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TransactionItemPreview(){
     TancikuTheme {
-        TransactionItem(iconResId = R.drawable.arrow_circle_down, title = "Beli geprek", date = "3 Oktober 2024", price = "Rp10.000.000", type = "kebutuhan")
+        TransactionItem(
+            transaction = Transaction(0,"Membeli ayam","2024-10-05", TransactionType.Pengeluaran,TransactionCategory.Kebutuhan,25000) ,
+            onClick = {})
     }
 }

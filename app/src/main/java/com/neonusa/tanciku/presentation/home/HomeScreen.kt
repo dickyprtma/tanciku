@@ -2,7 +2,6 @@ package com.neonusa.tanciku.presentation.home
 
 import android.content.res.Configuration
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
-import com.neonusa.tanciku.presentation.common.ItemData
 import com.neonusa.tanciku.presentation.common.ListTransactionitem
 import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
@@ -30,46 +28,6 @@ import com.neonusa.tanciku.presentation.home.components.TransactionTotalItem
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import java.text.NumberFormat
 import java.util.Locale
-
-
-val dummyItems = listOf(
-    ItemData(
-        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
-        title = "Menabung",
-        type = "menabung",
-        date = "6 Oktober 2024",
-        price = "Rp2.200.000"
-    ),
-    ItemData(
-        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
-        title = "Geprek curup",
-        type = "kebutuhan",
-        date = "7 Oktober",
-        price = "Rp10.000"
-    ),
-    ItemData(
-        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
-        title = "Es teh gacor",
-        type = "keinginan",
-        date = "14 Oct 2024",
-        price = "Rp7.000"
-    ),
-    ItemData(
-        iconResId = R.drawable.arrow_circle_down, // Ikon bawaan Android sebagai contoh
-        title = "Es teh gacor",
-        type = "keinginan",
-        date = "14 Oct 2024",
-        price = "Rp7.000"
-    ),
-    ItemData(
-        iconResId = R.drawable.arrow_circle_up, // Ikon bawaan Android sebagai contoh
-        title = "Gaji bulan ini",
-        type = "pemasukan",
-        date = "5 Oktober 2024",
-        price = "Rp5.000.000"
-    )
-
-)
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -80,7 +38,8 @@ fun HomeScreen(
     totalNeeds: Int,
     totalWants: Int,
     totalSaving: Int,
-    allocation: Allocation
+    allocation: Allocation,
+    state: HomeState
 ){
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
@@ -189,7 +148,7 @@ fun HomeScreen(
                     .padding(start = 8.dp)
             )
         }
-        ListTransactionitem(itemList = dummyItems)
+        ListTransactionitem(transactions = state.transactions,onClick = {})
     }
 }
 
@@ -199,6 +158,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0, totalWants = 0, totalSaving = 0)
+        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0, totalWants = 0, totalSaving = 0, state = HomeState())
     }
 }

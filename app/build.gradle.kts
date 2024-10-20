@@ -91,4 +91,7 @@ dependencies {
 
     // splash screen
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // date format converter
+    implementation ("com.jakewharton.threetenabp:threetenabp:1.4.7")
 }

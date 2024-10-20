@@ -117,6 +117,9 @@ fun MainNavigator() {
                 val balance by derivedStateOf { totalIncome - totalExpense }
 
                 val allocation: Allocation by viewModel.allocation.collectAsState()
+
+                val state = viewModel.state.value
+
                 HomeScreen(
                     totalIncome = totalIncome,
                     totalExpense = totalExpense,
@@ -124,7 +127,8 @@ fun MainNavigator() {
                     allocation = allocation,
                     totalNeeds = totalNeeds,
                     totalWants = totalWants,
-                    totalSaving = totalSaving)
+                    totalSaving = totalSaving,
+                    state = state)
             }
             composable(route = Route.BudgetScreen.route) {
             }
