@@ -34,6 +34,7 @@ import com.neonusa.tanciku.presentation.add_transaction.components.TransactionCa
 import com.neonusa.tanciku.presentation.add_transaction.components.TransactionTypeSelection
 import java.text.NumberFormat
 import java.util.Calendar
+import java.util.Locale
 
 @Composable
 fun AddTransactionScreen(
@@ -226,7 +227,8 @@ fun ShowDatePicker(
     DatePickerDialog(
         context,
         { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
-            val selectedDate = "$selectedYear-${selectedMonth+1}-$selectedDay"
+            val formattedDay = String.format(Locale.getDefault(), "%02d", selectedDay)
+            val selectedDate = "$selectedYear-${selectedMonth+1}-$formattedDay"
             onDateSelected(selectedDate)
         },
         year,
