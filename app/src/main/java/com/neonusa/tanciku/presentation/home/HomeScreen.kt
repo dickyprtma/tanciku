@@ -3,6 +3,7 @@ package com.neonusa.tanciku.presentation.home
 import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +40,9 @@ fun HomeScreen(
     totalWants: Int,
     totalSaving: Int,
     allocation: Allocation,
-    state: HomeState
+    state: HomeState,
+    navigateToBudget: () -> Unit,
+    navigateToTransaction: () -> Unit,
 ){
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
@@ -91,6 +94,9 @@ fun HomeScreen(
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .padding(start = 8.dp)
+                    .clickable {
+                        navigateToBudget()
+                    }
             )
         }
 
@@ -146,6 +152,9 @@ fun HomeScreen(
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .padding(start = 8.dp)
+                    .clickable {
+                        navigateToTransaction()
+                    }
             )
         }
         ListTransactionItem(transactions = state.transactions,onClick = {})
@@ -158,6 +167,10 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0, totalWants = 0, totalSaving = 0, state = HomeState())
+        HomeScreen(0,0, 0,
+            allocation = Allocation(0,0,0),
+            totalNeeds = 0, totalWants = 0, totalSaving = 0,
+            state = HomeState(),
+            navigateToBudget = {}, navigateToTransaction = {})
     }
 }

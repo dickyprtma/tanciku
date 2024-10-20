@@ -128,7 +128,13 @@ fun MainNavigator() {
                     totalNeeds = totalNeeds,
                     totalWants = totalWants,
                     totalSaving = totalSaving,
-                    state = state)
+                    state = state,
+                    navigateToBudget = {
+                        navigateToBudget(navController)
+                    },
+                    navigateToTransaction = {
+                        navigateToTransaction(navController)
+                    })
             }
             composable(route = Route.BudgetScreen.route) {
             }
@@ -192,6 +198,18 @@ private fun navigateToTab(navController: NavController, route: String) {
 private fun navigateToAddTransaction(navController: NavController){
     navController.navigate(
         route = Route.AddTransactionScreen.route
+    )
+}
+
+private fun navigateToBudget(navController: NavController){
+    navController.navigate(
+        route = Route.BudgetScreen.route
+    )
+}
+
+private fun navigateToTransaction(navController: NavController){
+    navController.navigate(
+        route = Route.TransactionScreen.route
     )
 }
 
