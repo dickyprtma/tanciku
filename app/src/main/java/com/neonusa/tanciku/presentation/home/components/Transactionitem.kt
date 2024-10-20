@@ -25,6 +25,7 @@ import com.neonusa.tanciku.domain.model.TransactionType
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
@@ -81,9 +82,11 @@ fun TransactionItem(
             else -> "−"
         }
 
+        val formattedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(transaction.amount)
+
         // Harga di ujung kanan
         Text(
-            text = symbol+"Rp"+transaction.amount,
+            text = symbol+"Rp"+formattedAmount,
             color = colorResource(id = R.color.text_title_large),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(start = 16.dp)
