@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
-import com.neonusa.tanciku.presentation.common.ListTransactionitem
+import com.neonusa.tanciku.presentation.common.ListTransactionItem
 import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.TransactionTotalItem
@@ -148,7 +148,7 @@ fun HomeScreen(
                     .padding(start = 8.dp)
             )
         }
-        ListTransactionitem(transactions = state.transactions,onClick = {})
+        ListTransactionItem(transactions = state.transactions,onClick = {})
     }
 }
 
