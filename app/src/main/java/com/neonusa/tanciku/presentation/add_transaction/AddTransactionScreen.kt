@@ -40,6 +40,9 @@ fun AddTransactionScreen(
     navigateUp: () -> Unit,
     event: (AddTransactionEvent) -> Unit,
 ){
+
+    //todo : bikin rekomendasi sebesar persentase alokasi menabung saat kategori menabung dipilih
+
     var rawAmount by remember { mutableStateOf("0") } // for data input
     var amount by remember{ mutableStateOf("0")} // for data view
     var desc by remember{ mutableStateOf("")}

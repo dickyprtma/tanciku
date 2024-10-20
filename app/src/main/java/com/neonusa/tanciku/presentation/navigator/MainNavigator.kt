@@ -110,12 +110,21 @@ fun MainNavigator() {
                 val totalExpense by viewModel.currentMonthTotalExpense.collectAsState()
 
                 val totalNeeds by viewModel.currentMonthTotalNeeds.collectAsState()
+                val totalWants by viewModel.currentMonthTotalWants.collectAsState()
+                val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
 
                 // derivedStateOf : state turunan yang nilainya bergantung dengan state yang lain
                 val balance by derivedStateOf { totalIncome - totalExpense }
 
                 val allocation: Allocation by viewModel.allocation.collectAsState()
-                HomeScreen(totalIncome = totalIncome, totalExpense = totalExpense, balance = balance, allocation = allocation, totalNeeds = totalNeeds)
+                HomeScreen(
+                    totalIncome = totalIncome,
+                    totalExpense = totalExpense,
+                    balance = balance,
+                    allocation = allocation,
+                    totalNeeds = totalNeeds,
+                    totalWants = totalWants,
+                    totalSaving = totalSaving)
             }
             composable(route = Route.BudgetScreen.route) {
             }

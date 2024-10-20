@@ -78,6 +78,8 @@ fun HomeScreen(
     totalExpense: Int,
     balance: Int,
     totalNeeds: Int,
+    totalWants: Int,
+    totalSaving: Int,
     allocation: Allocation
 ){
     // rumus usedPercentage = total<Needs || Wants || Saving> / totalIncome
@@ -143,8 +145,9 @@ fun HomeScreen(
             verticalAlignment = Alignment.CenterVertically
         ){
             val needsUsedPercentage = if (totalIncome != 0) (totalNeeds.toFloat() / totalIncome.toFloat()) * 100 else 0f
-            Log.d("Test", "HomeScreen: $needsUsedPercentage")
-            Log.d("Test", "HomeScreen: $totalNeeds/$totalIncome")
+            val wantsUsedPercentage = if (totalIncome != 0) (totalWants.toFloat() / totalIncome.toFloat()) * 100 else 0f
+            val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
+
             BudgetCircularItem(
                 title = "Kebutuhan",
                 usedPercentage = needsUsedPercentage,
@@ -154,14 +157,14 @@ fun HomeScreen(
 
             BudgetCircularItem(
                 title = "Keinginan",
-                usedPercentage = 0f, //todo : rumus + dari room
+                usedPercentage = wantsUsedPercentage,
                 allocatedPercentage = allocation.wants.toFloat(),
                 progressBarColorResId = R.color.color_wants
             )
 
             BudgetCircularItem(
                 title = "Menabung",
-                usedPercentage = 0f, //todo : rumus + dari room
+                usedPercentage = savingUsedPercentage,
                 allocatedPercentage = allocation.saving.toFloat(),
                 progressBarColorResId = R.color.color_income
             )
@@ -198,6 +201,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReview(){
     TancikuTheme {
-        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0)
+        HomeScreen(0,0, 0, allocation = Allocation(0,0,0), totalNeeds = 0, totalWants = 0, totalSaving = 0)
     }
 }
