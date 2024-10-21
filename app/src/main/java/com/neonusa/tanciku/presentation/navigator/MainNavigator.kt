@@ -28,6 +28,7 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
+import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -137,6 +138,7 @@ fun MainNavigator() {
                     })
             }
             composable(route = Route.BudgetScreen.route) {
+                BudgetScreen()
             }
 
             composable(route = Route.AddTransactionScreen.route) {
