@@ -1,7 +1,11 @@
 package com.neonusa.tanciku.presentation.navigator
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
@@ -29,6 +33,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
+import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -66,34 +71,41 @@ fun MainNavigator() {
     }
 
     Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-        // buat jadi true untuk melihat navigation bar
-        if (isBottomBarVisible) {
-            MainBottomNavigation(
-                items = bottomNavigationItems,
-                selectedItem = selectedItem,
-                onItemClick = { index ->
-                    when (index) {
-                        0 -> navigateToTab(
-                            navController = navController,
-                            route = Route.TransactionScreen.route
-                        )
+        Column {
+            if (!isBottomBarVisible) {
+                AdMobBannerAd(modifier = Modifier.padding(WindowInsets.navigationBars.asPaddingValues()))
+            } else {
+                AdMobBannerAd()
+            }
+            
+            if (isBottomBarVisible) {
+                MainBottomNavigation(
+                    items = bottomNavigationItems,
+                    selectedItem = selectedItem,
+                    onItemClick = { index ->
+                        when (index) {
+                            0 -> navigateToTab(
+                                navController = navController,
+                                route = Route.TransactionScreen.route
+                            )
 
-                        1 -> navigateToTab(
-                            navController = navController,
-                            route = Route.HomeScreen.route
-                        )
+                            1 -> navigateToTab(
+                                navController = navController,
+                                route = Route.HomeScreen.route
+                            )
 
-                        2 -> navigateToTab(
-                            navController = navController,
-                            route = Route.BudgetScreen.route
-                        )
+                            2 -> navigateToTab(
+                                navController = navController,
+                                route = Route.BudgetScreen.route
+                            )
+                        }
+                    },
+                    onFabClick = {
+                        navigateToAddTransaction(navController = navController)
+                        Log.d("FAB", "Plus button clicked!")
                     }
-                },
-                onFabClick = {
-                    navigateToAddTransaction(navController = navController)
-                    Log.d("FAB", "Plus button clicked!")
-                }
-            )
+                )
+            }
         }
     }) {
         val bottomPadding = it.calculateBottomPadding()

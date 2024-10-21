@@ -94,4 +94,7 @@ dependencies {
 
     // date format converter
     implementation ("com.jakewharton.threetenabp:threetenabp:1.4.7")
+
+    // admob
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 }
