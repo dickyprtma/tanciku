@@ -103,7 +103,7 @@ fun MainBottomNavigation(
             Icon(
                 painter = painterResource(id = fabIcon),
                 contentDescription = if (selectedItem == 1) "Add" else "Home", // Deskripsi FAB berubah sesuai ikon
-                modifier = Modifier.size(28.dp) // Ikon di dalam FAB lebih besar
+                modifier = Modifier.size(32.dp) // Ikon di dalam FAB lebih besar
             )
         }
     }
