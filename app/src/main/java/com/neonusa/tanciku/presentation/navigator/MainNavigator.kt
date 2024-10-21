@@ -150,7 +150,7 @@ fun MainNavigator() {
                     })
             }
             composable(route = Route.BudgetScreen.route) {
-                BudgetScreen()
+//                BudgetScreen()
             }
 
             composable(route = Route.AddTransactionScreen.route) {

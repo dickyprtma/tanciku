@@ -26,13 +26,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.presentation.budget.components.BudgetCircularItemLarge
 import com.neonusa.tanciku.presentation.budget.components.BudgetItem
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.convertDate
 
 @Composable
-fun BudgetScreen(){
+fun BudgetScreen(
+    totalIncome: Int,
+    totalExpense: Int,
+    totalNeeds: Int,
+    totalWants: Int,
+    totalSaving: Int,
+    allocation: Allocation,
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -60,10 +69,14 @@ fun BudgetScreen(){
             }
         }
 
+        val needsUsedPercentage = if (totalIncome != 0) (totalNeeds.toFloat() / totalIncome.toFloat()) * 100 else 0f
+        val wantsUsedPercentage = if (totalIncome != 0) (totalWants.toFloat() / totalIncome.toFloat()) * 100 else 0f
+        val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
+
         // todo : menggunakan data asli
-        BudgetItem(category = "Kebutuhan", usedAmount = 200000, allocatedAmount = 1000000, usedPercentage = 20f, allocatedPercentage = 30f, progressBarColorResId = R.color.color_expense)
-        BudgetItem(category = "Keinginan", usedAmount = 100000, allocatedAmount = 400000, usedPercentage = 19f, allocatedPercentage = 20f, progressBarColorResId = R.color.color_wants)
-        BudgetItem(category = "Menabung", usedAmount = 2000000, allocatedAmount = 2000000, usedPercentage = 50f, allocatedPercentage = 50f, progressBarColorResId = R.color.color_income)
+//        BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedAmount = 1000000, allocatedAmount = 1000000, usedPercentage = 20f, allocatedPercentage = 30f, progressBarColorResId = R.color.color_expense)
+//        BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedAmount = 200000, allocatedAmount = 400000, usedPercentage = 19f, allocatedPercentage = 20f, progressBarColorResId = R.color.color_wants)
+//        BudgetItem(transactionCategory = TransactionCategory.Menabung, usedAmount = 190000, allocatedAmount = 2000000, usedPercentage = 50f, allocatedPercentage = 50f, progressBarColorResId = R.color.color_income)
 
     }
 }
@@ -72,7 +85,7 @@ fun BudgetScreen(){
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetScreenPreview(){
-    BudgetScreen()
+//    BudgetScreen()
 }
 
 

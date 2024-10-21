@@ -16,14 +16,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.TransactionCategory
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun BudgetItem(
-    category: String,
+    transactionCategory: TransactionCategory,
     usedPercentage: Float,
     allocatedPercentage: Float,
-    usedAmount: Int,
-    allocatedAmount: Int,
     progressBarColorResId: Int
 ){
     Row(
@@ -40,19 +42,56 @@ fun BudgetItem(
                 .padding(start = 16.dp)
         ) {
             Text(
-                text = category,
+                text = transactionCategory.name,
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Rp$usedAmount / $allocatedAmount",
+                text = "Dummy / Dummy",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
+
+//            val textColorId = if(transactionCategory != TransactionCategory.Menabung){
+//                // jika kategori kebutuhan/keinginan
+//                if(usedAmount >= allocatedAmount){
+//                    R.color.color_expense
+//                } else if (usedAmount > (allocatedAmount / 2) && usedAmount < allocatedAmount) {
+//                    R.color.color_wants
+//                }
+//                else {
+//                    R.color.color_income
+//                }
+//            } else {
+//                if(usedAmount >= allocatedAmount){
+//                    R.color.color_income
+//                } else {
+//                    R.color.text_transaction_type_add_transaction_wants_bg_selected
+//                }
+//            }
+//
+//            val textStatus = if(transactionCategory != TransactionCategory.Menabung){
+//                // jika kategori kebutuhan/keinginan
+//                if(usedAmount >= allocatedAmount){
+//                    "Buruk"
+//                } else if (usedAmount > (allocatedAmount / 2) && usedAmount < allocatedAmount) {
+//                    "Sedang"
+//                }
+//                else {
+//                    "Bagus!"
+//                }
+//            } else {
+//                if(usedAmount >= allocatedAmount){
+//                    "Bagus!"
+//                } else {
+//                    "Belum tercapai"
+//                }
+//            }
+
             Text(
-                text = "Status : Bagus",
+                text = "Status : Dummy",
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray,
+                color = colorResource(id = R.color.text_title_small),
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
@@ -64,5 +103,5 @@ fun BudgetItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetItemPreview(){
-    BudgetItem(category = "Kebutuhan", usedPercentage = 20f, allocatedPercentage = 30f, usedAmount = 200000, allocatedAmount = 200000, progressBarColorResId = R.color.color_income)
+//    BudgetItem(transactionCategory = TransactionCategory.Kebutuhan,  allocatedPercentage = 30f, usedAmount = 200000, totalIncomeAmount = 5000000, progressBarColorResId = R.color.color_income)
 }

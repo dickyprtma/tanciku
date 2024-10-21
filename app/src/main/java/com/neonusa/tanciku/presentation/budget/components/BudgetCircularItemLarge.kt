@@ -16,12 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.TransactionCategory
 
 @Composable
 fun BudgetCircularItemLarge(
+    transactionCategory: TransactionCategory,
     usedPercentage: Float,
-    allocatedPercentage: Float,
-    progressBarColorResId: Int
+    allocatedPercentage: Float
 ) {
     Box(modifier = Modifier
         .size(70.dp),
@@ -35,6 +36,18 @@ fun BudgetCircularItemLarge(
             color = colorResource(id = R.color.color_gray_circular), // Gray color for unused portion
             strokeWidth = 8.dp,
         )
+
+        val progressBarColorResId = when (transactionCategory) {
+            TransactionCategory.Kebutuhan -> {
+                R.color.color_expense
+            }
+            TransactionCategory.Keinginan -> {
+                R.color.color_wants
+            }
+            else -> {
+                R.color.color_income
+            }
+        }
 
         // Inner circle (represents used percentage)
         CircularProgressIndicator(
@@ -58,5 +71,5 @@ fun BudgetCircularItemLarge(
 @Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
 @Composable()
 fun BudgetCircularItemLargePreview(){
-    BudgetCircularItemLarge(usedPercentage = 20f, allocatedPercentage = 30f, R.color.color_income)
+    BudgetCircularItemLarge(transactionCategory = TransactionCategory.Menabung ,usedPercentage = 20f, allocatedPercentage = 30f)
 }

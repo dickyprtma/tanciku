@@ -31,7 +31,7 @@ class MainViewModel @Inject constructor(
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(500) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
+            delay(1000) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }
