@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
@@ -89,7 +90,8 @@ fun MainBottomNavigation(
             modifier = Modifier
                 .size(56.dp) // Ukuran FAB lebih besar
                 .align(Alignment.TopCenter) // Posisi FAB di tengah atas
-                .offset(y = (-28).dp) // Setengah dari ukuran FAB untuk mengangkatnya
+                .offset(y = (8).dp) // hapus ini jika ingin mengangkat FAB
+//                .offset(y = (-28).dp) // Setengah dari ukuran FAB untuk mengangkatnya
         ) {
             // Menentukan ikon FAB berdasarkan selectedItem
             val fabIcon = if (selectedItem == 1) {
