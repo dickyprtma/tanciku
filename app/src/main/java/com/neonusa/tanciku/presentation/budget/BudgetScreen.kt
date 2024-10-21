@@ -76,6 +76,8 @@ fun BudgetScreen(
         //todo : ambil data real
         TotalExpense(usedPercentage = 20, allocatedpercentage = 50)
 
+        Spacer(modifier = Modifier.height(12.dp))
+
         BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedPercentage = needsUsedPercentage, allocation.needs.toFloat(), usedAmount = totalNeeds, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving, totalIncome = totalIncome)

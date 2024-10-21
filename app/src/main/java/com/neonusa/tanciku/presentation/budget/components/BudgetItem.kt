@@ -34,7 +34,7 @@ fun BudgetItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 24.dp, end = 24.dp, top = 24.dp),
+            .padding(start = 32.dp, end = 24.dp, top = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -47,7 +47,7 @@ fun BudgetItem(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 24.dp)
+                .padding(start = 16.dp)
         ) {
             Text(
                 text = transactionCategory.name,
