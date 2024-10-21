@@ -59,9 +59,11 @@ fun BudgetScreen(){
                 )
             }
         }
-        BudgetItem(category = "Kebutuhan")
-        BudgetItem(category = "Keinginan")
-        BudgetItem(category = "Menabung")
+
+        // todo : menggunakan data asli
+        BudgetItem(category = "Kebutuhan", usedAmount = 200000, allocatedAmount = 1000000, usedPercentage = 20f, allocatedPercentage = 30f, progressBarColorResId = R.color.color_expense)
+        BudgetItem(category = "Keinginan", usedAmount = 100000, allocatedAmount = 400000, usedPercentage = 19f, allocatedPercentage = 20f, progressBarColorResId = R.color.color_wants)
+        BudgetItem(category = "Menabung", usedAmount = 2000000, allocatedAmount = 2000000, usedPercentage = 50f, allocatedPercentage = 50f, progressBarColorResId = R.color.color_income)
 
     }
 }

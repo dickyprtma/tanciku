@@ -19,16 +19,21 @@ import com.neonusa.tanciku.R
 
 @Composable
 fun BudgetItem(
-    category: String
+    category: String,
+    usedPercentage: Float,
+    allocatedPercentage: Float,
+    usedAmount: Int,
+    allocatedAmount: Int,
+    progressBarColorResId: Int
 ){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, end = 8.dp, top = 16.dp),
+            .padding(start = 8.dp, end = 8.dp, top = 24.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BudgetCircularItemLarge()
+        BudgetCircularItemLarge(usedPercentage=usedPercentage, allocatedPercentage=allocatedPercentage, progressBarColorResId = progressBarColorResId)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -40,7 +45,7 @@ fun BudgetItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Rp229.500 / 2.564.000",
+                text = "Rp$usedAmount / $allocatedAmount",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
@@ -59,5 +64,5 @@ fun BudgetItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetItemPreview(){
-    BudgetItem("Kebutuhan")
+    BudgetItem(category = "Kebutuhan", usedPercentage = 20f, allocatedPercentage = 30f, usedAmount = 200000, allocatedAmount = 200000, progressBarColorResId = R.color.color_income)
 }
