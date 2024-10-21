@@ -62,17 +62,20 @@ fun BudgetItem(
 
             val status = if(transactionCategory == TransactionCategory.Kebutuhan || transactionCategory == TransactionCategory.Keinginan){
                 when {
-                    usedAmount == allocatedAmount.toInt() -> "Pas!"
+                    (usedAmount == allocatedAmount.toInt() &&
+                     usedAmount != 0 && allocatedAmount.toInt() != 0) -> "Pas!"
                     usedAmount > allocatedAmount -> "Buruk"
                     usedAmount >= (allocatedAmount / 2) && usedAmount <= (allocatedAmount - 1) -> "Sedang"
                     usedAmount < (allocatedAmount / 2) -> "Baik!"
-                    else -> "Tidak diketahui" // fallback if needed
+                    else -> "Belum diatur" // fallback if needed
                 }
             } else {
                 when {
-                    usedAmount == allocatedAmount.toInt() -> "Pas!"
+                    (usedAmount == allocatedAmount.toInt() &&
+                     usedAmount != 0 && allocatedAmount.toInt() != 0) -> "Pas!"
                     usedAmount > allocatedAmount -> "Baik!"
-                    else -> "Belum tercapai"
+                    usedAmount >= 0 && usedAmount < allocatedAmount -> "Belum tercapai"
+                    else -> "Belum diatur"
                 }
             }
 
