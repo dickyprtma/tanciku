@@ -32,6 +32,14 @@ class BudgetViewModel @Inject constructor(
     private val _allocation = MutableStateFlow(Allocation(needs = 0, wants = 0, saving = 0))
     val allocation: StateFlow<Allocation> = _allocation
 
+    /*
+        Blok init berarti fungsi tersebut hanya dijalankan sekali saat ViewModel pertama kali diinisialisasi.
+        Jika data diubah setelah ViewModel sudah diinisialisasi (misalnya, setelah penambahan transaksi di AddTransactionScreen),
+        maka BudgetScreen tidak akan memperbarui state-nya secara otomatis.
+
+        oleh karena itu perlu menambahkan Launched di MainNavigator agar data terupdate saat ada perubahan di screen lain
+    */
+
     init {
         getCurrentMonthTotalIncome()
         getCurrentMonthTotalNeeds()
@@ -40,34 +48,34 @@ class BudgetViewModel @Inject constructor(
         getAllocation()
     }
 
-    private fun getCurrentMonthTotalIncome() {
+    fun getCurrentMonthTotalIncome() {
         viewModelScope.launch {
             _currentMonthTotalIncome.value = transactionUseCases.getCurrentMonthTotalIncome()
         }
     }
 
-    private fun getCurrentMonthTotalNeeds() {
+    fun getCurrentMonthTotalNeeds() {
         viewModelScope.launch {
             _currentMonthTotalNeeds.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(
                 TransactionCategory.Kebutuhan)
         }
     }
 
-    private fun getCurrentMonthTotalWants() {
+    fun getCurrentMonthTotalWants() {
         viewModelScope.launch {
             _currentMonthTotalWants.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(
                 TransactionCategory.Keinginan)
         }
     }
 
-    private fun getCurrentMonthTotalSaving() {
+    fun getCurrentMonthTotalSaving() {
         viewModelScope.launch {
             _currentMonthTotalSaving.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(
                 TransactionCategory.Menabung)
         }
     }
 
-    private fun getAllocation() {
+    fun getAllocation() {
         viewModelScope.launch {
             allocationUseCases.readAllocation().collect { allocation ->
                 _allocation.value = allocation

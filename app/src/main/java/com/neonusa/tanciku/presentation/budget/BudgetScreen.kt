@@ -33,7 +33,6 @@ import com.neonusa.tanciku.presentation.budget.components.BudgetItem
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.convertDate
 
-// todo : data belum terupdate jika mengupdate data dari add transaction
 @Composable
 fun BudgetScreen(
     totalIncome: Int,

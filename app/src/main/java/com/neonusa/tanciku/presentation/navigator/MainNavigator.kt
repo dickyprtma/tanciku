@@ -158,6 +158,15 @@ fun MainNavigator() {
                 val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
                 val allocation: Allocation by viewModel.allocation.collectAsState()
 
+                //LaunchedEffect digunakan untuk memicu ulang pemanggilan fungsi setiap kali layar BudgetScreen dimasuki
+                LaunchedEffect(Unit) {
+                    viewModel.getCurrentMonthTotalIncome()
+                    viewModel.getCurrentMonthTotalNeeds()
+                    viewModel.getCurrentMonthTotalWants()
+                    viewModel.getCurrentMonthTotalSaving()
+                    viewModel.getAllocation()
+                }
+
                 BudgetScreen(
                     allocation = allocation,
                     totalIncome = totalIncome,
