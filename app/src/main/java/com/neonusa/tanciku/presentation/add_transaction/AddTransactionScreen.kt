@@ -36,6 +36,7 @@ import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
 
+//todo : user experience waktu input nominal masih buruk cursornya
 @Composable
 fun AddTransactionScreen(
     navigateUp: () -> Unit,

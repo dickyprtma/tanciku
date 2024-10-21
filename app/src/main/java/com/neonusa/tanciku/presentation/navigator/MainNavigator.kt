@@ -33,6 +33,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
+import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
@@ -150,7 +151,7 @@ fun MainNavigator() {
                     })
             }
             composable(route = Route.BudgetScreen.route) {
-                val viewModel: HomeViewModel = hiltViewModel()
+                val viewModel: BudgetViewModel = hiltViewModel()
                 val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
                 val totalNeeds by viewModel.currentMonthTotalNeeds.collectAsState()
                 val totalWants by viewModel.currentMonthTotalWants.collectAsState()

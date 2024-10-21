@@ -6,11 +6,13 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.usecases.allocation.AllocationUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class BudgetViewModel @Inject constructor(
     private val transactionUseCases: TransactionUseCases,
     private val allocationUseCases: AllocationUseCases

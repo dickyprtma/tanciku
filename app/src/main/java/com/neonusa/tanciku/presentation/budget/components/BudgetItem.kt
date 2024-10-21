@@ -13,10 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
-import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import java.text.NumberFormat
 import java.util.Locale
@@ -26,6 +28,7 @@ fun BudgetItem(
     transactionCategory: TransactionCategory,
     usedPercentage: Float,
     allocatedPercentage: Float,
+    totalIncome: Int,
     usedAmount: Int
 ){
     Row(
@@ -36,6 +39,9 @@ fun BudgetItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         val formattedUsedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(usedAmount)
+
+        val allocatedAmount = (allocatedPercentage/100) * totalIncome
+        val formattedAllocatedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(allocatedAmount.toInt())
 
         BudgetCircularItemLarge(transactionCategory,usedPercentage=usedPercentage, allocatedPercentage=allocatedPercentage)
         Column(
@@ -49,51 +55,47 @@ fun BudgetItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "$formattedUsedAmount / Dummy",
+                text = "Rp$formattedUsedAmount / $formattedAllocatedAmount",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
 
-//            val textColorId = if(transactionCategory != TransactionCategory.Menabung){
-//                // jika kategori kebutuhan/keinginan
-//                if(usedAmount >= allocatedAmount){
-//                    R.color.color_expense
-//                } else if (usedAmount > (allocatedAmount / 2) && usedAmount < allocatedAmount) {
-//                    R.color.color_wants
-//                }
-//                else {
-//                    R.color.color_income
-//                }
-//            } else {
-//                if(usedAmount >= allocatedAmount){
-//                    R.color.color_income
-//                } else {
-//                    R.color.text_transaction_type_add_transaction_wants_bg_selected
-//                }
-//            }
-//
-//            val textStatus = if(transactionCategory != TransactionCategory.Menabung){
-//                // jika kategori kebutuhan/keinginan
-//                if(usedAmount >= allocatedAmount){
-//                    "Buruk"
-//                } else if (usedAmount > (allocatedAmount / 2) && usedAmount < allocatedAmount) {
-//                    "Sedang"
-//                }
-//                else {
-//                    "Bagus!"
-//                }
-//            } else {
-//                if(usedAmount >= allocatedAmount){
-//                    "Bagus!"
-//                } else {
-//                    "Belum tercapai"
-//                }
-//            }
+            val status = if(transactionCategory == TransactionCategory.Kebutuhan || transactionCategory == TransactionCategory.Keinginan){
+                when {
+                    usedAmount == allocatedAmount.toInt() -> "Pas!"
+                    usedAmount > allocatedAmount -> "Buruk"
+                    usedAmount >= (allocatedAmount / 2) && usedAmount <= (allocatedAmount - 1) -> "Sedang"
+                    usedAmount < (allocatedAmount / 2) -> "Baik!"
+                    else -> "Tidak diketahui" // fallback if needed
+                }
+            } else {
+                when {
+                    usedAmount == allocatedAmount.toInt() -> "Pas!"
+                    usedAmount > allocatedAmount -> "Baik!"
+                    else -> "Belum tercapai"
+                }
+            }
+
+            var textColorId = when {
+                status == "Pas!" -> R.color.color_income
+                status == "Buruk" -> R.color.color_expense
+                status == "Sedang" -> R.color.text_transaction_type_add_transaction_wants_bg_selected
+                status == "Baik!" -> R.color.color_income
+                else -> R.color.text_title_small
+
+            }
 
             Text(
-                text = "Status : Dummy",
+                text = buildAnnotatedString {
+                    withStyle(style = SpanStyle(color = colorResource(id = R.color.text_title_small))) {
+                        append("Status: ") // Bagian "Status :" dengan warna hitam
+                    }
+                    withStyle(style = SpanStyle(color = colorResource(id = textColorId))) {
+                        append(status) // Bagian "$status" dengan warna mengikuti textColorId
+                    }
+                },
                 style = MaterialTheme.typography.bodySmall,
-                color = colorResource(id = R.color.text_title_small),
+                color = colorResource(id = textColorId),
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
@@ -105,5 +107,5 @@ fun BudgetItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetItemPreview(){
-    BudgetItem(transactionCategory = TransactionCategory.Kebutuhan,  usedPercentage = 20f ,allocatedPercentage = 30f, 2000000)
+    BudgetItem(transactionCategory = TransactionCategory.Kebutuhan,  usedPercentage = 3f ,allocatedPercentage = 50f, totalIncome = 3128000, usedAmount = 100000)
 }
