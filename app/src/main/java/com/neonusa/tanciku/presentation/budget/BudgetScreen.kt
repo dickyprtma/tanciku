@@ -30,6 +30,7 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.presentation.budget.components.BudgetCircularItemLarge
 import com.neonusa.tanciku.presentation.budget.components.BudgetItem
+import com.neonusa.tanciku.presentation.budget.components.TotalExpense
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.convertDate
 
@@ -72,10 +73,14 @@ fun BudgetScreen(
         val wantsUsedPercentage = if (totalIncome != 0) (totalWants.toFloat() / totalIncome.toFloat()) * 100 else 0f
         val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
 
+        //todo : ambil data real
+        TotalExpense(usedPercentage = 20, allocatedpercentage = 50)
+
         BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedPercentage = needsUsedPercentage, allocation.needs.toFloat(), usedAmount = totalNeeds, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving, totalIncome = totalIncome)
 
+        // todo : isi layar kosong ini dengan sedikit informasi terkait penganggaran (seperti kebutuhan : blablablabal, dst.)
     }
 }
 

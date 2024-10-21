@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="blue80">#49729E</color>
+
     <color name="text_title_large">#FFFFFFFF</color>
     <color name="text_title_small">#FFFFFFFF</color>
 
