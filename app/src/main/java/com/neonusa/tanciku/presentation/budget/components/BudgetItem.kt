@@ -26,7 +26,7 @@ fun BudgetItem(
     transactionCategory: TransactionCategory,
     usedPercentage: Float,
     allocatedPercentage: Float,
-    progressBarColorResId: Int
+    usedAmount: Int
 ){
     Row(
         modifier = Modifier
@@ -35,7 +35,9 @@ fun BudgetItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BudgetCircularItemLarge(usedPercentage=usedPercentage, allocatedPercentage=allocatedPercentage, progressBarColorResId = progressBarColorResId)
+        val formattedUsedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(usedAmount)
+
+        BudgetCircularItemLarge(transactionCategory,usedPercentage=usedPercentage, allocatedPercentage=allocatedPercentage)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -47,7 +49,7 @@ fun BudgetItem(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Dummy / Dummy",
+                text = "$formattedUsedAmount / Dummy",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
@@ -103,5 +105,5 @@ fun BudgetItem(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetItemPreview(){
-//    BudgetItem(transactionCategory = TransactionCategory.Kebutuhan,  allocatedPercentage = 30f, usedAmount = 200000, totalIncomeAmount = 5000000, progressBarColorResId = R.color.color_income)
+    BudgetItem(transactionCategory = TransactionCategory.Kebutuhan,  usedPercentage = 20f ,allocatedPercentage = 30f, 2000000)
 }

@@ -150,7 +150,19 @@ fun MainNavigator() {
                     })
             }
             composable(route = Route.BudgetScreen.route) {
-//                BudgetScreen()
+                val viewModel: HomeViewModel = hiltViewModel()
+                val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
+                val totalNeeds by viewModel.currentMonthTotalNeeds.collectAsState()
+                val totalWants by viewModel.currentMonthTotalWants.collectAsState()
+                val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
+                val allocation: Allocation by viewModel.allocation.collectAsState()
+
+                BudgetScreen(
+                    allocation = allocation,
+                    totalIncome = totalIncome,
+                    totalNeeds = totalNeeds,
+                    totalWants = totalWants,
+                    totalSaving = totalSaving)
             }
 
             composable(route = Route.AddTransactionScreen.route) {

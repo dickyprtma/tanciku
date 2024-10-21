@@ -36,7 +36,6 @@ import com.neonusa.tanciku.presentation.home.components.convertDate
 @Composable
 fun BudgetScreen(
     totalIncome: Int,
-    totalExpense: Int,
     totalNeeds: Int,
     totalWants: Int,
     totalSaving: Int,
@@ -73,10 +72,9 @@ fun BudgetScreen(
         val wantsUsedPercentage = if (totalIncome != 0) (totalWants.toFloat() / totalIncome.toFloat()) * 100 else 0f
         val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
 
-        // todo : menggunakan data asli
-//        BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedAmount = 1000000, allocatedAmount = 1000000, usedPercentage = 20f, allocatedPercentage = 30f, progressBarColorResId = R.color.color_expense)
-//        BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedAmount = 200000, allocatedAmount = 400000, usedPercentage = 19f, allocatedPercentage = 20f, progressBarColorResId = R.color.color_wants)
-//        BudgetItem(transactionCategory = TransactionCategory.Menabung, usedAmount = 190000, allocatedAmount = 2000000, usedPercentage = 50f, allocatedPercentage = 50f, progressBarColorResId = R.color.color_income)
+        BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedPercentage = needsUsedPercentage, allocation.needs.toFloat(), usedAmount = totalNeeds)
+        BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants)
+        BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving)
 
     }
 }
@@ -85,7 +83,7 @@ fun BudgetScreen(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetScreenPreview(){
-//    BudgetScreen()
+    BudgetScreen(totalIncome = 5000000, totalNeeds = 1500000, totalWants = 600000, totalSaving = 900000, allocation = Allocation(50,30,20))
 }
 
 
