@@ -42,7 +42,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun EditBudgetScreen(
-    onEvent: (GetStartedEvent) -> Unit,
+    onEvent: (EditAllocationEvent) -> Unit,
     navigateUp: () -> Unit,
     allocation: Allocation
 ) {
@@ -142,7 +142,7 @@ fun EditBudgetScreen(
             Spacer(modifier = Modifier.weight(1f)) // Memberi jarak agar teks berada di tengah
 
             Text(
-                text = "Ubah Alokasi Anggaran",
+                text = "Ubah Alokasi",
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
@@ -285,14 +285,14 @@ fun EditBudgetScreen(
             delay(3000) // Delay 3 detik
 
             // insert ke database
-            val allocation = Allocation(
+            val newAllocation = Allocation(
                 needs = kebutuhan.toInt(),
                 wants = keinginan.toInt(),
                 saving = menabung.toInt(),
             )
-            onEvent(GetStartedEvent.SaveAllocation(allocation))
-            onEvent(GetStartedEvent.SaveAppEntry) // langsung pindah ke halaman utama sebab readAppEntry berubah
+            onEvent(EditAllocationEvent.SaveAllocation(newAllocation))
             showSuccessDialog = false
+            navigateUp()
         }
     }
 }

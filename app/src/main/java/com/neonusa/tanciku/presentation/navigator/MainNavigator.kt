@@ -35,6 +35,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
+import com.neonusa.tanciku.presentation.edit_allocation.EditAllocationEvent
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
@@ -222,14 +223,13 @@ fun MainNavigator() {
             composable(route = Route.EditBudgetScreen.route){
                 val viewModel: EditBudgetViewModel = hiltViewModel()
                 val allocation: Allocation by viewModel.allocation.collectAsState()
-
                 EditBudgetScreen(
-                    onEvent = {},
+                    onEvent = viewModel::onEvent,
                     navigateUp = {navController.navigateUp()},
                     allocation = allocation
                 )
-
             }
+
         }
     }
 }
