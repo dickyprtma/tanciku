@@ -13,6 +13,7 @@ sealed class Route(
     object TransactionScreen : Route(route = "TransactionScreen")
     object HomeScreen : Route(route = "HomeScreen")
     object BudgetScreen : Route(route = "BudgetScreen")
+    object EditBudgetScreen: Route(route = "EditBudgetScreen")
 
     // LEVEL 2
     object AddTransactionScreen: Route(route = "AddTransactionScreen")

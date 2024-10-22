@@ -41,6 +41,7 @@ fun BudgetScreen(
     totalWants: Int,
     totalSaving: Int,
     allocation: Allocation,
+    navigateToEdit: () -> Unit
 ){
     Column(
         modifier = Modifier
@@ -61,7 +62,7 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.titleLarge
             )
 
-            IconButton(onClick = {}) {
+            IconButton(onClick = {navigateToEdit()}) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_edit_24), // ganti dengan ikon edit
                     contentDescription = "Edit"
@@ -90,7 +91,7 @@ fun BudgetScreen(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetScreenPreview(){
-    BudgetScreen(totalIncome = 5000000, totalNeeds = 1500000, totalWants = 600000, totalSaving = 900000, allocation = Allocation(50,30,20))
+    BudgetScreen(totalIncome = 5000000, totalNeeds = 1500000, totalWants = 600000, totalSaving = 900000, allocation = Allocation(50,30,20), navigateToEdit = {})
 }
 
 

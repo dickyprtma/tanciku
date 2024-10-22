@@ -35,6 +35,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
+import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -172,7 +173,8 @@ fun MainNavigator() {
                     totalIncome = totalIncome,
                     totalNeeds = totalNeeds,
                     totalWants = totalWants,
-                    totalSaving = totalSaving)
+                    totalSaving = totalSaving,
+                    navigateToEdit = { navigateToEditBudget(navController) })
             }
 
             composable(route = Route.AddTransactionScreen.route) {
@@ -215,6 +217,15 @@ fun MainNavigator() {
                     event = viewModel::onEvent
                 )
             }
+
+            composable(route = Route.EditBudgetScreen.route){
+                //todo pass data from viewmodel
+                EditBudgetScreen(
+                    onEvent = {},
+                    navigateUp = {navController.navigateUp()}
+                )
+
+            }
         }
     }
 }
@@ -243,6 +254,12 @@ private fun navigateToBudget(navController: NavController){
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun navigateToEditBudget(navController: NavController){
+    navController.navigate(
+        route = Route.EditBudgetScreen.route
+    )
 }
 
 private fun navigateToTransaction(navController: NavController){

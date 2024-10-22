@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,8 +41,9 @@ import com.neonusa.tanciku.ui.theme.TancikuTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun EditAllocationScreen(
-    onEvent: (GetStartedEvent) -> Unit
+fun EditBudgetScreen(
+    onEvent: (GetStartedEvent) -> Unit,
+    navigateUp: () -> Unit
 ) {
     var usedPercentage by remember { mutableStateOf(0) }
     var allocatedPercentage by remember { mutableStateOf(100) }
@@ -119,19 +123,33 @@ fun EditAllocationScreen(
             .padding(16.dp),
     ) {
 
-        Text(
-            text = "Ayo Mulai!",
-            color = colorResource(id = R.color.text_title_large),
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(top=24.dp, start = 16.dp, end=16.dp, bottom = 4.dp)
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 48.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack, // Ganti dengan ikon back yang kamu inginkan
+                contentDescription = "Back",
+                modifier = Modifier
+                    .size(24.dp)
+                    .clickable { navigateUp() }
+            )
 
-        Text(
-            text = "Mulai langkah pertama anda dengan mengalokasikan pemasukan",
-            color = colorResource(id = R.color.text_title_small),
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(bottom = 48.dp,start = 16.dp, end=16.dp,)
-        )
+            Spacer(modifier = Modifier.weight(1f)) // Memberi jarak agar teks berada di tengah
+
+            Text(
+                text = "Ubah Alokasi Anggaran",
+                color = colorResource(id = R.color.text_title_large),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier
+                    .weight(8f) // Menyebar teks di tengah
+                    .align(Alignment.CenterVertically)
+            )
+
+            Spacer(modifier = Modifier.weight(1f)) // Memberi jarak di kanan teks
+        }
 
         Box(
             modifier = Modifier
@@ -224,7 +242,7 @@ fun EditAllocationScreen(
             },
             modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
         ) {
-            Text("Alokasikan")
+            Text("Ubah Alokasi")
         }
 
 
@@ -280,8 +298,8 @@ fun EditAllocationScreen(
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun EditAllocationScreen(){
+fun EditBudgetScreenPreview(){
     TancikuTheme {
-        EditAllocationScreen({})
+        EditBudgetScreen({}, {})
     }
 }
