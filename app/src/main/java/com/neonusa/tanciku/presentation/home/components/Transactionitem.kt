@@ -55,7 +55,6 @@ fun TransactionItem(
 
         // Icon di sebelah kiri
         Icon(
-
             painter = painterResource(id = iconResId),
             contentDescription = null,
             modifier = Modifier.size(30.dp),

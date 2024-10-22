@@ -31,12 +31,17 @@ import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun DetailsTransactionScreen(
     onDismiss: () -> Unit,
     transaction: Transaction
 ) {
+    val formattedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(transaction.amount)
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -54,7 +59,7 @@ fun DetailsTransactionScreen(
                     onDismiss()
                 }) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow), // ganti dengan ikon edit
+                        imageVector = ImageVector.vectorResource(id = R.drawable.baseline_clear_24), // ganti dengan ikon edit
                         contentDescription = "Back",
                         tint = colorResource(id = R.color.text_title_small)
                     )
@@ -90,17 +95,29 @@ fun DetailsTransactionScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        val iconResId = when(transaction.type){
+            TransactionType.Pemasukan -> R.drawable.arrow_circle_up
+            TransactionType.Pengeluaran -> R.drawable.arrow_circle_down
+        }
+
+        val iconTintColor = when (transaction.category) {
+            TransactionCategory.Menabung -> colorResource(id = R.color.color_income)
+            TransactionCategory.Pemasukan -> colorResource(id = R.color.color_income)
+            TransactionCategory.Kebutuhan -> colorResource(id = R.color.color_expense)
+            TransactionCategory.Keinginan -> colorResource(id = R.color.color_wants)
+        }
+
         Icon(
-            painter = painterResource(id = R.drawable.arrow_circle_down),
+            painter = painterResource(id = iconResId),
             contentDescription = null,
             modifier = Modifier
                 .size(80.dp)
                 .align(Alignment.CenterHorizontally),
-            tint = colorResource(id = R.color.color_expense),
+            tint = iconTintColor,
         )
 
         Text(
-            text = "Rp${transaction.amount}",
+            text = "Rp$formattedAmount",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp),
@@ -126,7 +143,7 @@ fun DetailsTransactionScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             Text(
-                text = "24 Februari 2024",
+                text = convertDate(transaction.date),
                 color = colorResource(id = R.color.text_title_small),
                 fontSize = 12.sp)
             Text(
@@ -136,6 +153,13 @@ fun DetailsTransactionScreen(
             )
         }
     }
+}
+
+fun convertDate(inputDate: String): String {
+    val inputFormatter = DateTimeFormatter.ofPattern("yyyy-M-d", Locale.getDefault()) // Handling single digit month/day
+    val outputFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale("id", "ID")) // Indonesian locale
+    val date = LocalDate.parse(inputDate, inputFormatter)
+    return date.format(outputFormatter)
 }
 
 @Preview(showBackground = true)

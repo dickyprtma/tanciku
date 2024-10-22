@@ -180,7 +180,6 @@ fun MainNavigator() {
                         navigateToTransaction(navController)
                     },
                     onTransactionItemClicked = {
-                        //todo : i need $it to DetailsTransactionScreen
                         Log.d("TEST", "MainNavigator: $it")
                         transaction = it
                         showDialog = true
