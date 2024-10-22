@@ -43,6 +43,7 @@ import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.detail_transaction.DetailsTransactionScreen
+import com.neonusa.tanciku.presentation.detail_transaction.DetailsTransactionViewModel
 import com.neonusa.tanciku.presentation.edit_allocation.EditAllocationEvent
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
@@ -146,8 +147,10 @@ fun MainNavigator() {
                 val state = viewModel.state.value
 
                 var showDialog by remember { mutableStateOf(false) }
-
                 var transaction by remember { mutableStateOf<Transaction?>(null)}
+
+                // details view model
+//                val detailsTransactionViewModel: DetailsTransactionViewModel = hiltViewModel()
 
                 if (showDialog) {
                     Dialog(onDismissRequest = { showDialog = false }) {
@@ -158,8 +161,12 @@ fun MainNavigator() {
                         ) {
                             DetailsTransactionScreen(
                                 transaction = transaction!!,
-                                onDismiss = {showDialog = false}
-                            )  // Show the details screen within the dialog
+                                onDismiss = {showDialog = false},
+                                event = { detailsTransactionEvent ->
+                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
+                                    showDialog = false
+                                }
+                            )
                         }
                     }
                 }

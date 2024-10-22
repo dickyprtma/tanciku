@@ -44,7 +44,6 @@ interface TransactionDao {
         SELECT SUM(amount) FROM transactions 
         WHERE type = 'Pemasukan' AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
-
     suspend fun getCurrentMonthTotalIncome(): Int
     @Query("""
         SELECT SUM(amount) FROM transactions 
@@ -58,4 +57,6 @@ interface TransactionDao {
         WHERE category = :category AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
     """)
     suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int
+
+
 }

@@ -8,6 +8,7 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.usecases.allocation.AllocationUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
+import com.neonusa.tanciku.presentation.detail_transaction.DetailsTransactionEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,12 @@ class HomeViewModel @Inject constructor(
     private val transactionUseCases: TransactionUseCases,
     private val allocationUseCases: AllocationUseCases
 ): ViewModel() {
+
+    // catatan :
+    // arsitektur viewmodel punya metode enkapsulasi yang membagi variabel menjadi
+    // _namaVariabel : bisa diubah di dalam viewModel
+    // namaVariabel : tidak bisa diubah (untuk diakses di luar viewmodel seperti view)
+
     private val _currentMonthTotalIncome = MutableStateFlow(0)
     val currentMonthTotalIncome: StateFlow<Int> = _currentMonthTotalIncome
 
@@ -41,6 +48,16 @@ class HomeViewModel @Inject constructor(
 
     private val _state = mutableStateOf(HomeState())
     val state: State<HomeState> = _state
+
+    fun onEvent(event: DetailsTransactionEvent){
+        when(event){
+            is DetailsTransactionEvent.DeleteTransactionById -> {
+                viewModelScope.launch {
+                    deleteTransactionById(event.id)
+                }
+            }
+        }
+    }
 
     init {
         getCurrentMonthTotalIncome()
@@ -96,6 +113,11 @@ class HomeViewModel @Inject constructor(
         transactionUseCases.getCurrentMonthLatestTransactions().onEach {
             _state.value = _state.value.copy(transactions = it)
         }.launchIn(viewModelScope)
+    }
+
+    private suspend fun deleteTransactionById(id: Int){
+        transactionUseCases.deleteTransactionById(id)
+        _currentMonthTotalExpense.value = transactionUseCases.getCurrentMonthTotalExpense() // Perbarui StateFlow Expense
     }
 
 }

@@ -39,7 +39,8 @@ import java.util.Locale
 @Composable
 fun DetailsTransactionScreen(
     onDismiss: () -> Unit,
-    transaction: Transaction
+    transaction: Transaction,
+    event: (DetailsTransactionEvent) -> Unit
 ) {
     val formattedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(transaction.amount)
     Column(
@@ -74,7 +75,7 @@ fun DetailsTransactionScreen(
             }
 
             Row {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {event(DetailsTransactionEvent.DeleteTransactionById(transaction.id!!))}) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.trash), // ganti dengan ikon edit
                         contentDescription = "Hapus",
@@ -168,5 +169,6 @@ fun convertDate(inputDate: String): String {
 fun DetailsTransactionScreenPreview(){
     DetailsTransactionScreen(
         onDismiss = {},
-        transaction = Transaction(0,"Membeli ayam geprek","2024-10-10",TransactionType.Pengeluaran, TransactionCategory.Kebutuhan,10000))
+        transaction = Transaction(0,"Membeli ayam geprek","2024-10-10",TransactionType.Pengeluaran, TransactionCategory.Kebutuhan,10000),
+        event = {})
 }
