@@ -156,13 +156,23 @@ fun MainNavigator() {
             composable(route = Route.BudgetScreen.route) {
                 val viewModel: BudgetViewModel = hiltViewModel()
                 val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
+                val totalExpense by viewModel.currentMonthTotalExpense.collectAsState()
                 val totalNeeds by viewModel.currentMonthTotalNeeds.collectAsState()
                 val totalWants by viewModel.currentMonthTotalWants.collectAsState()
                 val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
                 val allocation: Allocation by viewModel.allocation.collectAsState()
 
+                val expensePercentage by derivedStateOf {
+                    if (totalIncome != 0) {
+                        (totalExpense.toFloat() / totalIncome.toFloat()) * 100
+                    } else {
+                        0
+                    }
+                }
+
                 //LaunchedEffect digunakan untuk memicu ulang pemanggilan fungsi setiap kali layar BudgetScreen dimasuki
                 LaunchedEffect(Unit) {
+                    viewModel.getCurrentMonthTotalExpense()
                     viewModel.getCurrentMonthTotalIncome()
                     viewModel.getCurrentMonthTotalNeeds()
                     viewModel.getCurrentMonthTotalWants()
@@ -173,9 +183,11 @@ fun MainNavigator() {
                 BudgetScreen(
                     allocation = allocation,
                     totalIncome = totalIncome,
+                    totalExpense = totalExpense,
                     totalNeeds = totalNeeds,
                     totalWants = totalWants,
                     totalSaving = totalSaving,
+                    expensePercentage = expensePercentage.toInt(),
                     navigateToEdit = { navigateToEditBudget(navController) })
             }
 

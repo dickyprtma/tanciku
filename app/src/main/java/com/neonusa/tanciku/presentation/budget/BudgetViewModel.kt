@@ -17,6 +17,9 @@ class BudgetViewModel @Inject constructor(
     private val transactionUseCases: TransactionUseCases,
     private val allocationUseCases: AllocationUseCases
 ):ViewModel() {
+    private val _currentMonthTotalExpense = MutableStateFlow(0)
+    val currentMonthTotalExpense: StateFlow<Int> = _currentMonthTotalExpense
+
     private val _currentMonthTotalIncome = MutableStateFlow(0)
     val currentMonthTotalIncome: StateFlow<Int> = _currentMonthTotalIncome
 
@@ -45,7 +48,14 @@ class BudgetViewModel @Inject constructor(
         getCurrentMonthTotalNeeds()
         getCurrentMonthTotalWants()
         getCurrentMonthTotalSaving()
+        getCurrentMonthTotalExpense()
         getAllocation()
+    }
+
+    fun getCurrentMonthTotalExpense() {
+        viewModelScope.launch {
+            _currentMonthTotalExpense.value = transactionUseCases.getCurrentMonthTotalExpense()
+        }
     }
 
     fun getCurrentMonthTotalIncome() {

@@ -33,13 +33,17 @@ import com.neonusa.tanciku.presentation.budget.components.BudgetItem
 import com.neonusa.tanciku.presentation.budget.components.TotalExpense
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
 import com.neonusa.tanciku.presentation.home.components.convertDate
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun BudgetScreen(
+    totalExpense: Int,
     totalIncome: Int,
     totalNeeds: Int,
     totalWants: Int,
     totalSaving: Int,
+    expensePercentage: Int,
     allocation: Allocation,
     navigateToEdit: () -> Unit
 ){
@@ -49,6 +53,7 @@ fun BudgetScreen(
             .statusBarsPadding()
             .padding(16.dp)
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,7 +80,7 @@ fun BudgetScreen(
         val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
 
         //todo : ambil data real
-        TotalExpense(usedPercentage = 20, allocatedpercentage = 50)
+        TotalExpense(expensePercentage = expensePercentage, totalExpense = totalExpense, totalIncome = totalIncome)
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -91,7 +96,7 @@ fun BudgetScreen(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun BudgetScreenPreview(){
-    BudgetScreen(totalIncome = 5000000, totalNeeds = 1500000, totalWants = 600000, totalSaving = 900000, allocation = Allocation(50,30,20), navigateToEdit = {})
+    BudgetScreen(totalIncome = 5000000, totalNeeds = 1500000, totalWants = 600000, totalSaving = 900000, allocation = Allocation(50,30,20), navigateToEdit = {}, totalExpense = 500400, expensePercentage = 50)
 }
 
 

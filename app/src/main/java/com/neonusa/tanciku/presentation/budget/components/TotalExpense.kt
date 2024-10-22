@@ -23,16 +23,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.TransactionCategory
+import java.text.NumberFormat
+import java.util.Locale
 
 @Composable
 fun TotalExpense(
-    usedPercentage: Int,
-    allocatedpercentage: Int
+    expensePercentage: Int,
+    totalExpense: Int,
+    totalIncome: Int
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val formattedTotalExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
+        val formattedTotalIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
+
         Box(modifier = Modifier
             .size(80.dp),
             contentAlignment = Alignment.Center
@@ -48,7 +54,7 @@ fun TotalExpense(
 
             // Inner circle (represents used percentage)
             CircularProgressIndicator(
-                progress = usedPercentage.toFloat() / allocatedpercentage.toFloat(),
+                progress = expensePercentage.toFloat() / 100,
                 modifier = Modifier
                     .size(100.dp)
                     .padding(1.dp), // To prevent overlap
@@ -57,7 +63,7 @@ fun TotalExpense(
             )
 
             Text(
-                text = "30%",
+                text = "$expensePercentage%",
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.bodySmall
             )
@@ -74,7 +80,7 @@ fun TotalExpense(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Rp1.000.000 / 3.000.000",
+                text = "Rp$formattedTotalExpense / $formattedTotalIncome",
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
@@ -86,5 +92,5 @@ fun TotalExpense(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun TotalExpensePreview() {
-    TotalExpense(20,50)
+    TotalExpense(20,1000000,3000000)
 }
