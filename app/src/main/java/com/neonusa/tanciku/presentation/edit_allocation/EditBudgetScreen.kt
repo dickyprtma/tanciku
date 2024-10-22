@@ -128,7 +128,7 @@ fun EditBudgetScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 48.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 48.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(

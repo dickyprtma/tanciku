@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -79,7 +80,6 @@ fun BudgetScreen(
         val wantsUsedPercentage = if (totalIncome != 0) (totalWants.toFloat() / totalIncome.toFloat()) * 100 else 0f
         val savingUsedPercentage = if (totalIncome != 0) (totalSaving.toFloat() / totalIncome.toFloat()) * 100 else 0f
 
-        //todo : ambil data real
         TotalExpense(expensePercentage = expensePercentage, totalExpense = totalExpense, totalIncome = totalIncome)
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -88,7 +88,12 @@ fun BudgetScreen(
         BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving, totalIncome = totalIncome)
 
-        // todo : isi layar kosong ini dengan sedikit informasi terkait penganggaran (seperti kebutuhan : blablablabal, dst.)
+        Text(
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 32.dp),
+            style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
+            color = colorResource(id = R.color.text_title_small).copy(alpha = 0.5f),
+            textAlign = TextAlign.Center,
+            text = "Kamu mengeluarkan sekitar $expensePercentage% dari pemasukan, terdiri dari ${needsUsedPercentage.toInt()}% Kebutuhan, ${wantsUsedPercentage.toInt()}% Keinginan dan ${savingUsedPercentage.toInt()}% untuk Menabung")
     }
 }
 
