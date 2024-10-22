@@ -88,12 +88,6 @@ fun BudgetScreen(
         BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving, totalIncome = totalIncome)
 
-        Text(
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 32.dp),
-            style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
-            color = colorResource(id = R.color.text_title_small).copy(alpha = 0.5f),
-            textAlign = TextAlign.Center,
-            text = "Kamu mengeluarkan sekitar $expensePercentage% dari pemasukan, terdiri dari ${needsUsedPercentage.toInt()}% Kebutuhan, ${wantsUsedPercentage.toInt()}% Keinginan dan ${savingUsedPercentage.toInt()}% untuk Menabung")
     }
 }
 
