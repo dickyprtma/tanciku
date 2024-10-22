@@ -43,18 +43,20 @@ import kotlinx.coroutines.delay
 @Composable
 fun EditBudgetScreen(
     onEvent: (GetStartedEvent) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    allocation: Allocation
 ) {
-    var usedPercentage by remember { mutableStateOf(0) }
+    val usedPercentageInit = allocation.needs + allocation.wants + allocation.saving
+    var usedPercentage by remember { mutableStateOf(usedPercentageInit) }
     var allocatedPercentage by remember { mutableStateOf(100) }
 
     val kebutuhanError = remember { mutableStateOf(false) }
     val keinginanError = remember { mutableStateOf(false) }
     val menabungError = remember { mutableStateOf(false) }
 
-    var kebutuhan by remember { mutableStateOf("0") }
-    var keinginan by remember { mutableStateOf("0") }
-    var menabung by remember { mutableStateOf("0") }
+    var kebutuhan by remember { mutableStateOf(allocation.needs.toString()) }
+    var keinginan by remember { mutableStateOf(allocation.wants.toString()) }
+    var menabung by remember { mutableStateOf(allocation.saving.toString()) }
 
     var showAllocationError by remember { mutableStateOf(false) }
     var allocationErrorMessage by remember { mutableStateOf("") }
@@ -175,7 +177,7 @@ fun EditBudgetScreen(
             )
 
             Text(
-                text = "${usedPercentage.toInt()}/${allocatedPercentage.toInt()}%",
+                text = "${usedPercentage}/${allocatedPercentage.toInt()}%",
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleMedium
             )
@@ -300,6 +302,6 @@ fun EditBudgetScreen(
 @Composable
 fun EditBudgetScreenPreview(){
     TancikuTheme {
-        EditBudgetScreen({}, {})
+        EditBudgetScreen({}, {}, allocation = Allocation(0,0,0))
     }
 }

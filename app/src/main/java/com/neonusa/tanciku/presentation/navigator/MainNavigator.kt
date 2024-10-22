@@ -36,6 +36,7 @@ import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
+import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -219,10 +220,13 @@ fun MainNavigator() {
             }
 
             composable(route = Route.EditBudgetScreen.route){
-                //todo pass data from viewmodel
+                val viewModel: EditBudgetViewModel = hiltViewModel()
+                val allocation: Allocation by viewModel.allocation.collectAsState()
+
                 EditBudgetScreen(
                     onEvent = {},
-                    navigateUp = {navController.navigateUp()}
+                    navigateUp = {navController.navigateUp()},
+                    allocation = allocation
                 )
 
             }

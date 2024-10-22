@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
     private val _state = mutableStateOf(HomeState())
     val state: State<HomeState> = _state
 
-
     init {
         getCurrentMonthTotalIncome()
         getCurrentMonthTotalExpense()
