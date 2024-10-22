@@ -35,6 +35,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
@@ -144,8 +145,9 @@ fun MainNavigator() {
 
                 val state = viewModel.state.value
 
-
                 var showDialog by remember { mutableStateOf(false) }
+
+                var transaction by remember { mutableStateOf<Transaction?>(null)}
 
                 if (showDialog) {
                     Dialog(onDismissRequest = { showDialog = false }) {
@@ -154,7 +156,10 @@ fun MainNavigator() {
                             color = MaterialTheme.colorScheme.surface,
                             contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
                         ) {
-                            DetailsTransactionScreen()  // Show the details screen within the dialog
+                            DetailsTransactionScreen(
+                                transaction = transaction!!,
+                                onDismiss = {showDialog = false}
+                            )  // Show the details screen within the dialog
                         }
                     }
                 }
@@ -175,9 +180,10 @@ fun MainNavigator() {
                         navigateToTransaction(navController)
                     },
                     onTransactionItemClicked = {
+                        //todo : i need $it to DetailsTransactionScreen
                         Log.d("TEST", "MainNavigator: $it")
+                        transaction = it
                         showDialog = true
-                        //todo munculkan dialog dari DetailsTransactionScreen
                     })
             }
             composable(route = Route.BudgetScreen.route) {

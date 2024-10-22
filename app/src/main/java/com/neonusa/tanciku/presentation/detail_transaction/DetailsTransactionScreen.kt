@@ -28,9 +28,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Transaction
+import com.neonusa.tanciku.domain.model.TransactionCategory
+import com.neonusa.tanciku.domain.model.TransactionType
 
 @Composable
-fun DetailsTransactionScreen() {
+fun DetailsTransactionScreen(
+    onDismiss: () -> Unit,
+    transaction: Transaction
+) {
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -44,7 +50,9 @@ fun DetailsTransactionScreen() {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {
+                    onDismiss()
+                }) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_back_arrow), // ganti dengan ikon edit
                         contentDescription = "Back",
@@ -92,7 +100,7 @@ fun DetailsTransactionScreen() {
         )
 
         Text(
-            text = "Rp980.000",
+            text = "Rp${transaction.amount}",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 16.dp, start = 24.dp, end = 24.dp),
@@ -101,7 +109,7 @@ fun DetailsTransactionScreen() {
         )
 
         Text(
-            text = "Membeli saham dan reksadana + tanah + ruko + semuanya",
+            text = transaction.description,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp, start = 24.dp, end = 24.dp),
@@ -122,7 +130,7 @@ fun DetailsTransactionScreen() {
                 color = colorResource(id = R.color.text_title_small),
                 fontSize = 12.sp)
             Text(
-                text = "Pemasukan",
+                text = transaction.category.name,
                 color = colorResource(id = R.color.text_title_small),
                 fontSize = 12.sp
             )
@@ -134,5 +142,7 @@ fun DetailsTransactionScreen() {
 @Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun DetailsTransactionScreenPreview(){
-    DetailsTransactionScreen()
+    DetailsTransactionScreen(
+        onDismiss = {},
+        transaction = Transaction(0,"Membeli ayam geprek","2024-10-10",TransactionType.Pengeluaran, TransactionCategory.Kebutuhan,10000))
 }
