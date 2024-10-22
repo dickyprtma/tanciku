@@ -8,7 +8,7 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.usecases.allocation.AllocationUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
-import com.neonusa.tanciku.presentation.detail_transaction.DetailsTransactionEvent
+import com.neonusa.tanciku.presentation.common.DetailsTransactionEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val allocationUseCases: AllocationUseCases
 ): ViewModel() {
 
-    // catatan :
+    // catatan penting :
     // arsitektur viewmodel punya metode enkapsulasi yang membagi variabel menjadi
     // _namaVariabel : bisa diubah di dalam viewModel
     // namaVariabel : tidak bisa diubah (untuk diakses di luar viewmodel seperti view)

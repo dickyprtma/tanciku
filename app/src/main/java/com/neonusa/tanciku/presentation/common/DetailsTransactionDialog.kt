@@ -1,12 +1,10 @@
-package com.neonusa.tanciku.presentation.detail_transaction
+package com.neonusa.tanciku.presentation.common
 
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,7 +35,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun DetailsTransactionScreen(
+fun DetailsTransactionDialog(
     onDismiss: () -> Unit,
     transaction: Transaction,
     event: (DetailsTransactionEvent) -> Unit
@@ -75,7 +73,11 @@ fun DetailsTransactionScreen(
             }
 
             Row {
-                IconButton(onClick = {event(DetailsTransactionEvent.DeleteTransactionById(transaction.id!!))}) {
+                IconButton(onClick = {event(
+                    DetailsTransactionEvent.DeleteTransactionById(
+                        transaction.id!!
+                    )
+                )}) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.trash), // ganti dengan ikon edit
                         contentDescription = "Hapus",
@@ -166,8 +168,8 @@ fun convertDate(inputDate: String): String {
 @Preview(showBackground = true)
 @Preview(showBackground = false, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun DetailsTransactionScreenPreview(){
-    DetailsTransactionScreen(
+fun DetailsTransactionDialogPreview(){
+    DetailsTransactionDialog(
         onDismiss = {},
         transaction = Transaction(0,"Membeli ayam geprek","2024-10-10",TransactionType.Pengeluaran, TransactionCategory.Kebutuhan,10000),
         event = {})
