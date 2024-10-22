@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.common.ListTransactionItem
 import com.neonusa.tanciku.presentation.home.components.BalanceLayout
 import com.neonusa.tanciku.presentation.home.components.BudgetCircularItem
@@ -43,6 +44,7 @@ fun HomeScreen(
     state: HomeState,
     navigateToBudget: () -> Unit,
     navigateToTransaction: () -> Unit,
+    onTransactionItemClicked: (Transaction) -> Unit
 ){
     val formattedIncome = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalIncome)
     val formattedExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)
@@ -157,7 +159,7 @@ fun HomeScreen(
                     }
             )
         }
-        ListTransactionItem(transactions = state.transactions,onClick = {})
+        ListTransactionItem(transactions = state.transactions,onClick = {onTransactionItemClicked(it)})
     }
 }
 
@@ -171,6 +173,7 @@ fun HomeScreenReview(){
             allocation = Allocation(0,0,0),
             totalNeeds = 0, totalWants = 0, totalSaving = 0,
             state = HomeState(),
-            navigateToBudget = {}, navigateToTransaction = {})
+            navigateToBudget = {}, navigateToTransaction = {},
+            onTransactionItemClicked = {})
     }
 }

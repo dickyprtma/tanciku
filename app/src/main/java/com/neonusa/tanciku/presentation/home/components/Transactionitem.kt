@@ -1,6 +1,7 @@
 package com.neonusa.tanciku.presentation.home.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,7 +48,8 @@ fun TransactionItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 24.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 24.dp, start = 16.dp, end = 16.dp)
+            .clickable { onClick?.invoke() },
         verticalAlignment = Alignment.CenterVertically
     ) {
 

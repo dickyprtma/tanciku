@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +53,7 @@ fun DetailsTransactionScreen() {
                 }
 
                 Text(
-                    text = "Detail Transaksi",
+                    text = "Transaksi",
                     fontSize = 20.sp,
                     style = MaterialTheme.typography.titleLarge,
                     color = colorResource(id = R.color.text_title_small)
@@ -79,13 +80,13 @@ fun DetailsTransactionScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Icon(
             painter = painterResource(id = R.drawable.arrow_circle_down),
             contentDescription = null,
             modifier = Modifier
-                .size(100.dp)
+                .size(80.dp)
                 .align(Alignment.CenterHorizontally),
             tint = colorResource(id = R.color.color_expense),
         )
@@ -94,18 +95,20 @@ fun DetailsTransactionScreen() {
             text = "Rp980.000",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                .padding(top = 16.dp, start = 24.dp, end = 24.dp),
             style = MaterialTheme.typography.titleLarge,
             color = colorResource(id = R.color.text_title_small)
         )
 
         Text(
-            text = "Membeli saham dan reksadana",
+            text = "Membeli saham dan reksadana + tanah + ruko + semuanya",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp, start = 24.dp, end = 24.dp),
-            style = MaterialTheme.typography.bodyLarge,
-            color = colorResource(id = R.color.text_title_small)
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.text_title_small),
+            fontSize = 13.sp
         )
 
         Row (
@@ -116,11 +119,12 @@ fun DetailsTransactionScreen() {
         ){
             Text(
                 text = "24 Februari 2024",
-                color = colorResource(id = R.color.text_title_small)
-                )
+                color = colorResource(id = R.color.text_title_small),
+                fontSize = 12.sp)
             Text(
                 text = "Pemasukan",
-                color = colorResource(id = R.color.text_title_small)
+                color = colorResource(id = R.color.text_title_small),
+                fontSize = 12.sp
             )
         }
     }

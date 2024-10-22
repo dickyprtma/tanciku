@@ -1,6 +1,7 @@
 package com.neonusa.tanciku.presentation.navigator
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -8,8 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -20,7 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -35,6 +41,7 @@ import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
+import com.neonusa.tanciku.presentation.detail_transaction.DetailsTransactionScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditAllocationEvent
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
@@ -137,6 +144,21 @@ fun MainNavigator() {
 
                 val state = viewModel.state.value
 
+
+                var showDialog by remember { mutableStateOf(false) }
+
+                if (showDialog) {
+                    Dialog(onDismissRequest = { showDialog = false }) {
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surface,
+                            contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
+                        ) {
+                            DetailsTransactionScreen()  // Show the details screen within the dialog
+                        }
+                    }
+                }
+
                 HomeScreen(
                     totalIncome = totalIncome,
                     totalExpense = totalExpense,
@@ -151,6 +173,11 @@ fun MainNavigator() {
                     },
                     navigateToTransaction = {
                         navigateToTransaction(navController)
+                    },
+                    onTransactionItemClicked = {
+                        Log.d("TEST", "MainNavigator: $it")
+                        showDialog = true
+                        //todo munculkan dialog dari DetailsTransactionScreen
                     })
             }
             composable(route = Route.BudgetScreen.route) {
