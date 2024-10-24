@@ -58,8 +58,6 @@ fun AddTransactionScreen(
     totalSaving: Int,
     ){
 
-    //todo : bikin rekomendasi sebesar persentase alokasi menabung saat kategori menabung dipilih
-
     var rawAmount by remember { mutableStateOf("0") } // for data input
     var amount by remember{ mutableStateOf("0")} // for data view
     var desc by remember{ mutableStateOf("")}
@@ -215,62 +213,65 @@ fun AddTransactionScreen(
         val formattedAmountLeft = NumberFormat.getNumberInstance(Locale("id", "ID")).format(amountLeft)
 
         if (transactionCategory == "Menabung") {
-            if(!isSavingRecommendationAlreadyChoosed){
-                if (showSavingRecommendation) {
-                    Text(
-                        text = "Masih kurang Rp$formattedAmountLeft untuk memenuhi target ${allocation.saving}% menabung. Apakah kamu ingin memenuhi target menabungmu?",
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp, top = 12.dp)
-                    ) {
-                        Button(
-                            onClick = {
-                                amount =  formattedAmountLeft
-                                showSavingRecommendation = false
-                                rawAmount = amountLeft.toString()
-                                isSavingRecommendationAlreadyChoosed = true
-                            },
+            if(amountLeft > 0){
+                if(!isSavingRecommendationAlreadyChoosed){
+                    if (showSavingRecommendation) {
+                        Text(
+                            text = "Masih kurang Rp$formattedAmountLeft untuk memenuhi target ${allocation.saving}% menabung. Apakah kamu ingin memenuhi target menabungmu?",
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
+                        )
+                        Row(
                             modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 4.dp)
-                                .border(
-                                    1.dp,
-                                    colorResource(id = R.color.color_income),
-                                    shape = RoundedCornerShape(50)
-                                ),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = colorResource(id = R.color.color_income)
-                            )
+                                .fillMaxWidth()
+                                .padding(start = 20.dp, end = 20.dp, top = 12.dp)
                         ) {
-                            Text("Ya")
-                        }
-                        Button(
-                            onClick = {
-                                showSavingRecommendation = false
-                                isSavingRecommendationAlreadyChoosed = true
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 4.dp)
-                                .border(
-                                    1.dp,
-                                    colorResource(id = R.color.color_expense),
-                                    shape = RoundedCornerShape(50)
+                            Button(
+                                onClick = {
+                                    amount =  formattedAmountLeft
+                                    showSavingRecommendation = false
+                                    rawAmount = amountLeft.toString()
+                                    isSavingRecommendationAlreadyChoosed = true
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 4.dp)
+                                    .border(
+                                        1.dp,
+                                        colorResource(id = R.color.color_income),
+                                        shape = RoundedCornerShape(50)
+                                    ),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Transparent,
+                                    contentColor = colorResource(id = R.color.color_income)
+                                )
+                            ) {
+                                Text("Ya")
+                            }
+                            Button(
+                                onClick = {
+                                    showSavingRecommendation = false
+                                    isSavingRecommendationAlreadyChoosed = true
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(start = 4.dp)
+                                    .border(
+                                        1.dp,
+                                        colorResource(id = R.color.color_expense),
+                                        shape = RoundedCornerShape(50)
+                                    ),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Transparent,
+                                    contentColor = colorResource(id = R.color.color_expense)
                                 ),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = colorResource(id = R.color.color_expense)
-                            ),
-                        ) {
-                            Text("Tidak")
+                            ) {
+                                Text("Tidak")
+                            }
                         }
                     }
+
                 }
 
             }
