@@ -237,11 +237,6 @@ fun MainNavigator() {
                 if (showDialog) {
                     AlertDialog(
                         onDismissRequest = {
-                            showDialog = false
-                            viewModel.onEvent(AddTransactionEvent.RemoveSideEffect)
-                            navController.navigate(Route.HomeScreen.route) {
-                                popUpTo(Route.HomeScreen.route) { inclusive = true }
-                            }
                         },
                         title = { Text("Success") },
                         text = { Text("Data transaksi berhasil Ditambahkan") },

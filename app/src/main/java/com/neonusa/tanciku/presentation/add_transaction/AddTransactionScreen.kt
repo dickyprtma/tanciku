@@ -66,6 +66,20 @@ fun AddTransactionScreen(
             .fillMaxSize()
             .statusBarsPadding()
     ) {
+        // convert transaction type and category string to enum
+        val transactionTypeEnum = when (transactionType) {
+            "Pengeluaran" -> TransactionType.Pengeluaran
+            "Pemasukan" -> TransactionType.Pemasukan
+            else -> TransactionType.Pengeluaran // Default value (jika ada)
+        }
+
+        val transactionCategoryEnum = when (transactionCategory) {
+            "Kebutuhan" -> TransactionCategory.Kebutuhan
+            "Keinginan" -> TransactionCategory.Keinginan
+            "Menabung" -> TransactionCategory.Menabung
+            else -> TransactionCategory.Pemasukan // Default value (jika ada)
+        }
+
         // rencananya nanti pilih tanggalnya kalo udh tekan centang aja
         AddTransactionToolbarLayout(
             onBackClick = navigateUp,
@@ -179,26 +193,8 @@ fun AddTransactionScreen(
                 onDateSelected = { date ->
                     selectedDate = date
                     showDatePicker = false // Hide the DatePicker once a date is selected
-                },
-                onDismissRequest = {
-                    //todo : pastikan insert ke database hanya terjadi jika user menekan ok, jika menekan batal ini tidak tejadi
-                    showDatePicker = false // Hide the DatePicker if dismissed
 
-                    // convert transaction type and category string to enum
-                    val transactionTypeEnum = when (transactionType) {
-                        "Pengeluaran" -> TransactionType.Pengeluaran
-                        "Pemasukan" -> TransactionType.Pemasukan
-                        else -> TransactionType.Pengeluaran // Default value (jika ada)
-                    }
-
-                    val transactionCategoryEnum = when (transactionCategory) {
-                        "Kebutuhan" -> TransactionCategory.Kebutuhan
-                        "Keinginan" -> TransactionCategory.Keinginan
-                        "Menabung" -> TransactionCategory.Menabung
-                        else -> TransactionCategory.Pemasukan // Default value (jika ada)
-                    }
-
-                    // insert ke database
+                    // insert ke database jika sudah memilih tanggal dan menekan ok
                     val transaction = Transaction(
                         type = transactionTypeEnum,
                         amount = rawAmount.toInt(),
@@ -207,6 +203,10 @@ fun AddTransactionScreen(
                         date = selectedDate
                     )
                     event(AddTransactionEvent.InsertTransaction(transaction))
+                    Log.d("AddTransactionScreen@Test", "dateselected and ok pressed")
+                },
+                onDismissRequest = {
+                    showDatePicker = false // Hide the DatePicker if dismissed
                 }
             )
         }
