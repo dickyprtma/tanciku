@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,8 +44,9 @@ import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
 
-// next update saja
+// next update 1.1.0
 // kasih peringatan ke user terkait kebutuhan atau pengeluarannya jika udah berlebih
+// masih dipertimbangkan untuk jadi fitur tanciku+ atau tidak
 
 //todo : user experience waktu input nominal masih buruk cursornya
 @Composable
@@ -70,6 +70,7 @@ fun AddTransactionScreen(
 
     var showDatePicker by remember { mutableStateOf(false) }
     var showSavingRecommendation by remember { mutableStateOf(false) }
+    var isSavingRecommendationAlreadyChoosed by remember { mutableStateOf(false) }
 
 
     val context = LocalContext.current
@@ -107,14 +108,16 @@ fun AddTransactionScreen(
 
                 // Validation logic
                 val isValid = when {
-                    rawAmount.isEmpty() || rawAmount.toIntOrNull() == null || rawAmount.toInt() <= 0 -> {
+                    rawAmount.isEmpty() || rawAmount.toFloat().toInt() <= 0 -> {
                         amountError = "Nominal harus lebih dari 0"
                         false
                     }
+
                     desc.isEmpty() -> {
                         descError = "Keterangan tidak boleh kosong"
                         false
                     }
+
                     else -> true
                 }
 
@@ -125,7 +128,7 @@ fun AddTransactionScreen(
 
         TransactionTypeSelection(
             selectedType = transactionType,
-            onTypeChange = {newType ->
+            onTypeChange = { newType ->
                 transactionType = newType
                 // Set category to "Kebutuhan" if type is "Pengeluaran"
                 if (newType == "Pengeluaran") {
@@ -195,67 +198,81 @@ fun AddTransactionScreen(
             )
         }
 
-        if(transactionType == "Pengeluaran"){
+        if (transactionType == "Pengeluaran") {
             TransactionCategorySelection(
                 selectedCategory = transactionCategory,
-                onCategoryChange = {category ->
+                onCategoryChange = { category ->
                     transactionCategory = category
-                    if (category=="Menabung"){
+                    if (category == "Menabung") {
                         showSavingRecommendation = true
                     }
                 }
             )
         }
 
-        if(transactionCategory == "Menabung"){
-            if(showSavingRecommendation){
-                Text(text = "Masih kurang Rp000.000 untuk memenuhi target ${allocation.saving}% menabung. Apakah kamu ingin memenuhi target menabungmu?",
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, top = 12.dp)
-                ) {
-                    Button(
-                        onClick = {
-                            //todo : langsung isi nominal nd% alokasi menabung
-                        },
+        val allocatedAmount = (allocation.saving.toFloat() / 100) * totalIncome
+        val amountLeft = allocatedAmount - totalSaving
+        val formattedAmountLeft = NumberFormat.getNumberInstance(Locale("id", "ID")).format(amountLeft)
+
+        if (transactionCategory == "Menabung") {
+            if(!isSavingRecommendationAlreadyChoosed){
+                if (showSavingRecommendation) {
+                    Text(
+                        text = "Masih kurang Rp$formattedAmountLeft untuk memenuhi target ${allocation.saving}% menabung. Apakah kamu ingin memenuhi target menabungmu?",
+                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
+                    )
+                    Row(
                         modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 4.dp)
-                            .border(
-                                1.dp,
-                                colorResource(id = R.color.color_income),
-                                shape = RoundedCornerShape(50)
-                            ),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                            contentColor = colorResource(id = R.color.color_income))
+                            .fillMaxWidth()
+                            .padding(start = 20.dp, end = 20.dp, top = 12.dp)
                     ) {
-                        Text("Ya")
-                    }
-                    Button(
-                        onClick = {
-                            showSavingRecommendation = false
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(start = 4.dp)
-                            .border(
-                                1.dp,
-                                colorResource(id = R.color.color_expense),
-                                shape = RoundedCornerShape(50)
+                        Button(
+                            onClick = {
+                                amount =  formattedAmountLeft
+                                showSavingRecommendation = false
+                                rawAmount = amountLeft.toString()
+                                isSavingRecommendationAlreadyChoosed = true
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 4.dp)
+                                .border(
+                                    1.dp,
+                                    colorResource(id = R.color.color_income),
+                                    shape = RoundedCornerShape(50)
+                                ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.color_income)
+                            )
+                        ) {
+                            Text("Ya")
+                        }
+                        Button(
+                            onClick = {
+                                showSavingRecommendation = false
+                                isSavingRecommendationAlreadyChoosed = true
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 4.dp)
+                                .border(
+                                    1.dp,
+                                    colorResource(id = R.color.color_expense),
+                                    shape = RoundedCornerShape(50)
+                                ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Transparent,
+                                contentColor = colorResource(id = R.color.color_expense)
                             ),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                            contentColor = colorResource(id = R.color.color_expense)),
-                    ) {
-                        Text("Tidak")
+                        ) {
+                            Text("Tidak")
+                        }
                     }
                 }
+
             }
 
         }
@@ -270,7 +287,7 @@ fun AddTransactionScreen(
                     // insert ke database jika sudah memilih tanggal dan menekan ok
                     val transaction = Transaction(
                         type = transactionTypeEnum,
-                        amount = rawAmount.toInt(),
+                        amount = rawAmount.toFloat().toInt(),
                         description = desc,
                         category = transactionCategoryEnum,
                         date = selectedDate
