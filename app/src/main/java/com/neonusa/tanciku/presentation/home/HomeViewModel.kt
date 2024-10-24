@@ -117,7 +117,14 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun deleteTransactionById(id: Int){
         transactionUseCases.deleteTransactionById(id)
-        _currentMonthTotalExpense.value = transactionUseCases.getCurrentMonthTotalExpense() // Perbarui StateFlow Expense
+
+        // Perbarui StateFlow
+        _currentMonthTotalIncome.value = transactionUseCases.getCurrentMonthTotalIncome()
+        _currentMonthTotalExpense.value = transactionUseCases.getCurrentMonthTotalExpense()
+
+        _currentMonthTotalNeeds.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Kebutuhan)
+        _currentMonthTotalWants.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Keinginan)
+        _currentMonthTotalSaving.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Menabung)
     }
 
 }
