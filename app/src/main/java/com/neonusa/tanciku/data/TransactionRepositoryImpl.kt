@@ -26,7 +26,7 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
         return transactionDao.getCurrentMonthTotalExpense()
     }
 
-    override suspend fun getCurentMonthTotalTransactionByCategory(category: TransactionCategory): Int {
+    override suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int {
         return transactionDao.getCurrentMonthTotalTransactionByCategory(category)
     }
 
