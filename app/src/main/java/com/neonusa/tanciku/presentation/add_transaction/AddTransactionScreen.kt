@@ -50,7 +50,6 @@ import java.util.Locale
 // kasih peringatan ke user terkait kebutuhan atau pengeluarannya jika udah berlebih
 // masih dipertimbangkan untuk jadi fitur tanciku+ atau tidak
 
-//todo : user experience waktu input nominal masih buruk cursornya
 @Composable
 fun AddTransactionScreen(
     navigateUp: () -> Unit,
