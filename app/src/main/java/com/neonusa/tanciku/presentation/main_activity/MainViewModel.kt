@@ -25,13 +25,12 @@ class MainViewModel @Inject constructor(
     val startDestination: State<String> = _startDestination
 
     init {
-        appEntryUseCases.readAppEntry().onEach { shouldStartFromHomeScreen ->
-            if(shouldStartFromHomeScreen){
+        appEntryUseCases.readAppEntry().onEach { getStartedDone ->
+            if(getStartedDone){
                 _startDestination.value = Route.MainNavigation.route
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(1000) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }

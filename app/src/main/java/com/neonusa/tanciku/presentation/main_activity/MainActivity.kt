@@ -2,6 +2,9 @@ package com.neonusa.tanciku.presentation.main_activity
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -35,13 +38,29 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
+        // original code
+//        installSplashScreen().apply {
+//            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
+//        }
+
+        var isConditionMet = false
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition{
+            // Logika untuk tetap menampilkan splash screen sampai kondisi tertentu terpenuhi
+            // selama ini bernilai true, splashscreen akan terus tampil
+            Log.d("MainActivity@test", "onCreate: splash screen showing...$isConditionMet")
+            !isConditionMet
         }
+
+        // Menggunakan Handler untuk menunda perubahan kondisi selama dua detik
+        Handler(Looper.getMainLooper()).postDelayed({
+            isConditionMet = true
+            Log.d("MainActivity@test", "onCreate: here your first screen...$isConditionMet")
+        }, 2000)
 
         enableEdgeToEdge()
         setContent {
-            TancikuApp()
+//            TancikuApp()
         }
     }
 }
