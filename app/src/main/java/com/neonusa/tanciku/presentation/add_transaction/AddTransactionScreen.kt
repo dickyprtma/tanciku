@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.Log
 import android.widget.DatePicker
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -23,11 +26,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
@@ -50,12 +56,14 @@ fun AddTransactionScreen(
     var rawAmount by remember { mutableStateOf("0") } // for data input
     var amount by remember{ mutableStateOf("0")} // for data view
     var desc by remember{ mutableStateOf("")}
+    var selectedDate by remember { mutableStateOf("") }
 
     var transactionType by remember { mutableStateOf("Pengeluaran")}
     var transactionCategory by remember { mutableStateOf("Kebutuhan")}
 
     var showDatePicker by remember { mutableStateOf(false) }
-    var selectedDate by remember { mutableStateOf("") }
+    var showSavingRecommendation by remember { mutableStateOf(false) }
+
 
     val context = LocalContext.current
 
@@ -185,23 +193,64 @@ fun AddTransactionScreen(
                 selectedCategory = transactionCategory,
                 onCategoryChange = {category ->
                     transactionCategory = category
+                    if (category=="Menabung"){
+                        showSavingRecommendation = true
+                    }
                 }
             )
         }
 
         if(transactionCategory == "Menabung"){
-            Text(text = "Kamu mengalokasikan ND% untuk menabung, ingin menabung sebesar nd%?",
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp),
-                style = MaterialTheme.typography.bodySmall
-            )
-            Button(
-                onClick = {
-                    //todo : langsung isi nominal nd% alokasi menabung
-                },
-                modifier = Modifier.fillMaxWidth().padding(start= 20.dp, end= 20.dp, top = 16.dp)
-            ) {
-                Text("Menabung nd%")
+            if(showSavingRecommendation){
+                Text(text = "Masih kurang Rp000.000 untuk memenuhi target ND% menabung. Apakah kamu ingin memenuhi target menabungmu?",
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, top = 12.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            //todo : langsung isi nominal nd% alokasi menabung
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 4.dp)
+                            .border(
+                                1.dp,
+                                colorResource(id = R.color.color_income),
+                                shape = RoundedCornerShape(50)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = colorResource(id = R.color.color_income))
+                    ) {
+                        Text("Ya")
+                    }
+                    Button(
+                        onClick = {
+                            showSavingRecommendation = false
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 4.dp)
+                            .border(
+                                1.dp,
+                                colorResource(id = R.color.color_expense),
+                                shape = RoundedCornerShape(50)
+                            ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = colorResource(id = R.color.color_expense)),
+                    ) {
+                        Text("Tidak")
+                    }
+                }
             }
+
         }
 
         if (showDatePicker) {
