@@ -24,6 +24,7 @@ fun IncomeAllocationInputField(
         onValueChange = { updatedValue ->
             // Clean the value by removing leading zeros
             val cleanedValue = updatedValue.trimStart('0')
+                .filter { char -> char.isDigit() }
 
             // Limit the value to a maximum of 2 digits
             val finalValue = when {

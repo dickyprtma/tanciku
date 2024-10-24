@@ -2,6 +2,9 @@ package com.neonusa.tanciku.presentation.main_activity
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +26,12 @@ import com.neonusa.tanciku.presentation.navgraph.NavGraph
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
+
+//todo : masih bug menampilkan getstarted screen waktu buka aplikasi  (padahal sudah save entry)
+// todo : bug kalau klik icon edit dua kali, dia ke halaman edit juga dua kali (dua halaman ngestack)
+
+//todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
+//todo : fitur edit transaksi
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

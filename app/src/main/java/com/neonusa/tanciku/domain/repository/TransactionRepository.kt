@@ -11,7 +11,7 @@ interface TransactionRepository {
 
     suspend fun getCurrentMonthTotalIncome(): Int
     suspend fun getCurrentMonthTotalExpense(): Int
-    suspend fun getCurentMonthTotalTransactionByCategory(category: TransactionCategory): Int //todo: fix this typo
+    suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int
 
     fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>>
 }

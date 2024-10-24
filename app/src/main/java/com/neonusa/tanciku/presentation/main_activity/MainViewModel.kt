@@ -1,6 +1,5 @@
 package com.neonusa.tanciku.presentation.main_activity
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -25,13 +24,13 @@ class MainViewModel @Inject constructor(
     val startDestination: State<String> = _startDestination
 
     init {
-        appEntryUseCases.readAppEntry().onEach { shouldStartFromHomeScreen ->
-            if(shouldStartFromHomeScreen){
+        appEntryUseCases.readAppEntry().onEach { getStartedDone ->
+            if(getStartedDone){
                 _startDestination.value = Route.MainNavigation.route
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(1000) // need this delay so the getStartedScreen not showing when we already fill the budget allocation
+            delay(1000)
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }

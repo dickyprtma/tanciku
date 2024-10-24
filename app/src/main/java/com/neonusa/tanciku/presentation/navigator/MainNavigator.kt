@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,6 +24,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -29,13 +33,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionScreen
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionViewModel
 import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
-import com.neonusa.tanciku.presentation.edit_allocation.EditAllocationEvent
+import com.neonusa.tanciku.presentation.common.DetailsTransactionDialog
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
@@ -137,6 +142,31 @@ fun MainNavigator() {
 
                 val state = viewModel.state.value
 
+                var showDialog by remember { mutableStateOf(false) }
+                var transaction by remember { mutableStateOf<Transaction?>(null)}
+
+                // details view model
+//                val detailsTransactionViewModel: DetailsTransactionViewModel = hiltViewModel()
+
+                if (showDialog) {
+                    Dialog(onDismissRequest = { showDialog = false }) {
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surface,
+                            contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
+                        ) {
+                            DetailsTransactionDialog(
+                                transaction = transaction!!,
+                                onDismiss = {showDialog = false},
+                                event = { detailsTransactionEvent ->
+                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
+                                    showDialog = false
+                                }
+                            )
+                        }
+                    }
+                }
+
                 HomeScreen(
                     totalIncome = totalIncome,
                     totalExpense = totalExpense,
@@ -151,6 +181,11 @@ fun MainNavigator() {
                     },
                     navigateToTransaction = {
                         navigateToTransaction(navController)
+                    },
+                    onTransactionItemClicked = {
+                        Log.d("TEST", "MainNavigator: $it")
+                        transaction = it
+                        showDialog = true
                     })
             }
             composable(route = Route.BudgetScreen.route) {
@@ -193,6 +228,9 @@ fun MainNavigator() {
 
             composable(route = Route.AddTransactionScreen.route) {
                 val viewModel: AddTransactionViewModel = hiltViewModel()
+                val allocation: Allocation by viewModel.allocation.collectAsState()
+                val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
+                val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
 
                 var showDialog by remember { mutableStateOf(false) }
                 if (viewModel.sideEffect != null && !showDialog) {
@@ -202,11 +240,6 @@ fun MainNavigator() {
                 if (showDialog) {
                     AlertDialog(
                         onDismissRequest = {
-                            showDialog = false
-                            viewModel.onEvent(AddTransactionEvent.RemoveSideEffect)
-                            navController.navigate(Route.HomeScreen.route) {
-                                popUpTo(Route.HomeScreen.route) { inclusive = true }
-                            }
                         },
                         title = { Text("Success") },
                         text = { Text("Data transaksi berhasil Ditambahkan") },
@@ -228,7 +261,10 @@ fun MainNavigator() {
 
                 AddTransactionScreen(
                     navigateUp = {navController.navigateUp()},
-                    event = viewModel::onEvent
+                    event = viewModel::onEvent,
+                    allocation = allocation,
+                    totalIncome = totalIncome,
+                    totalSaving = totalSaving
                 )
             }
 
