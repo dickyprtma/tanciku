@@ -1,6 +1,5 @@
 package com.neonusa.tanciku.presentation.main_activity
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -31,7 +30,7 @@ class MainViewModel @Inject constructor(
             }else{
                 _startDestination.value = Route.GetStartedNavigation.route
             }
-            delay(200)
+            delay(1000)
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }
