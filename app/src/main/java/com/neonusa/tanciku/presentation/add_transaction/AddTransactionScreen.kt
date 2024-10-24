@@ -29,7 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
@@ -70,6 +72,8 @@ fun AddTransactionScreen(
     var showSavingRecommendation by remember { mutableStateOf(false) }
     var isSavingRecommendationAlreadyChoosed by remember { mutableStateOf(false) }
 
+    // agar kursor tidak berpindah ke kiri saat . muncul di nominal
+    var textFieldValue by remember { mutableStateOf(TextFieldValue(amount)) }
 
     val context = LocalContext.current
 
@@ -139,17 +143,24 @@ fun AddTransactionScreen(
             })
 
         OutlinedTextField(
-            value = amount,
+            value = textFieldValue,
             leadingIcon = { Text("Rp") },
-            onValueChange = { newText ->
+            onValueChange = { newTextFieldValue ->
                 // Strip non-numeric characters for internal storage, except for commas or periods
-                val unformatted = newText.replace(".", "").replace(",", "")
+                val unformatted = newTextFieldValue.text.replace(".", "").replace(",", "")
 
                 // Update rawAmount for validation
                 rawAmount = if (unformatted.isEmpty()) "0" else unformatted
 
                 // Format the amount with thousands separators for display
-                amount = NumberFormat.getInstance().format(unformatted.toLongOrNull() ?: 0)
+                val formattedAmount = NumberFormat.getInstance().format(unformatted.toLongOrNull() ?: 0)
+
+
+                // Atur ulang TextFieldValue dengan teks yang sudah diformat dan posisi kursor di ujung teks
+                textFieldValue = newTextFieldValue.copy(
+                    text = formattedAmount,
+                    selection = TextRange(formattedAmount.length) // Paksa kursor berada di ujung teks
+                )
             },
             label = { Text("Nominal") },
             isError = amountError != null,
@@ -229,7 +240,7 @@ fun AddTransactionScreen(
                         ) {
                             Button(
                                 onClick = {
-                                    amount =  formattedAmountLeft
+                                    textFieldValue = TextFieldValue(formattedAmountLeft)
                                     showSavingRecommendation = false
                                     rawAmount = amountLeft.toString()
                                     isSavingRecommendationAlreadyChoosed = true
