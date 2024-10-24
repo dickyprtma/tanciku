@@ -1,6 +1,7 @@
 package com.neonusa.tanciku
 
 import android.app.Application
+import android.util.Log
 import com.google.android.gms.ads.MobileAds
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
@@ -13,7 +14,9 @@ class App: Application(){
     override fun onCreate() {
         super.onCreate()
         // untuk menggunakan library threetenabp (convert format date)
-        AndroidThreeTen.init(this);
+        AndroidThreeTen.init(this)
+        Log.d("Tag", "onCreate: initialized")
+
 
         val backgroundScope = CoroutineScope(Dispatchers.IO)
         backgroundScope.launch {
