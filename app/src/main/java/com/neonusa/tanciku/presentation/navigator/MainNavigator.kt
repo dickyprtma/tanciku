@@ -228,6 +228,7 @@ fun MainNavigator() {
 
             composable(route = Route.AddTransactionScreen.route) {
                 val viewModel: AddTransactionViewModel = hiltViewModel()
+                val allocation: Allocation by viewModel.allocation.collectAsState()
 
                 var showDialog by remember { mutableStateOf(false) }
                 if (viewModel.sideEffect != null && !showDialog) {
@@ -258,7 +259,10 @@ fun MainNavigator() {
 
                 AddTransactionScreen(
                     navigateUp = {navController.navigateUp()},
-                    event = viewModel::onEvent
+                    event = viewModel::onEvent,
+                    allocation = allocation,
+                    totalIncome = 0, // todo : still dummy
+                    totalSaving = 0 // todo : still dummy
                 )
             }
 

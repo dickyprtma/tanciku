@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
+import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
@@ -44,12 +45,18 @@ import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
 
+// next update saja
+// kasih peringatan ke user terkait kebutuhan atau pengeluarannya jika udah berlebih
+
 //todo : user experience waktu input nominal masih buruk cursornya
 @Composable
 fun AddTransactionScreen(
     navigateUp: () -> Unit,
     event: (AddTransactionEvent) -> Unit,
-){
+    allocation: Allocation,
+    totalIncome: Int,
+    totalSaving: Int,
+    ){
 
     //todo : bikin rekomendasi sebesar persentase alokasi menabung saat kategori menabung dipilih
 
@@ -202,7 +209,7 @@ fun AddTransactionScreen(
 
         if(transactionCategory == "Menabung"){
             if(showSavingRecommendation){
-                Text(text = "Masih kurang Rp000.000 untuk memenuhi target ND% menabung. Apakah kamu ingin memenuhi target menabungmu?",
+                Text(text = "Masih kurang Rp000.000 untuk memenuhi target ${allocation.saving}% menabung. Apakah kamu ingin memenuhi target menabungmu?",
                     modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
                     style = MaterialTheme.typography.bodySmall,
                     color = colorResource(id = R.color.text_title_small).copy(alpha = 0.6f)
@@ -311,5 +318,5 @@ fun ShowDatePicker(
 @Preview(showBackground = false, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun AddTransactionScreenPreview(){
-    AddTransactionScreen(navigateUp = {}, event = {})
+    AddTransactionScreen(navigateUp = {}, event = {}, allocation = Allocation(50,30,20), totalIncome = 5000000, totalSaving = 500000)
 }
