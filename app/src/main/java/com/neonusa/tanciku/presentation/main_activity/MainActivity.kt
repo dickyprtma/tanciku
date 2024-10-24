@@ -39,28 +39,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // original code
-//        installSplashScreen().apply {
-//            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
-//        }
-
-        var isConditionMet = false
-        val splashScreen = installSplashScreen()
-        splashScreen.setKeepOnScreenCondition{
-            // Logika untuk tetap menampilkan splash screen sampai kondisi tertentu terpenuhi
-            // selama ini bernilai true, splashscreen akan terus tampil
-            Log.d("MainActivity@test", "onCreate: splash screen showing...$isConditionMet")
-            !isConditionMet
+        installSplashScreen().apply {
+            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
         }
-
-        // Menggunakan Handler untuk menunda perubahan kondisi selama dua detik
-        Handler(Looper.getMainLooper()).postDelayed({
-            isConditionMet = true
-            Log.d("MainActivity@test", "onCreate: here your first screen...$isConditionMet")
-        }, 2000)
 
         enableEdgeToEdge()
         setContent {
-//            TancikuApp()
+            TancikuApp()
         }
     }
 }
