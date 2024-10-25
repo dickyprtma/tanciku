@@ -16,14 +16,9 @@ fun NavGraph(
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = startDestination) {
-        navigation(
-            route = Route.GetStartedNavigation.route,
-            startDestination = Route.GetStartedScreen.route
-        ) {
-            composable(route = Route.GetStartedScreen.route) {
-                val viewModel: GetStartedViewModel = hiltViewModel()
-                GetStartedScreen(viewModel::onEvent)
-            }
+        composable(route = Route.GetStartedScreen.route) {
+            val viewModel: GetStartedViewModel = hiltViewModel()
+            GetStartedScreen(viewModel::onEvent)
         }
 
         navigation(

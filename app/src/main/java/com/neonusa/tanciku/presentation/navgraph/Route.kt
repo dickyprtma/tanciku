@@ -4,22 +4,16 @@ import androidx.navigation.NamedNavArgument
 
 sealed class Route(
     val route: String,
-    val arguments: List<NamedNavArgument> = emptyList()
 ) {
-    // LEVEL 0
     object GetStartedScreen : Route(route = "GetStartedScreen")
 
-    // LEVEL 1
+    object MainNavigation : Route(route = "MainNavigation")
+    object MainNavigatorScreen : Route(route = "MainNavigatorScreen")
     object TransactionScreen : Route(route = "TransactionScreen")
     object HomeScreen : Route(route = "HomeScreen")
     object BudgetScreen : Route(route = "BudgetScreen")
     object EditBudgetScreen: Route(route = "EditBudgetScreen")
-
-    // LEVEL 2
     object AddTransactionScreen: Route(route = "AddTransactionScreen")
 
-    object GetStartedNavigation : Route(route = "GetStartedNavigation")
-    object MainNavigation : Route(route = "MainNavigation")
 
-    object MainNavigatorScreen : Route(route = "MainNavigatorScreen")
 }

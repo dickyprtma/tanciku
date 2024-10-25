@@ -20,7 +20,7 @@ class MainViewModel @Inject constructor(
     private val _splashCondition = mutableStateOf(true)
     val splashCondition: State<Boolean> = _splashCondition
 
-    private val _startDestination = mutableStateOf(Route.GetStartedNavigation.route)
+    private val _startDestination = mutableStateOf(Route.GetStartedScreen.route)
     val startDestination: State<String> = _startDestination
 
     init {
@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(
             if(getStartedDone){
                 _startDestination.value = Route.MainNavigation.route
             }else{
-                _startDestination.value = Route.GetStartedNavigation.route
+                _startDestination.value = Route.GetStartedScreen.route
             }
             delay(1000)
             _splashCondition.value = false
