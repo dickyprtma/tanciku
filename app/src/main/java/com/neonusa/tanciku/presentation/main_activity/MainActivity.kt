@@ -39,7 +39,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
-            setKeepOnScreenCondition(condition = { viewModel.splashCondition.value })
+            setKeepOnScreenCondition(
+                condition = { viewModel.splashCondition.value || viewModel.startDestination.value.isEmpty()}
+            )
         }
 
         enableEdgeToEdge()
@@ -56,9 +58,10 @@ fun TancikuApp(viewModel: MainViewModel = hiltViewModel()) {
         val systemUiColor = rememberSystemUiController()
         ConfigureSystemBars(systemUiColor, isSystemInDarkMode)
 
-        // Main UI content
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-            NavGraph(startDestination = viewModel.startDestination.value)
+        if (viewModel.startDestination.value.isNotEmpty()) {
+            Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+                NavGraph(startDestination = viewModel.startDestination.value)
+            }
         }
     }
 }
