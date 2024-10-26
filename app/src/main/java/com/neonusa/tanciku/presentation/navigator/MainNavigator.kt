@@ -162,10 +162,11 @@ fun MainNavigator() {
                                 transaction = transaction!!,
                                 onDismiss = {showDialog = false},
                                 event = { detailsTransactionEvent ->
-                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
                                     showDialog = false
+                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
                                 },
                                 navigateToEditTransaction = {
+                                    showDialog = false
                                     navigateToEditTransaction(
                                         navController = navController,
                                         transaction = transaction!!
