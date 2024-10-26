@@ -15,6 +15,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,6 +46,10 @@ fun DetailsTransactionDialog(
     navigateToEditTransaction: (Transaction) -> Unit
 ) {
     val formattedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(transaction.amount)
+
+    // Debounce state
+    var lastClickTime by remember { mutableLongStateOf(0L) }
+    val debounceDelay = 1000L  // Delay in milliseconds
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -86,7 +94,13 @@ fun DetailsTransactionDialog(
                         tint = colorResource(id = R.color.color_expense)
                     )
                 }
-                IconButton(onClick = {navigateToEditTransaction(transaction)}) {
+                IconButton(onClick = {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastClickTime >= debounceDelay) {
+                        lastClickTime = currentTime
+                        navigateToEditTransaction(transaction)
+                    }
+                }) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_edit_24), // ganti dengan ikon edit
                         contentDescription = "Edit",
