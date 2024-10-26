@@ -1,10 +1,12 @@
 package com.neonusa.tanciku.presentation.common
 
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,10 +28,14 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
+import com.neonusa.tanciku.presentation.Dimens.ExtraSmallPadding2
+import com.neonusa.tanciku.presentation.Dimens.MediumPadding1
 import com.neonusa.tanciku.presentation.home.components.TransactionItem
 
 @Composable
@@ -62,23 +68,96 @@ fun ListTransactionItem(
             }
         }
     }
-
 }
 
-@Preview(showBackground = true)
 @Composable
-fun PreviewListTransactionItem() {
-    // Data dummy untuk preview
-    val dummyItems = listOf(
-        Transaction(
-            description = "Transaction 1",
-            type = TransactionType.Pemasukan,
-            category = TransactionCategory.Pemasukan,
-            date = "20 Oktober 2024",
-            amount = 20000000
-        )
-    )
+fun ListTransactionItem(
+    transactions: LazyPagingItems<Transaction>,
+    onClick:(Transaction) -> Unit,
+) {
+    val handlePagingResult = handlePagingResult(transactions)
+    if(handlePagingResult){
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding1),
+            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+        ) {
+            items(
+                count = transactions.itemCount,
+            ) {
+                transactions[it]?.let { transaction ->
+                    TransactionItem(transaction = transaction, onClick = {onClick(transaction)})
+                }
+            }
+        }
+    }
 
-    // Panggil ListTransactionItem dengan data dummy
-    ListTransactionItem(transactions = dummyItems, {})
+//    if (transactions.isEmpty()){
+//        var startAnimation by remember {
+//            mutableStateOf(false)
+//        }
+//
+//        val alphaAnimation by animateFloatAsState(
+//            targetValue = if (startAnimation) 0.3f else 0f,
+//            animationSpec = tween(durationMillis = 1000)
+//        )
+//
+//        LaunchedEffect(key1 = true) {
+//            startAnimation = true
+//        }
+//
+//        EmptyContent(alphaAnim = alphaAnimation, message = "Belum ada transaksi", iconId = R.drawable.no_transaction)
+//    } else {
+//        LazyColumn {
+//            items(count = transactions.size) {
+//                val transaction = transactions[it]
+//                TransactionItem(
+//                    transaction = transaction, onClick = {onClick(transaction)}
+//                )
+//            }
+//        }
+//    }
 }
+
+@Composable
+fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
+    val loadState = articles.loadState
+    val error = when {
+        loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+        loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+        loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+        else -> null
+    }
+    return when {
+        loadState.refresh is LoadState.Loading -> {
+            Log.d("Test", "handlePagingResult: Loading...")
+            false
+        }
+
+        error != null -> {
+            Log.d("Test", "handlePagingResult: Empty content")
+            false
+        }
+        else -> {
+            true
+        }
+    }
+}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewListTransactionItem() {
+//    // Data dummy untuk preview
+//    val dummyItems = listOf(
+//        Transaction(
+//            description = "Transaction 1",
+//            type = TransactionType.Pemasukan,
+//            category = TransactionCategory.Pemasukan,
+//            date = "20 Oktober 2024",
+//            amount = 20000000
+//        )
+//    )
+//
+//    // Panggil ListTransactionItem dengan data dummy
+//    ListTransactionItem(transactions = dummyItems, {})
+//}

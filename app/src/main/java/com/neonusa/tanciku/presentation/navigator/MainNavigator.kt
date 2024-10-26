@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
@@ -52,6 +53,7 @@ import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
 import com.neonusa.tanciku.presentation.transaction.TransactionScreen
+import com.neonusa.tanciku.presentation.transaction.TransactionViewModel
 
 @Composable
 fun MainNavigator() {
@@ -127,7 +129,12 @@ fun MainNavigator() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.TransactionScreen.route) {
-                TransactionScreen()
+                val viewModel: TransactionViewModel = hiltViewModel()
+                val transactions = viewModel.transactions.collectAsLazyPagingItems()
+                TransactionScreen(
+                    transactions = transactions,
+                    onTransactionItemClicked = {}
+                )
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
                 val viewModel: HomeViewModel = hiltViewModel()

@@ -22,6 +22,7 @@ import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthLatestTran
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalExpense
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalIncome
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalTransactionByCategory
+import com.neonusa.tanciku.domain.usecases.transaction.GetTransactionsPaged
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
 import com.neonusa.tanciku.domain.usecases.transaction.UpdateTransaction
 import com.neonusa.tanciku.utils.Constants.DATABASE_NAME
@@ -55,7 +56,8 @@ object AppModule {
             getCurrentMonthTotalExpense = GetCurrentMonthTotalExpense(transactionRepository),
             getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository),
             getCurrentMonthLatestTransactions = GetCurrentMonthLatestTransactions(transactionRepository),
-            updateTransaction = UpdateTransaction(transactionRepository)
+            updateTransaction = UpdateTransaction(transactionRepository),
+            getTransactionsPaged = GetTransactionsPaged(transactionRepository)
         )
     }
 

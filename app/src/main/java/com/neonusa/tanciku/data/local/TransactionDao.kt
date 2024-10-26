@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -23,6 +24,9 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
+
+    @Query("SELECT * FROM transactions")
+    fun getTransactionsPaging(): PagingSource<Int, Transaction>
 
     @Query("""
     SELECT * FROM transactions 

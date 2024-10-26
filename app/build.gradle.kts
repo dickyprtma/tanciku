@@ -97,4 +97,10 @@ dependencies {
 
     // admob
     implementation("com.google.android.gms:play-services-ads:23.3.0")
+
+    // paging 3
+    //Paging 3 : Paging
+    implementation ("androidx.room:room-paging:2.5.0")
+    implementation ("androidx.paging:paging-runtime:3.1.1")
+    implementation ("androidx.paging:paging-compose:3.2.0-rc01")
 }
