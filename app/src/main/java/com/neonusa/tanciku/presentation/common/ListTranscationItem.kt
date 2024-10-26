@@ -38,25 +38,26 @@ import com.neonusa.tanciku.presentation.Dimens.ExtraSmallPadding2
 import com.neonusa.tanciku.presentation.Dimens.MediumPadding1
 import com.neonusa.tanciku.presentation.home.components.TransactionItem
 
+
 @Composable
 fun ListTransactionItem(
     transactions: List<Transaction>,
     onClick:(Transaction) -> Unit,
     ) {
+    var startAnimation by remember {
+        mutableStateOf(false)
+    }
+
+    val alphaAnimation by animateFloatAsState(
+        targetValue = if (startAnimation) 0.3f else 0f,
+        animationSpec = tween(durationMillis = 1000)
+    )
+
+    LaunchedEffect(key1 = true) {
+        startAnimation = true
+    }
+
     if (transactions.isEmpty()){
-        var startAnimation by remember {
-            mutableStateOf(false)
-        }
-
-        val alphaAnimation by animateFloatAsState(
-            targetValue = if (startAnimation) 0.3f else 0f,
-            animationSpec = tween(durationMillis = 1000)
-        )
-
-        LaunchedEffect(key1 = true) {
-            startAnimation = true
-        }
-
         EmptyContent(alphaAnim = alphaAnimation, message = "Belum ada transaksi", iconId = R.drawable.no_transaction)
     } else {
         LazyColumn {
@@ -78,9 +79,7 @@ fun ListTransactionItem(
     val handlePagingResult = handlePagingResult(transactions)
     if(handlePagingResult){
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(MediumPadding1),
-            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+            modifier = Modifier.fillMaxSize()
         ) {
             items(
                 count = transactions.itemCount,
@@ -121,6 +120,19 @@ fun ListTransactionItem(
 
 @Composable
 fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
+    var startAnimation by remember {
+        mutableStateOf(false)
+    }
+
+    val alphaAnimation by animateFloatAsState(
+        targetValue = if (startAnimation) 0.3f else 0f,
+        animationSpec = tween(durationMillis = 1000)
+    )
+
+    LaunchedEffect(key1 = true) {
+        startAnimation = true
+    }
+
     val loadState = articles.loadState
     val error = when {
         loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
@@ -134,11 +146,12 @@ fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
             false
         }
 
-        error != null -> {
-            Log.d("Test", "handlePagingResult: Empty content")
+        error != null || articles.itemCount == 0 -> {
+            EmptyContent(alphaAnim = alphaAnimation, message = "Belum ada transaksi", iconId = R.drawable.no_transaction)
             false
         }
         else -> {
+            Log.d("Test", "handlePagingResult: Success...")
             true
         }
     }

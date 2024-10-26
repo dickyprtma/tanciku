@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
 
 // Membuat data dummy di dalam lifecycleScope
         lifecycleScope.launch {
-            repeat(100) { index ->
+            repeat(12) { index ->
                 val description = descriptions.random() + " $index"
                 val date = randomDate()
                 val type = types.random()

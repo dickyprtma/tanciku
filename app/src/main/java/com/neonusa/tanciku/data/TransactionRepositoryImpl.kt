@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.neonusa.tanciku.data.local.TransactionDao
+import com.neonusa.tanciku.data.local.TransactionPagingSource
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.repository.TransactionRepository
@@ -23,11 +24,11 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
 
     override fun getTransactions(): Flow<PagingData<Transaction>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 10,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { transactionDao.getTransactionsPaging() }
+            config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = {
+//                TransactionPagingSource(transactionDao)
+                transactionDao.getTransactionsPaging()
+            }
         ).flow
     }
 

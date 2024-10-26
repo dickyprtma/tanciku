@@ -28,6 +28,12 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions")
     fun getTransactionsPaging(): PagingSource<Int, Transaction>
 
+    @Query("SELECT * FROM transactions")
+    fun getTransactionsList(): List<Transaction>
+
+    @Query("SELECT * FROM transactions LIMIT :pageSize OFFSET :offset")
+    suspend fun getTransactionsForPage(pageSize: Int, offset: Int): List<Transaction>
+
     @Query("""
     SELECT * FROM transactions 
     WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now') 
