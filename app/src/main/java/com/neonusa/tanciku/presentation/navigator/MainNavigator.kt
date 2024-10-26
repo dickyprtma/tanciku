@@ -43,6 +43,8 @@ import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.common.DetailsTransactionDialog
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
+import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionScreen
+import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
 import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
@@ -161,6 +163,12 @@ fun MainNavigator() {
                                 event = { detailsTransactionEvent ->
                                     viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
                                     showDialog = false
+                                },
+                                navigateToEditTransaction = {
+                                    navigateToEditTransaction(
+                                        navController = navController,
+                                        transaction = transaction!!
+                                    )
                                 }
                             )
                         }
@@ -268,6 +276,24 @@ fun MainNavigator() {
                 )
             }
 
+            composable(route = Route.EditTransactionScreen.route) {
+                val viewModel: EditTransactionViewModel = hiltViewModel()
+                val allocation: Allocation by viewModel.allocation.collectAsState()
+                val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
+                val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
+                navController.previousBackStackEntry?.savedStateHandle?.get<Transaction?>("transaction")
+                    ?.let { transaction ->
+                        EditTransactionScreen(
+                            navigateUp = {navController.navigateUp()},
+                            event = viewModel::onEvent, //TODO : create viewmodel edit and add it's event
+                            allocation = allocation,
+                            totalIncome = totalIncome,
+                            totalSaving = totalSaving,
+                            transaction = transaction
+                        )
+                    }
+            }
+
             composable(route = Route.EditBudgetScreen.route){
                 val viewModel: EditBudgetViewModel = hiltViewModel()
                 val allocation: Allocation by viewModel.allocation.collectAsState()
@@ -320,6 +346,13 @@ private fun navigateToTransaction(navController: NavController){
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun navigateToEditTransaction(navController: NavController, transaction: Transaction){
+    navController.currentBackStackEntry?.savedStateHandle?.set("transaction", transaction)
+    navController.navigate(
+        route = Route.EditTransactionScreen.route
+    )
 }
 
 @Preview

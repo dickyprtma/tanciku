@@ -56,6 +56,11 @@ class HomeViewModel @Inject constructor(
                     deleteTransactionById(event.id)
                 }
             }
+            is  DetailsTransactionEvent.EditTransaction -> {
+                viewModelScope.launch {
+
+                }
+            }
         }
     }
 
@@ -126,5 +131,6 @@ class HomeViewModel @Inject constructor(
         _currentMonthTotalWants.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Keinginan)
         _currentMonthTotalSaving.value = transactionUseCases.getCurrentMonthTotalTransactionByCategory(TransactionCategory.Menabung)
     }
+
 
 }

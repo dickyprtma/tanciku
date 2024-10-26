@@ -39,9 +39,9 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.model.TransactionType
-import com.neonusa.tanciku.presentation.add_transaction.components.AddTransactionToolbarLayout
 import com.neonusa.tanciku.presentation.add_transaction.components.TransactionCategorySelection
 import com.neonusa.tanciku.presentation.add_transaction.components.TransactionTypeSelection
+import com.neonusa.tanciku.presentation.common.AddEditTransactionToolbarLayout
 import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
@@ -100,7 +100,8 @@ fun AddTransactionScreen(
         }
 
         // rencananya nanti pilih tanggalnya kalo udh tekan centang aja
-        AddTransactionToolbarLayout(
+        AddEditTransactionToolbarLayout(
+            title = "Transaksi Baru",
             onBackClick = navigateUp,
             onCheckClick = {
                 // Reset errors

@@ -38,7 +38,8 @@ import java.util.Locale
 fun DetailsTransactionDialog(
     onDismiss: () -> Unit,
     transaction: Transaction,
-    event: (DetailsTransactionEvent) -> Unit
+    event: (DetailsTransactionEvent) -> Unit,
+    navigateToEditTransaction: (Transaction) -> Unit
 ) {
     val formattedAmount = NumberFormat.getNumberInstance(Locale("id", "ID")).format(transaction.amount)
     Column(
@@ -85,7 +86,7 @@ fun DetailsTransactionDialog(
                         tint = colorResource(id = R.color.color_expense)
                     )
                 }
-                IconButton(onClick = {}) {
+                IconButton(onClick = {navigateToEditTransaction(transaction)}) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.baseline_edit_24), // ganti dengan ikon edit
                         contentDescription = "Edit",
@@ -172,5 +173,6 @@ fun DetailsTransactionDialogPreview(){
     DetailsTransactionDialog(
         onDismiss = {},
         transaction = Transaction(0,"Membeli ayam geprek","2024-10-10",TransactionType.Pengeluaran, TransactionCategory.Kebutuhan,10000),
-        event = {})
+        event = {},
+        navigateToEditTransaction = {})
 }

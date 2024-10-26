@@ -14,6 +14,7 @@ sealed class Route(
     object BudgetScreen : Route(route = "BudgetScreen")
     object EditBudgetScreen: Route(route = "EditBudgetScreen")
     object AddTransactionScreen: Route(route = "AddTransactionScreen")
+    object EditTransactionScreen: Route(route = "EditTransactionScreen")
 
 
 }

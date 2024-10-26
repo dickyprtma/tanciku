@@ -27,7 +27,6 @@ import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-//todo : masih bug menampilkan getstarted screen waktu buka aplikasi  (padahal sudah save entry)
 // todo : bug kalau klik icon edit dua kali, dia ke halaman edit juga dua kali (dua halaman ngestack)
 
 //todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
