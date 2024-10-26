@@ -28,9 +28,7 @@ import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 // todo : bug kalau klik icon edit dua kali, dia ke halaman edit juga dua kali (dua halaman ngestack)
-
 //todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
-//todo : fitur edit transaksi
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
