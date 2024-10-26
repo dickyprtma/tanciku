@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neonusa.tanciku.domain.model.Allocation
+import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import com.neonusa.tanciku.domain.usecases.allocation.AllocationUseCases
 import com.neonusa.tanciku.domain.usecases.transaction.TransactionUseCases
@@ -43,7 +44,7 @@ class EditTransactionViewModel @Inject constructor(
         when(event){
             is EditTransactionEvent.EditTransaction -> {
                 viewModelScope.launch {
-//                    insertTransaction(event.transaction) todo
+                    updateTransaction(event.transaction)
                 }
             }
             is EditTransactionEvent.RemoveSideEffect -> {
@@ -71,5 +72,10 @@ class EditTransactionViewModel @Inject constructor(
         viewModelScope.launch {
             _currentMonthTotalIncome.value = transactionUseCases.getCurrentMonthTotalIncome()
         }
+    }
+
+    private suspend fun updateTransaction(transaction: Transaction){
+        transactionUseCases.updateTransaction(transaction)
+        sideEffect = "Transaksi Berhasil diubah"
     }
 }

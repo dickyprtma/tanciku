@@ -295,15 +295,17 @@ fun EditTransactionScreen(
                     showDatePicker = false // Hide the DatePicker once a date is selected
 
                     // insert ke database jika sudah memilih tanggal dan menekan ok
-                    val transaction = Transaction(
+                    val transactionInput = Transaction(
+                        id = transaction.id,
                         type = transactionTypeEnum,
                         amount = rawAmount.toFloat().toInt(),
                         description = desc,
                         category = transactionCategoryEnum,
                         date = selectedDate
                     )
-                    event(EditTransactionEvent.EditTransaction(transaction))
+                    event(EditTransactionEvent.EditTransaction(transactionInput))
                     Log.d("EditTransactionEvent@Test", "dateselected and ok pressed")
+                    Log.d("EditTransactionEvent@Test", "$transactionInput")
                 },
                 onDismissRequest = {
                     showDatePicker = false // Hide the DatePicker if dismissed

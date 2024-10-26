@@ -23,6 +23,7 @@ import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalExpen
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalIncome
 import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalTransactionByCategory
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
+import com.neonusa.tanciku.domain.usecases.transaction.UpdateTransaction
 import com.neonusa.tanciku.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -53,7 +54,8 @@ object AppModule {
             getCurrentMonthTotalIncome = GetCurrentMonthTotalIncome((transactionRepository)),
             getCurrentMonthTotalExpense = GetCurrentMonthTotalExpense(transactionRepository),
             getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository),
-            getCurrentMonthLatestTransactions = GetCurrentMonthLatestTransactions(transactionRepository)
+            getCurrentMonthLatestTransactions = GetCurrentMonthLatestTransactions(transactionRepository),
+            updateTransaction = UpdateTransaction(transactionRepository)
         )
     }
 

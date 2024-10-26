@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
 import kotlinx.coroutines.flow.Flow
@@ -58,5 +59,7 @@ interface TransactionDao {
     """)
     suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int
 
-
+    // Fungsi untuk memperbarui data transaction
+    @Update
+    suspend fun update(transaction: Transaction)
 }

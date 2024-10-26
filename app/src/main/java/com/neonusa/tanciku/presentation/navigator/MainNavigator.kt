@@ -43,6 +43,7 @@ import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.common.DetailsTransactionDialog
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
+import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionEvent
 import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionScreen
 import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionViewModel
 import com.neonusa.tanciku.presentation.home.HomeScreen
@@ -281,11 +282,39 @@ fun MainNavigator() {
                 val allocation: Allocation by viewModel.allocation.collectAsState()
                 val totalSaving by viewModel.currentMonthTotalSaving.collectAsState()
                 val totalIncome by viewModel.currentMonthTotalIncome.collectAsState()
+
+                var showDialog by remember { mutableStateOf(false) }
+                if (viewModel.sideEffect != null && !showDialog) {
+                    showDialog = true
+                }
+
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = {
+                        },
+                        title = { Text("Success") },
+                        text = { Text("Data transaksi berhasil diubah") },
+                        confirmButton = {
+
+                        }
+                    )
+
+                    // Automatically dismiss after 2 seconds
+                    LaunchedEffect(Unit) {
+                        kotlinx.coroutines.delay(2000)
+                        showDialog = false
+                        viewModel.onEvent(EditTransactionEvent.RemoveSideEffect)
+                        navController.navigate(Route.HomeScreen.route) {
+                            popUpTo(Route.HomeScreen.route) { inclusive = true }
+                        }
+                    }
+                }
+
                 navController.previousBackStackEntry?.savedStateHandle?.get<Transaction?>("transaction")
                     ?.let { transaction ->
                         EditTransactionScreen(
                             navigateUp = {navController.navigateUp()},
-                            event = viewModel::onEvent, //TODO : create viewmodel edit and add it's event
+                            event = viewModel::onEvent,
                             allocation = allocation,
                             totalIncome = totalIncome,
                             totalSaving = totalSaving,
@@ -303,7 +332,6 @@ fun MainNavigator() {
                     allocation = allocation
                 )
             }
-
         }
     }
 }

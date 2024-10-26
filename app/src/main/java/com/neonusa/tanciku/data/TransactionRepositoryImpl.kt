@@ -34,4 +34,8 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
         return transactionDao.getCurrentMonthLatestTransactions()
     }
 
+    override suspend fun updateTransaction(transaction: Transaction) {
+        transactionDao.update(transaction)
+    }
+
 }
