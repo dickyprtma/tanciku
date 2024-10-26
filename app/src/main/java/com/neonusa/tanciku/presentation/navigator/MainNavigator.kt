@@ -132,45 +132,9 @@ fun MainNavigator() {
                 val viewModel: TransactionViewModel = hiltViewModel()
                 val transactions = viewModel.transactions.collectAsLazyPagingItems()
 
-                var showDialog by remember { mutableStateOf(false) }
-                var transaction by remember { mutableStateOf<Transaction?>(null)}
-
-                // details view model
-//                val detailsTransactionViewModel: DetailsTransactionViewModel = hiltViewModel()
-
-                if (showDialog) {
-                    Dialog(onDismissRequest = { showDialog = false }) {
-                        Surface(
-                            shape = MaterialTheme.shapes.medium,
-                            color = MaterialTheme.colorScheme.surface,
-                            contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
-                        ) {
-                            DetailsTransactionDialog(
-                                transaction = transaction!!,
-                                onDismiss = {showDialog = false},
-                                event = { detailsTransactionEvent ->
-                                    showDialog = false
-                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
-                                },
-                                navigateToEditTransaction = {
-                                    showDialog = false
-                                    navigateToEditTransaction(
-                                        navController = navController,
-                                        transaction = transaction!!
-                                    )
-                                }
-                            )
-                        }
-                    }
-                }
-
                 TransactionScreen(
                     transactions = transactions,
-                    onTransactionItemClicked = {
-                        Log.d("TEST", "MainNavigator: $it")
-                        transaction = it
-                        showDialog = true
-                    }
+                    onTransactionItemClicked = {}
                 )
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
