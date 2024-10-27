@@ -28,7 +28,7 @@ import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 //todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
-
+// todo : rp- harusnya -rp (saldo sama sisa anggaran)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
