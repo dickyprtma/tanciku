@@ -30,6 +30,10 @@ import dagger.hilt.android.AndroidEntryPoint
 //todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
 // todo : rp- harusnya -rp (saldo sama sisa anggaran)
 // todo: saat selesai edit dari halaman transaksi ia kembali ke halaman utama bukan halaman transaksi
+// todo : fitur search
+
+//DONE STABLE 1.0.0 jika beres
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModel>()
