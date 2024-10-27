@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -125,12 +127,71 @@ fun BudgetScreen(
 
         TotalExpense(expensePercentage = expensePercentage, totalExpense = totalExpense, totalIncome = totalIncome)
 
-        Spacer(modifier = Modifier.height(12.dp))
+        HorizontalDivider(
+            color = Color.Gray, // Warna garis
+            thickness = 1.dp,   // Ketebalan garis
+            modifier = Modifier.padding(start = 24.dp, end=24.dp, top = 16.dp) // Padding untuk memberi jarak
+        )
 
         BudgetItem(transactionCategory = TransactionCategory.Kebutuhan, usedPercentage = needsUsedPercentage, allocation.needs.toFloat(), usedAmount = totalNeeds, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Keinginan, usedPercentage = wantsUsedPercentage, allocation.wants.toFloat(), usedAmount = totalWants, totalIncome = totalIncome)
         BudgetItem(transactionCategory = TransactionCategory.Menabung, usedPercentage = savingUsedPercentage, allocation.saving.toFloat(), usedAmount = totalSaving, totalIncome = totalIncome)
 
+        HorizontalDivider(
+            color = Color.Gray, // Warna garis
+            thickness = 1.dp,   // Ketebalan garis
+            modifier = Modifier.padding(start = 24.dp, end=24.dp, top = 16.dp) // Padding untuk memberi jarak
+        )
+
+        Text(
+            text = "Sisa Anggaran",
+            fontSize = 19.sp,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top=8.dp)
+        )
+
+        Row(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "Kebutuhan",
+                style = MaterialTheme.typography.bodySmall,
+                color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
+            )
+            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
+                .fillMaxWidth(),
+
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "Keinginan",
+                style = MaterialTheme.typography.bodySmall,
+                color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
+            )
+            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 24.dp, top = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "Menabung",
+                style = MaterialTheme.typography.bodySmall,
+                color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
+                )
+            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+        }
     }
 }
 

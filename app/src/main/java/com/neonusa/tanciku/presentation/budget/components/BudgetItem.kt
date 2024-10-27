@@ -34,7 +34,7 @@ fun BudgetItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 32.dp, end = 24.dp, top = 24.dp),
+            .padding(start = 32.dp, end = 24.dp, top = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
