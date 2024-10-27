@@ -73,13 +73,13 @@ fun BudgetScreen(
 
 
     val needsBalance = allocatedNeedsAmount - totalNeeds
-    val formattedNeedsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(needsBalance)
+    val formattedNeedsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(needsBalance.toInt())
 
     val wantsBalance = allocatedWantsAmount - totalWants
-    val formattedWantsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(wantsBalance)
+    val formattedWantsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(wantsBalance.toInt())
 
     val savingBalance = allocatedSavingAmount - totalSaving
-    val formattedsavingBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(savingBalance)
+    val formattedSavingBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(savingBalance.toInt())
 
     Column(
         modifier = Modifier
@@ -206,7 +206,7 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
                 )
-            Text(text = "Rp$formattedsavingBalance",style = MaterialTheme.typography.bodySmall)
+            Text(text = "Rp$formattedSavingBalance",style = MaterialTheme.typography.bodySmall)
         }
     }
 }
