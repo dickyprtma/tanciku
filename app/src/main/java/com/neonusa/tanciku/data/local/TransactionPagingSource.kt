@@ -6,7 +6,7 @@ import com.neonusa.tanciku.domain.model.Transaction
 
 class TransactionPagingSource(
     private val transactionDao: TransactionDao
-): PagingSource<Int, Transaction>() {
+) : PagingSource<Int, Transaction>() {
     override fun getRefreshKey(state: PagingState<Int, Transaction>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -17,10 +17,11 @@ class TransactionPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Transaction> {
         val page = params.key ?: 1
         val pageSize = params.loadSize
+        val offset = (page - 1) * pageSize
 
         return try {
-            // Fetch a subset of transactions based on page and page size
-            val transactions = transactionDao.getTransactionsForPage(page, pageSize)
+            // Fetch a subset of transactions based on page size and offset
+            val transactions = transactionDao.getTransactionsForPage(pageSize, offset)
 
             LoadResult.Page(
                 data = transactions,

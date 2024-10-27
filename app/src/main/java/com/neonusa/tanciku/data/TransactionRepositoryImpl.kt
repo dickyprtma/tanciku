@@ -39,6 +39,7 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
                 TransactionPagingSource(transactionDao)
+//                transactionDao.getTransactionsPaging()
             }
         ).flow
     }
