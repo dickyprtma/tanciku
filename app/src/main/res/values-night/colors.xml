@@ -19,6 +19,8 @@
     <color name="color_wants">#C5B54B</color>
     <color name="color_expense">#CE434A</color>
 
+    <color name="placeholder">#DDDDDD</color>
+    <color name="input_background">#3A3B3C</color>
 
     <color name="color_gray_circular">#E0E0E0</color>
 

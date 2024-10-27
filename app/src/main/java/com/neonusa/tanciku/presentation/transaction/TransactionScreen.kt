@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.presentation.Dimens.MediumPadding1
+import com.neonusa.tanciku.presentation.common.SearchBar
 
 @Composable
 fun TransactionScreen(){
@@ -41,6 +42,10 @@ fun TransactionScreen(){
             )
 
          }
+
+        SearchBar(text = "Cari transaksi...", readOnly = true, onValueChange = {}) {
+            
+        }
         //todo tampilkan data transaction
 //        ListTransactionitem(itemList = dummyItems)
     }
