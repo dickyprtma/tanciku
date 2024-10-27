@@ -29,7 +29,7 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions LIMIT :pageSize OFFSET :offset")
     suspend fun getTransactionsForPage(pageSize: Int, offset: Int): List<Transaction>
 
-    @Query("SELECT * FROM transactions")
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
     fun getTransactionsPaging(): PagingSource<Int, Transaction>
 
     @Query("""
