@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.presentation.common
 
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -26,6 +27,8 @@ import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
@@ -62,7 +65,66 @@ fun ListTransactionItem(
             }
         }
     }
+}
 
+@Composable
+fun ListTransactionItem(
+    transactions: LazyPagingItems<Transaction>,
+    onClick:(Transaction) -> Unit,
+) {
+    val handlePagingResult = handlePagingResult(transactions)
+    if (handlePagingResult) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(
+                count = transactions.itemCount,
+            ) {
+                transactions[it]?.let { transaction ->
+                    TransactionItem(transaction = transaction, onClick = { onClick(transaction) })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
+    var startAnimation by remember {
+        mutableStateOf(false)
+    }
+
+    val alphaAnimation by animateFloatAsState(
+        targetValue = if (startAnimation) 0.3f else 0f,
+        animationSpec = tween(durationMillis = 1000), label = ""
+    )
+
+    LaunchedEffect(key1 = true) {
+        startAnimation = true
+    }
+
+    val loadState = articles.loadState
+    val error = when {
+        loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+        loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+        loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+        else -> null
+    }
+    return when {
+        loadState.refresh is LoadState.Loading -> {
+            Log.d("Test", "handlePagingResult: Loading...")
+            false
+        }
+
+        error != null || articles.itemCount == 0 -> {
+            EmptyContent(alphaAnim = alphaAnimation, message = "Belum ada transaksi", iconId = R.drawable.no_transaction)
+            false
+        }
+        else -> {
+            Log.d("Test", "handlePagingResult: Success...")
+            true
+        }
+    }
 }
 
 @Preview(showBackground = true)
