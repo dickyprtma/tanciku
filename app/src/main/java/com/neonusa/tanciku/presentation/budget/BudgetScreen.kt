@@ -65,6 +65,22 @@ fun BudgetScreen(
     // Debounce state
     var lastClickTime by remember { mutableLongStateOf(0L) }
     val debounceDelay = 1000L  // Delay in milliseconds
+
+    // Budget Balance
+    val allocatedNeedsAmount = (allocation.needs.toFloat()/100) * totalIncome
+    val allocatedWantsAmount = (allocation.wants.toFloat()/100) * totalIncome
+    val allocatedSavingAmount = (allocation.saving.toFloat()/100) * totalIncome
+
+
+    val needsBalance = allocatedNeedsAmount - totalNeeds
+    val formattedNeedsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(needsBalance)
+
+    val wantsBalance = allocatedWantsAmount - totalWants
+    val formattedWantsBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(wantsBalance)
+
+    val savingBalance = allocatedSavingAmount - totalSaving
+    val formattedsavingBalance = NumberFormat.getNumberInstance(Locale("id", "ID")).format(savingBalance)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -112,7 +128,7 @@ fun BudgetScreen(
                 )
                 Spacer(modifier = Modifier.width(4.dp)) // Jarak antara ikon dan teks
                 Text(
-                    text = "Ubah Anggaran",
+                    text = "Ubah",
                     color = colorResource(id = R.color.white), // Warna emas atau warna yang menunjukkan premium
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontWeight = FontWeight.Bold
@@ -161,7 +177,7 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
             )
-            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+            Text(text = "Rp$formattedNeedsBalance",style = MaterialTheme.typography.bodySmall)
         }
 
         Row(
@@ -176,7 +192,7 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
             )
-            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+            Text(text = "Rp$formattedWantsBalance",style = MaterialTheme.typography.bodySmall)
         }
 
         Row(
@@ -190,7 +206,7 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
                 )
-            Text(text = "Rp2.000.000",style = MaterialTheme.typography.bodySmall)
+            Text(text = "Rp$formattedsavingBalance",style = MaterialTheme.typography.bodySmall)
         }
     }
 }
