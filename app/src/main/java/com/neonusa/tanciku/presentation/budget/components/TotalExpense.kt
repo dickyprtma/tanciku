@@ -33,7 +33,7 @@ fun TotalExpense(
     totalIncome: Int
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 12.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 24.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val formattedTotalExpense = NumberFormat.getNumberInstance(Locale("id", "ID")).format(totalExpense)

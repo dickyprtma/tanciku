@@ -25,19 +25,18 @@ fun TransactionScreen(){
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .padding(top = MediumPadding1, start = MediumPadding1, end = MediumPadding1)
+            .padding(16.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Transaksi",
                 color = colorResource(id = R.color.text_title_large),
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.weight(1f)
             )
 
