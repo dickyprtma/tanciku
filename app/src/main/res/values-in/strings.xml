@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Tanciku</string>
     <string name="balance">Saldo</string>
+    <string name="period">Periode</string>
     <string name="income">Pemasukan</string>
     <string name="expense">Pengeluaran</string>
 </resources>

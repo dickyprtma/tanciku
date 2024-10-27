@@ -49,7 +49,7 @@ fun BalanceLayout(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
+            .padding(top = 16.dp ,start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
@@ -59,39 +59,30 @@ fun BalanceLayout(
         ) {
             Text(
                 text = stringResource(id = R.string.balance),
-                color = colorResource(id = R.color.text_title_large),
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = "$currentMonth $currentYear",
-                color = colorResource(id = R.color.text_title_small),
+                color = colorResource(id = R.color.text_title_large).copy(alpha = 0.6f),
                 style = MaterialTheme.typography.bodySmall
             )
-        }
-        Column(
-            horizontalAlignment = Alignment.End, // Membuat elemen-alemen di kolom ini rata kanan
-        ) {
-            // text badge untuk beli versi premium
-            Text(
-                text = "Tanciku+",
-                color = Color(0xFF94882B), // Warna emas atau warna yang menunjukkan premium
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier
-                    .background(
-                        color = Color(0xFFFCF7D0), // Warna latar untuk badge
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-
             // Saldo
             Text(
                 text = "Rp$balance",
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleLarge
+            )
+        }
+        Column(
+            horizontalAlignment = Alignment.End, // Membuat elemen-alemen di kolom ini rata kanan
+        ) {
+
+            // Saldo
+            Text(
+                text = stringResource(id = R.string.period),
+                color = colorResource(id = R.color.text_title_large).copy(alpha = 0.6f),
+                style = MaterialTheme.typography.bodySmall
+            )
+            Text(
+                text = "$currentMonth $currentYear",
+                color = colorResource(id = R.color.text_title_small),
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
