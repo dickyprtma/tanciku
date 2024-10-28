@@ -80,7 +80,6 @@ fun HomeScreen(
                     .height(30.dp)
             )
 
-            // fitur premium harus pengujian tertutup 20 tester
 //            Text(
 //                text = "Tanciku+",
 //                color = Color(0xFF94882B), // Warna emas atau warna yang menunjukkan premium
