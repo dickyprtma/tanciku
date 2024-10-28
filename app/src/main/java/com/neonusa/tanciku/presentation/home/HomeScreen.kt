@@ -80,19 +80,19 @@ fun HomeScreen(
                     .height(30.dp)
             )
 
-            Text(
-                text = "Tanciku+",
-                color = Color(0xFF94882B), // Warna emas atau warna yang menunjukkan premium
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier
-                    .background(
-                        color = Color(0xFFFCF7D0), // Warna latar untuk badge
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            )
+//            Text(
+//                text = "Tanciku+",
+//                color = Color(0xFF94882B), // Warna emas atau warna yang menunjukkan premium
+//                style = MaterialTheme.typography.labelSmall.copy(
+//                    fontWeight = FontWeight.Bold
+//                ),
+//                modifier = Modifier
+//                    .background(
+//                        color = Color(0xFFFCF7D0), // Warna latar untuk badge
+//                        shape = RoundedCornerShape(8.dp)
+//                    )
+//                    .padding(horizontal = 8.dp, vertical = 4.dp)
+//            )
 
 
         }
