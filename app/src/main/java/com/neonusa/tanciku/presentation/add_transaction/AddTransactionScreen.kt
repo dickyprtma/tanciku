@@ -198,16 +198,6 @@ fun AddTransactionScreen(
                 .defaultMinSize(minHeight = 100.dp)
         )
 
-        if(descError == null && desc.isEmpty()){
-            Text(
-                text = "Contoh : makan siang",
-                color = colorResource(id = R.color.text_title_small).copy(0.6f),
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start = 24.dp, end = 16.dp, top = 8.dp)
-            )
-        }
-
-
         if (descError != null) {
             Text(
                 text = descError ?: "",

@@ -30,7 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint
 //todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
 // todo: saat selesai edit dari halaman transaksi ia kembali ke halaman utama bukan halaman transaksi
 // todo : fitur search
-// todo : contoh inputan keterangan waktu add transaksi
 
 //DONE STABLE 1.0.0 jika beres
 
