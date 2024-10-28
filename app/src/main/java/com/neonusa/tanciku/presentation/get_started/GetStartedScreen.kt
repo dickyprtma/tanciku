@@ -263,6 +263,7 @@ fun GetStartedScreen(
 
     if (showSuccessDialog) {
         AlertDialog(
+            //todo : sebaiknya diganti jadi loading
             onDismissRequest = {},
             title = { Text("Alokasi Berhasil") },
             text = { Text("Menyiapkan aplikasi...") },
