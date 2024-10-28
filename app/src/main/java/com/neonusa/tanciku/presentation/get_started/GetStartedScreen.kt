@@ -265,7 +265,7 @@ fun GetStartedScreen(
         AlertDialog(
             onDismissRequest = {},
             title = { Text("Alokasi Berhasil") },
-            text = { Text("Pemasukan kamu berhasil dialokasikan!") },
+            text = { Text("Menyiapkan aplikasi...") },
             confirmButton = {
             }
         )
@@ -280,7 +280,6 @@ fun GetStartedScreen(
             )
             onEvent(GetStartedEvent.SaveAllocation(allocation))
             onEvent(GetStartedEvent.SaveAppEntry) // langsung pindah ke halaman utama sebab readAppEntry berubah
-            showSuccessDialog = false
         }
     }
 }

@@ -71,8 +71,9 @@ fun ListTransactionItem(
 fun ListTransactionItem(
     transactions: LazyPagingItems<Transaction>,
     onClick:(Transaction) -> Unit,
+    emptyMessage: String
 ) {
-    val handlePagingResult = handlePagingResult(transactions)
+    val handlePagingResult = handlePagingResult(transactions,emptyMessage)
     if (handlePagingResult) {
         LazyColumn(
             modifier = Modifier.fillMaxSize()
@@ -89,7 +90,7 @@ fun ListTransactionItem(
 }
 
 @Composable
-fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
+fun handlePagingResult(articles: LazyPagingItems<Transaction>,emptyMessage: String): Boolean {
     var startAnimation by remember {
         mutableStateOf(false)
     }
@@ -117,7 +118,7 @@ fun handlePagingResult(articles: LazyPagingItems<Transaction>): Boolean {
         }
 
         error != null || articles.itemCount == 0 -> {
-            EmptyContent(alphaAnim = alphaAnimation, message = "Belum ada transaksi", iconId = R.drawable.no_transaction)
+            EmptyContent(alphaAnim = alphaAnimation, message = emptyMessage, iconId = R.drawable.no_transaction)
             false
         }
         else -> {

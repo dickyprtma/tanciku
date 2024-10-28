@@ -42,6 +42,15 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
         ).flow
     }
 
+    override fun searchTransactions(query: String): Flow<PagingData<Transaction>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = {
+                transactionDao.searchTransaction("%$query%")
+            }
+        ).flow
+    }
+
     override fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>> {
         return transactionDao.getCurrentMonthLatestTransactions()
     }

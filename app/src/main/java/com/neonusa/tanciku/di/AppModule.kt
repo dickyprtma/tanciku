@@ -25,6 +25,7 @@ import com.neonusa.tanciku.domain.usecases.transaction.GetCurrentMonthTotalTrans
 import com.neonusa.tanciku.domain.usecases.transaction.GetTransactionsPaged
 import com.neonusa.tanciku.domain.usecases.transaction.InsertTransaction
 import com.neonusa.tanciku.domain.usecases.transaction.UpdateTransaction
+import com.neonusa.tanciku.domain.usecases.transaction.SearchTransaction
 import com.neonusa.tanciku.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -57,7 +58,8 @@ object AppModule {
             getCurrentMonthTotalTransactionByCategory = GetCurrentMonthTotalTransactionByCategory(transactionRepository),
             getCurrentMonthLatestTransactions = GetCurrentMonthLatestTransactions(transactionRepository),
             updateTransaction = UpdateTransaction(transactionRepository),
-            getTransactionsPaged = GetTransactionsPaged(transactionRepository)
+            getTransactionsPaged = GetTransactionsPaged(transactionRepository),
+            searchTransaction = SearchTransaction(transactionRepository)
         )
     }
 

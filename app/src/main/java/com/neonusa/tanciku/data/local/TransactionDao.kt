@@ -32,6 +32,10 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions ORDER BY date DESC")
     fun getTransactionsPaging(): PagingSource<Int, Transaction>
 
+    @Query("SELECT * FROM transactions WHERE description LIKE :query ORDER BY date DESC")
+    fun searchTransaction(query: String): PagingSource<Int, Transaction>
+
+
     @Query("""
     SELECT * FROM transactions 
     WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now') 

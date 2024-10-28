@@ -52,6 +52,8 @@ import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
+import com.neonusa.tanciku.presentation.search.SearchScreen
+import com.neonusa.tanciku.presentation.search.SearchViewModel
 import com.neonusa.tanciku.presentation.transaction.TransactionScreen
 import com.neonusa.tanciku.presentation.transaction.TransactionViewModel
 
@@ -170,6 +172,11 @@ fun MainNavigator() {
                         Log.d("TEST", "MainNavigator: $it")
                         transaction = it
                         showDialog = true
+                    },
+                    navigateToSearch = {
+                        navigateToSearch(
+                            navController = navController
+                        )
                     }
                 )
             }
@@ -377,6 +384,15 @@ fun MainNavigator() {
                     allocation = allocation
                 )
             }
+
+            composable(route = Route.SearchScreen.route){
+                val viewModel: SearchViewModel = hiltViewModel()
+                val state = viewModel.state.value
+                SearchScreen(state = state,
+                    event = viewModel::onEvent,
+                    onTransactionItemClicked = {},
+                    navigateUp = {navController.navigateUp()})
+            }
         }
     }
 }
@@ -419,6 +435,12 @@ private fun navigateToTransaction(navController: NavController){
         launchSingleTop = true
         restoreState = true
     }
+}
+
+private fun navigateToSearch(navController: NavController){
+    navController.navigate(
+        route = Route.SearchScreen.route
+    )
 }
 
 private fun navigateToEditTransaction(navController: NavController, transaction: Transaction){

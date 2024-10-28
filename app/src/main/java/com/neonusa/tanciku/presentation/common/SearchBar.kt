@@ -90,7 +90,9 @@ fun SearchBar(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
-                    onSearch()
+                    if (text.isNotEmpty()) {
+                        onSearch()
+                    }
                 }
             ),
             textStyle = MaterialTheme.typography.bodySmall,
