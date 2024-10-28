@@ -217,7 +217,7 @@ fun BudgetScreen(
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
                 )
             Text(text = if (formattedSavingBalance.startsWith("-")) {
-                "-Rp${formattedSavingBalance.removePrefix("-")}"
+                "+Rp${formattedSavingBalance.removePrefix("-")}"
             } else {
                 "Rp$formattedSavingBalance"
             },
