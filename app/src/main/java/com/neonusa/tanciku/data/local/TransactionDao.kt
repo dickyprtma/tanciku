@@ -1,5 +1,6 @@
 package com.neonusa.tanciku.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -23,6 +24,13 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions")
     fun getTransactions(): Flow<List<Transaction>>
+
+    // paged
+    @Query("SELECT * FROM transactions LIMIT :pageSize OFFSET :offset")
+    suspend fun getTransactionsForPage(pageSize: Int, offset: Int): List<Transaction>
+
+    @Query("SELECT * FROM transactions ORDER BY date DESC")
+    fun getTransactionsPaging(): PagingSource<Int, Transaction>
 
     @Query("""
     SELECT * FROM transactions 

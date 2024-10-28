@@ -31,6 +31,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
@@ -52,6 +53,7 @@ import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
 import com.neonusa.tanciku.presentation.transaction.TransactionScreen
+import com.neonusa.tanciku.presentation.transaction.TransactionViewModel
 
 @Composable
 fun MainNavigator() {
@@ -127,7 +129,49 @@ fun MainNavigator() {
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
             composable(route = Route.TransactionScreen.route) {
-                TransactionScreen()
+                val viewModel: TransactionViewModel = hiltViewModel()
+                val transactions = viewModel.transactions.collectAsLazyPagingItems()
+
+                var showDialog by remember { mutableStateOf(false) }
+                var transaction by remember { mutableStateOf<Transaction?>(null)}
+
+                // details view model
+//                val detailsTransactionViewModel: DetailsTransactionViewModel = hiltViewModel()
+
+                if (showDialog) {
+                    Dialog(onDismissRequest = { showDialog = false }) {
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surface,
+                            contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
+                        ) {
+                            DetailsTransactionDialog(
+                                transaction = transaction!!,
+                                onDismiss = {showDialog = false},
+                                event = { detailsTransactionEvent ->
+                                    showDialog = false
+                                    viewModel.onEvent(detailsTransactionEvent) // Memanggil onEvent dengan parameter yang dikirim
+                                },
+                                navigateToEditTransaction = {
+                                    showDialog = false
+                                    navigateToEditTransaction(
+                                        navController = navController,
+                                        transaction = transaction!!
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+
+                TransactionScreen(
+                    transactions = transactions,
+                    onTransactionItemClicked = {
+                        Log.d("TEST", "MainNavigator: $it")
+                        transaction = it
+                        showDialog = true
+                    }
+                )
             }
             composable(route = Route.HomeScreen.route) { backStackEntry ->
                 val viewModel: HomeViewModel = hiltViewModel()
@@ -296,7 +340,6 @@ fun MainNavigator() {
                         title = { Text("Success") },
                         text = { Text("Data transaksi berhasil diubah") },
                         confirmButton = {
-
                         }
                     )
 
@@ -305,6 +348,7 @@ fun MainNavigator() {
                         kotlinx.coroutines.delay(2000)
                         showDialog = false
                         viewModel.onEvent(EditTransactionEvent.RemoveSideEffect)
+                        // todo : saya perlu ini dinamis (bisa tahu kembali ke Route.HomeScreen.route atau Route.TransactionScreen.route)
                         navController.navigate(Route.HomeScreen.route) {
                             popUpTo(Route.HomeScreen.route) { inclusive = true }
                         }

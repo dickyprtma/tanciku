@@ -177,7 +177,12 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
             )
-            Text(text = "Rp$formattedNeedsBalance",style = MaterialTheme.typography.bodySmall)
+            Text(text = if (formattedNeedsBalance.startsWith("-")) {
+                "-Rp${formattedNeedsBalance.removePrefix("-")}"
+            } else {
+                "Rp$formattedNeedsBalance"
+            },
+                style = MaterialTheme.typography.bodySmall)
         }
 
         Row(
@@ -192,7 +197,12 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
             )
-            Text(text = "Rp$formattedWantsBalance",style = MaterialTheme.typography.bodySmall)
+            Text(text = if (formattedWantsBalance.startsWith("-")) {
+                "-Rp${formattedWantsBalance.removePrefix("-")}"
+            } else {
+                "Rp$formattedWantsBalance"
+            },
+                style = MaterialTheme.typography.bodySmall)
         }
 
         Row(
@@ -206,7 +216,12 @@ fun BudgetScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = colorResource(id = R.color.text_title_small).copy(alpha = 0.7f)
                 )
-            Text(text = "Rp$formattedSavingBalance",style = MaterialTheme.typography.bodySmall)
+            Text(text = if (formattedSavingBalance.startsWith("-")) {
+                "+Rp${formattedSavingBalance.removePrefix("-")}"
+            } else {
+                "Rp$formattedSavingBalance"
+            },
+                style = MaterialTheme.typography.bodySmall)
         }
     }
 }

@@ -64,7 +64,11 @@ fun BalanceLayout(
             )
             // Saldo
             Text(
-                text = "Rp$balance",
+                text = if (balance.startsWith("-")) {
+                    "-Rp${balance.removePrefix("-")}"
+                } else {
+                    "Rp$balance"
+                },
                 color = colorResource(id = R.color.text_title_large),
                 style = MaterialTheme.typography.titleLarge
             )

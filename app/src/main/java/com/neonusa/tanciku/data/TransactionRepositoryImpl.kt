@@ -1,5 +1,8 @@
 package com.neonusa.tanciku.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.neonusa.tanciku.data.local.TransactionDao
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.domain.model.TransactionCategory
@@ -28,6 +31,15 @@ class TransactionRepositoryImpl(private val transactionDao: TransactionDao): Tra
 
     override suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int {
         return transactionDao.getCurrentMonthTotalTransactionByCategory(category)
+    }
+
+    override fun getTransactions(): Flow<PagingData<Transaction>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10),
+            pagingSourceFactory = {
+                transactionDao.getTransactionsPaging()
+            }
+        ).flow
     }
 
     override fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>> {

@@ -10,5 +10,7 @@ data class TransactionUseCases(
     val getCurrentMonthTotalExpense: GetCurrentMonthTotalExpense,
     val getCurrentMonthTotalTransactionByCategory: GetCurrentMonthTotalTransactionByCategory,
 
+    val getTransactionsPaged: GetTransactionsPaged,
+
     val getCurrentMonthLatestTransactions: GetCurrentMonthLatestTransactions
     )
