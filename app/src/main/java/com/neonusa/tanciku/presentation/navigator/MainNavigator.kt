@@ -348,6 +348,7 @@ fun MainNavigator() {
                         kotlinx.coroutines.delay(2000)
                         showDialog = false
                         viewModel.onEvent(EditTransactionEvent.RemoveSideEffect)
+                        // todo : saya perlu ini dinamis (bisa tahu kembali ke Route.HomeScreen.route atau Route.TransactionScreen.route)
                         navController.navigate(Route.HomeScreen.route) {
                             popUpTo(Route.HomeScreen.route) { inclusive = true }
                         }
