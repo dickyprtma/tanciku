@@ -27,8 +27,6 @@ import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-//todo: bikin dialog meyakinkan apakah ingin menghapus transaksi
-// todo: saat selesai edit dari halaman transaksi ia kembali ke halaman utama bukan halaman transaksi
 // todo : fitur search
 
 //DONE STABLE 1.0.0 jika beres

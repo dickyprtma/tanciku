@@ -347,10 +347,10 @@ fun MainNavigator() {
                     LaunchedEffect(Unit) {
                         kotlinx.coroutines.delay(2000)
                         showDialog = false
-                        viewModel.onEvent(EditTransactionEvent.RemoveSideEffect)
-                        // todo : saya perlu ini dinamis (bisa tahu kembali ke Route.HomeScreen.route atau Route.TransactionScreen.route)
-                        navController.navigate(Route.HomeScreen.route) {
-                            popUpTo(Route.HomeScreen.route) { inclusive = true }
+                        // Get the originating route from the saved state handle
+                        val originRoute = navController.previousBackStackEntry?.savedStateHandle?.get<String>("originRoute")
+                        navController.navigate(originRoute ?: Route.HomeScreen.route) {
+                            popUpTo(originRoute ?: Route.HomeScreen.route) { inclusive = true }
                         }
                     }
                 }
@@ -422,7 +422,10 @@ private fun navigateToTransaction(navController: NavController){
 }
 
 private fun navigateToEditTransaction(navController: NavController, transaction: Transaction){
+    val currentRoute = navController.currentBackStackEntry?.destination?.route
     navController.currentBackStackEntry?.savedStateHandle?.set("transaction", transaction)
+    navController.currentBackStackEntry?.savedStateHandle?.set("originRoute", currentRoute)
+    Log.d("Test", "navigateToEditTransaction: $currentRoute")
     navController.navigate(
         route = Route.EditTransactionScreen.route
     )
