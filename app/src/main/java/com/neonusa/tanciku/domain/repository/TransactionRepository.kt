@@ -15,6 +15,7 @@ interface TransactionRepository {
     suspend fun getCurrentMonthTotalTransactionByCategory(category: TransactionCategory): Int
 
     fun getTransactions(): Flow<PagingData<Transaction>>
+    fun searchTransactions(query: String): Flow<PagingData<Transaction>>
 
     fun getCurrentMonthLatestTransactions(): Flow<List<Transaction>>
     suspend fun updateTransaction(transaction: Transaction)
