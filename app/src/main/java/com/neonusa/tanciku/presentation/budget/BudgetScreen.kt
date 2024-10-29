@@ -105,7 +105,7 @@ fun BudgetScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .background(
-                        color = colorResource(id = R.color.blue40).copy(alpha = 0.5f), // Warna latar untuk badge
+                        color = colorResource(id = R.color.blue40), // Warna latar untuk badge
                         shape = RoundedCornerShape(8.dp)
                     )
                     .padding(horizontal = 8.dp, vertical = 4.dp)

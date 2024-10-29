@@ -35,6 +35,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
@@ -65,6 +66,7 @@ fun GetStartedScreen(
     var allocationErrorMessage by remember { mutableStateOf("") }
 
     var showSuccessDialog by remember { mutableStateOf(false) }
+    var showLoadingDialog by remember { mutableStateOf(false) }
 
     fun updateUsedPercentage() {
         val total = kebutuhan.toInt() + keinginan.toInt() + menabung.toInt()
@@ -263,19 +265,42 @@ fun GetStartedScreen(
     }
 
     if (showSuccessDialog) {
-        // todo : loading
         SuccessDialog(description = "Pemasukan kamu berhasil dialokasikan")
-        LaunchedEffect(Unit) {
-            delay(3000) // Delay 3 detik
 
-            // insert ke database
-            val allocation = Allocation(
-                needs = kebutuhan.toInt(),
-                wants = keinginan.toInt(),
-                saving = menabung.toInt(),
+        // Menggunakan LaunchedEffect untuk menunggu 2 detik sebelum mengubah state
+        LaunchedEffect(Unit) {
+            delay(1000) // Delay selama 2 detik
+            showSuccessDialog = false
+            showLoadingDialog = true
+        }
+        // insert ke database
+        val allocation = Allocation(
+            needs = kebutuhan.toInt(),
+            wants = keinginan.toInt(),
+            saving = menabung.toInt(),
+        )
+        onEvent(GetStartedEvent.SaveAllocation(allocation))
+        onEvent(GetStartedEvent.SaveAppEntry) // pindah ke halaman utama sebab readAppEntry berubah
+
+        if(showLoadingDialog){
+            // loading
+            // DialogPropertis : Menonaktifkan penghapusan dialog ketika menekan tombol kembali atau di luar dialog
+            AlertDialog(
+                onDismissRequest = {},
+                containerColor = Color.Transparent, // Menghilangkan background dialog
+                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+                text = {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+                },
+                confirmButton = {}
             )
-            onEvent(GetStartedEvent.SaveAllocation(allocation))
-            onEvent(GetStartedEvent.SaveAppEntry) // langsung pindah ke halaman utama sebab readAppEntry berubah
         }
     }
 }
