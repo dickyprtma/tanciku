@@ -2,6 +2,7 @@ package com.neonusa.tanciku.presentation.edit_allocation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -132,11 +134,15 @@ fun EditBudgetScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack, // Ganti dengan ikon back yang kamu inginkan
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Ganti dengan ikon back yang kamu inginkan
                 contentDescription = "Back",
                 modifier = Modifier
                     .size(24.dp)
-                    .clickable { navigateUp() }
+                    .clickable(
+                        onClick = { navigateUp() },
+                        indication = null, // Menghilangkan efek bayangan saat diklik
+                        interactionSource = remember { MutableInteractionSource() }
+                    )
             )
 
             Spacer(modifier = Modifier.weight(1f)) // Memberi jarak agar teks berada di tengah
@@ -186,7 +192,9 @@ fun EditBudgetScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 8.dp, end = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             IncomeAllocationInputField(
@@ -242,7 +250,9 @@ fun EditBudgetScreen(
             onClick = {
                 validateAndShowErrors()
             },
-            modifier = Modifier.fillMaxWidth().padding(start= 8.dp, end= 8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp, end = 8.dp)
         ) {
             Text("Ubah Alokasi")
         }
@@ -262,14 +272,18 @@ fun EditBudgetScreen(
 
         Text(
             text = "Gunakan Alokasi Default",
-            color = Color.Blue.copy(alpha = 0.7f),
+            color = colorResource(id = R.color.blue40),
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier
                 .padding(top = 24.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable {
-                    resetAllocation() // Reset allocation when clicked
-                }
+                .clickable(
+                    onClick = { resetAllocation() },
+                    indication = null, // Menghilangkan efek bayangan saat diklik
+                    interactionSource = remember { MutableInteractionSource() }
+                )
+
+
         )
     }
 
