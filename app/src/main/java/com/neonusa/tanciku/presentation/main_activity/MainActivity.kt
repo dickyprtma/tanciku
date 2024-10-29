@@ -22,6 +22,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.neonusa.tanciku.presentation.iap.IAPScreen
 import com.neonusa.tanciku.presentation.navgraph.NavGraph
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
@@ -42,7 +43,10 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            TancikuApp()
+            //todo : testing in app purchase
+            IAPScreen()
+
+//            TancikuApp()
         }
     }
 }

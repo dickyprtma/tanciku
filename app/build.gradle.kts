@@ -102,4 +102,8 @@ dependencies {
     implementation ("androidx.room:room-paging:2.5.0")
     implementation ("androidx.paging:paging-runtime:3.1.1")
     implementation ("androidx.paging:paging-compose:3.2.0-rc01")
+
+    // In app purchase
+    implementation ("com.android.billingclient:billing-ktx:7.0.0")
+    implementation ("com.google.guava:guava:31.0.1-jre") // immutableList
 }
