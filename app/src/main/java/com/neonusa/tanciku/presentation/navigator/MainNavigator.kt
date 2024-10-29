@@ -388,9 +388,46 @@ fun MainNavigator() {
             composable(route = Route.SearchScreen.route){
                 val viewModel: SearchViewModel = hiltViewModel()
                 val state = viewModel.state.value
+
+                var showDialog by remember { mutableStateOf(false) }
+                var transaction by remember { mutableStateOf<Transaction?>(null)}
+
+                // details view model
+//                val detailsTransactionViewModel: DetailsTransactionViewModel = hiltViewModel()
+
+                if (showDialog) {
+                    Dialog(onDismissRequest = { showDialog = false }) {
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surface,
+                            contentColor = contentColorFor(MaterialTheme.colorScheme.surface)
+                        ) {
+                            DetailsTransactionDialog(
+                                transaction = transaction!!,
+                                onDismiss = {showDialog = false},
+                                event = { searchEvent ->
+                                    showDialog = false
+                                    viewModel.onEvent(searchEvent) // Memanggil onEvent dengan parameter yang dikirim
+                                },
+                                navigateToEditTransaction = {
+                                    showDialog = false
+                                    navigateToEditTransaction(
+                                        navController = navController,
+                                        transaction = transaction!!
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+
                 SearchScreen(state = state,
                     event = viewModel::onEvent,
-                    onTransactionItemClicked = {},
+                    onTransactionItemClicked = {
+                        Log.d("TEST", "MainNavigator: $it")
+                        transaction = it
+                        showDialog = true
+                    },
                     navigateUp = {navController.navigateUp()})
             }
         }

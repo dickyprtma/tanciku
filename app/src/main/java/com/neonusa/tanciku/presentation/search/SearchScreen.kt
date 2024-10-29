@@ -25,8 +25,6 @@ import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.common.ListTransactionItem
 import com.neonusa.tanciku.presentation.common.SearchBar
 
-//todo: klik item
-
 @Composable
 fun SearchScreen(
     state: SearchState,
@@ -70,11 +68,12 @@ fun SearchScreen(
             }
         )
 
-        state.transactions?.let {
-            val transactions = it.collectAsLazyPagingItems()
+        state.transactions?.let { items ->
+            val transactions = items.collectAsLazyPagingItems()
             ListTransactionItem(
                 transactions = transactions,
                 onClick = {
+                    onTransactionItemClicked(it)
                 },
                 emptyMessage = "Transaksi tidak ditemukan"
 
