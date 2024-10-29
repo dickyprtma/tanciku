@@ -27,19 +27,13 @@ class MainViewModel @Inject constructor(
 
 
     init {
-        val startTime = System.currentTimeMillis() // Mencatat waktu mulai
         appEntryUseCases.readAppEntry().onEach { getStartedDone ->
-            val endTime = System.currentTimeMillis() // Mencatat waktu akhir
-            val executionTime = endTime - startTime // Menghitung waktu eksekusi
-            // Log atau print waktu eksekusi
-            Log.d("MainViewModel", "Waktu untuk mendapatkan nilai readAppEntry: $executionTime ms")
             if(getStartedDone){
                 _startDestination.value = Route.MainNavigation.route
             }else{
                 _startDestination.value = Route.GetStartedScreen.route
             }
-            // delay sebanyak waktu yang dibutuhkan untuk mendapatkan appEntryUseCases
-            delay(executionTime)
+            delay(1000)
             _splashCondition.value = false
         }.launchIn(viewModelScope)
     }
