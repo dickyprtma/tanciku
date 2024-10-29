@@ -228,6 +228,15 @@ fun MainNavigator() {
                     }
                 }
 
+                LaunchedEffect(Unit) {
+                    viewModel.getCurrentMonthTotalIncome()
+                    viewModel.getCurrentMonthTotalExpense()
+                    viewModel.getCurrentMonthTotalNeeds()
+                    viewModel.getCurrentMonthTotalWants()
+                    viewModel.getCurrentMonthTotalSaving()
+                    viewModel.getAllocation()
+                }
+
                 HomeScreen(
                     totalIncome = totalIncome,
                     totalExpense = totalExpense,
