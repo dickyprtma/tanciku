@@ -51,6 +51,7 @@ import com.neonusa.tanciku.presentation.home.HomeViewModel
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.presentation.navigator.components.BottomNavigationItem
 import com.neonusa.tanciku.presentation.navigator.components.MainBottomNavigation
+import com.neonusa.tanciku.presentation.search.SearchEvent
 import com.neonusa.tanciku.presentation.search.SearchScreen
 import com.neonusa.tanciku.presentation.search.SearchViewModel
 import com.neonusa.tanciku.presentation.transaction.TransactionScreen
@@ -381,6 +382,11 @@ fun MainNavigator() {
             composable(route = Route.SearchScreen.route){
                 val viewModel: SearchViewModel = hiltViewModel()
                 val state = viewModel.state.value
+
+                // Refresh data when navigating back to this screen
+                LaunchedEffect(Unit) {
+                    viewModel.onEvent(SearchEvent.SearchNews)
+                }
 
                 var showDialog by remember { mutableStateOf(false) }
                 var transaction by remember { mutableStateOf<Transaction?>(null)}
