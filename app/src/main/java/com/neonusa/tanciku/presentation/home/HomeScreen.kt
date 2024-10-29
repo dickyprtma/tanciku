@@ -41,6 +41,7 @@ import com.neonusa.tanciku.ui.theme.TancikuTheme
 import java.text.NumberFormat
 import java.util.Locale
 
+//todo : data saldo, pemasukan, pengeluaran, persenan, tidak berubah jika kita mengubah data melalui transaction/search screen
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
