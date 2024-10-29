@@ -27,7 +27,6 @@ import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.common.ListTransactionItem
 import com.neonusa.tanciku.presentation.common.SearchBar
 
-// todo : jika kembali dari halaman edit ke halaman transaction screen, data menghilang
 @Composable
 fun SearchScreen(
     state: SearchState,

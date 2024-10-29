@@ -22,6 +22,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "MAIN_BANNER", "${project.findProperty("MAIN_BANNER")}")
+
+        // setelah menambahkan kode diatas
+        // build -> clean
+        // build -> rebuild
+        buildFeatures {
+            buildConfig = true
+        }
     }
 
     buildTypes {

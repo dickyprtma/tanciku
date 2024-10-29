@@ -9,11 +9,12 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.neonusa.tanciku.BuildConfig
 
 @Composable
 fun AdMobBannerAd(
     modifier: Modifier = Modifier,
-    adUnitId: String = "ca-app-pub-3940256099942544/6300978111", // Test ad unit ID. Replace with your own.
+    adUnitId: String = BuildConfig.MAIN_BANNER, // Test ad unit ID. Replace with your own.
     adSize: AdSize = AdSize.BANNER
 ) {
     Box(
