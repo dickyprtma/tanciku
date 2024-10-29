@@ -106,4 +106,5 @@ dependencies {
     // In app purchase
     implementation ("com.android.billingclient:billing-ktx:7.0.0")
     implementation ("com.google.guava:guava:31.0.1-jre") // immutableList
+    implementation ("com.github.akshaaatt:Google-IAP:1.7.0")
 }
