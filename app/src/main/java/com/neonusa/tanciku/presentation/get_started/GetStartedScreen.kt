@@ -40,6 +40,7 @@ import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.domain.model.Transaction
 import com.neonusa.tanciku.presentation.add_transaction.AddTransactionEvent
 import com.neonusa.tanciku.presentation.common.IncomeAllocationInputField
+import com.neonusa.tanciku.presentation.common.SuccessDialog
 import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import kotlinx.coroutines.delay
@@ -262,14 +263,8 @@ fun GetStartedScreen(
     }
 
     if (showSuccessDialog) {
-        AlertDialog(
-            //todo : sebaiknya diganti jadi loading
-            onDismissRequest = {},
-            title = { Text("Alokasi Berhasil") },
-            text = { Text("Menyiapkan aplikasi...") },
-            confirmButton = {
-            }
-        )
+        // todo : loading
+        SuccessDialog(description = "Pemasukan kamu berhasil dialokasikan")
         LaunchedEffect(Unit) {
             delay(3000) // Delay 3 detik
 

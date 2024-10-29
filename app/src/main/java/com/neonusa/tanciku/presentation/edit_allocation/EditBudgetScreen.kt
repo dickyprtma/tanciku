@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import com.neonusa.tanciku.R
 import com.neonusa.tanciku.domain.model.Allocation
 import com.neonusa.tanciku.presentation.common.IncomeAllocationInputField
+import com.neonusa.tanciku.presentation.common.SuccessDialog
 import com.neonusa.tanciku.presentation.get_started.GetStartedEvent
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import kotlinx.coroutines.delay
@@ -288,13 +289,7 @@ fun EditBudgetScreen(
     }
 
     if (showSuccessDialog) {
-        AlertDialog(
-            onDismissRequest = {},
-            title = { Text("Alokasi Berhasil") },
-            text = { Text("Pemasukan kamu berhasil dialokasikan!") },
-            confirmButton = {
-            }
-        )
+        SuccessDialog(description = "Pemasukan kamu berhasil dialokasikan")
         LaunchedEffect(Unit) {
             delay(3000) // Delay 3 detik
 

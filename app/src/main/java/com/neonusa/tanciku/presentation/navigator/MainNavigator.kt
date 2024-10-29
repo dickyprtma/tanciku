@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +40,7 @@ import com.neonusa.tanciku.presentation.budget.BudgetScreen
 import com.neonusa.tanciku.presentation.budget.BudgetViewModel
 import com.neonusa.tanciku.presentation.common.AdMobBannerAd
 import com.neonusa.tanciku.presentation.common.DetailsTransactionDialog
+import com.neonusa.tanciku.presentation.common.SuccessDialog
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetScreen
 import com.neonusa.tanciku.presentation.edit_allocation.EditBudgetViewModel
 import com.neonusa.tanciku.presentation.edit_transaction.EditTransactionEvent
@@ -308,15 +307,7 @@ fun MainNavigator() {
                 }
 
                 if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = {
-                        },
-                        title = { Text("Success") },
-                        text = { Text("Data transaksi berhasil Ditambahkan") },
-                        confirmButton = {
-
-                        }
-                    )
+                    SuccessDialog(description = "Data Transaksi Berhasil Ditambahakan")
 
                     // Automatically dismiss after 2 seconds
                     LaunchedEffect(Unit) {
@@ -350,14 +341,7 @@ fun MainNavigator() {
                 }
 
                 if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = {
-                        },
-                        title = { Text("Success") },
-                        text = { Text("Data transaksi berhasil diubah") },
-                        confirmButton = {
-                        }
-                    )
+                    SuccessDialog(description = "Data transaksi berhasil diubah")
 
                     // Automatically dismiss after 2 seconds
                     LaunchedEffect(Unit) {
