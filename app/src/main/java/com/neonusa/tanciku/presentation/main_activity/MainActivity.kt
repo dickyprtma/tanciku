@@ -2,9 +2,6 @@ package com.neonusa.tanciku.presentation.main_activity
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,11 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.neonusa.tanciku.presentation.navgraph.NavGraph
-import com.neonusa.tanciku.presentation.navgraph.Route
 import com.neonusa.tanciku.ui.theme.TancikuTheme
 import dagger.hilt.android.AndroidEntryPoint
-
-//todo : hilangkan efek bayangan waktu klik view
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
