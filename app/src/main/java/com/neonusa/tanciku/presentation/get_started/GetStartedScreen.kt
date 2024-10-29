@@ -281,27 +281,27 @@ fun GetStartedScreen(
         )
         onEvent(GetStartedEvent.SaveAllocation(allocation))
         onEvent(GetStartedEvent.SaveAppEntry) // pindah ke halaman utama sebab readAppEntry berubah
+    }
 
-        if(showLoadingDialog){
-            // loading
-            // DialogPropertis : Menonaktifkan penghapusan dialog ketika menekan tombol kembali atau di luar dialog
-            AlertDialog(
-                onDismissRequest = {},
-                containerColor = Color.Transparent, // Menghilangkan background dialog
-                properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
-                text = {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(48.dp)
-                        )
-                    }
-                },
-                confirmButton = {}
-            )
-        }
+    if(showLoadingDialog){
+        // loading
+        // DialogPropertis : Menonaktifkan penghapusan dialog ketika menekan tombol kembali atau di luar dialog
+        AlertDialog(
+            onDismissRequest = {},
+            containerColor = Color.Transparent, // Menghilangkan background dialog
+            properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+            text = {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(48.dp)
+                    )
+                }
+            },
+            confirmButton = {}
+        )
     }
 }
 
